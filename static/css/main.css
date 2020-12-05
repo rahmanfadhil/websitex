@@ -1,0 +1,32 @@
+body {
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.btn:not(.btn-lg):not(.btn-sm) {
+  padding: 0.5rem 1rem;
+}
+
+.form-control {
+  height: initial;
+}
+
+.form-control:not(.form-control-lg):not(.form-control-sm) {
+  padding: 0.5rem 1rem;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* prettier-ignore */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: bold;
+}
+
+.account-form {
+  max-width: 450px;
+}
