@@ -1,6 +1,6 @@
 # DjangoX
 
-A highly-customized version of [DjangoX](https://github.com/wsvincent/djangox), a batteries-included Django boilerplate.
+A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvincent/djangox).
 
 ## Features
 
