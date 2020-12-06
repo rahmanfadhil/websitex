@@ -5,15 +5,17 @@ body {
 }
 
 .btn:not(.btn-lg):not(.btn-sm) {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
 }
 
 .form-control {
+  border-radius: 0.5rem;
   height: initial;
 }
 
 .form-control:not(.form-control-lg):not(.form-control-sm) {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
 }
 
 @media (min-width: 1200px) {

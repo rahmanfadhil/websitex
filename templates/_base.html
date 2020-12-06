@@ -13,8 +13,7 @@
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet"> -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -60,7 +59,7 @@
     <!-- Alert messages -->
     {% if messages %}
       {% for message in messages %}
-        <div class="mb-5 alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">{{ message }}</div>
+        <div class="mb-3 alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">{{ message }}</div>
       {% endfor %}
     {% endif %}
 
