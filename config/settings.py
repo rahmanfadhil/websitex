@@ -134,7 +134,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage
 # MESSAGES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/contrib/messages/#message-tags
-MESSAGES_TAGS = {
+MESSAGE_TAGS = {
     messages.DEBUG: 'info',
     messages.INFO: 'info',
     messages.SUCCESS: 'success',
