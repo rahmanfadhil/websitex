@@ -92,7 +92,14 @@ TEMPLATES = [
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': env.db_url('DATABASE_URL', default='sqlite:///db.sqlite3')
+    'default': env.db(default='sqlite:///db.sqlite3')
+}
+
+# CACHES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    'default': env.cache(default='filecache:///cache/')
 }
 
 # PASSWORDS
