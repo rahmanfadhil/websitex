@@ -1,0 +1,8 @@
+media/
+venv/
+staticfiles/
+node_modules/
+
+.*
+!.coveragerc
+!.env

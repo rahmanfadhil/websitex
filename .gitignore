@@ -9,7 +9,8 @@ __pycache__/
 # Django #
 *.log
 db.sqlite3
-media
+media/
+staticfiles/
 
 # Virtual environment #
 venv/
@@ -19,14 +20,16 @@ env/
 # Dependencies #
 node_modules/
 
-# Generated files #
-staticfiles/
-static/**/*.min.css
-static/**/*.min.js
-
 # IDE #
 .vscode/
 .idea/
 
 # Environment variables #
 .env
+
+# JavaScript & CSS bundles
+static/dist
+
+# Test coverge
+.coverage
+htmlcov/

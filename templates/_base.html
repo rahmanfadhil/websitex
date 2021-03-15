@@ -13,64 +13,89 @@
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- Styles -->
+  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
 </head>
 
 <body class="bg-light">
   <!-- Top navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm">
-    <div class="container">
-      <a class="navbar-brand font-weight-bold mr-5" href="{% url 'home' %}">DjangoX</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-md py-3">
+      <a class="navbar-brand" href="{% url 'pages:home' %}">WebsiteX</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- <div class="flex-grow-1"></div> -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            {% url 'home' as home_url %}
-            <a class="nav-link" href="{{ home_url }}">Home {% if request.get_full_path == home_url %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
-          <li class="nav-item">
-            {% url 'about' as about_url %}
-            <a class="nav-link" href="{{ about_url }}">About {% if request.get_full_path == about_url %}<span class="sr-only">(current)</span>{% endif %}</a>
-          </li>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% with request.resolver_match.url_name as url_name %}
+            <li class="nav-item">
+              <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'pages:home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if url_name == 'about' %}active{% endif %}" href="{% url 'pages:about' %}">About</a>
+            </li>
+          {% endwith %}
         </ul>
         {% if user.is_authenticated %}
-        <form action="{% url 'account_logout' %}" method="POST" class="form-inline mt-3 mt-lg-0">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-outline-danger rounded-pill">Log out</button>
-        </form>
-        {% else %}
-          <div class="form-inline mt-3 mt-lg-0">
-            <a href="{% url 'account_login' %}" class="btn btn-link text-dark rounded-pill">Log In</a>
-            <a href="{% url 'account_signup' %}" class="btn btn-outline-dark rounded-pill ml-1">Sign Up</a>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown ml-auto">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i data-feather="user" class="me-2"></i> My account
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">
+                  <i data-feather="settings" class="me-2"></i> Settings
+                </a>
+                <hr class="dropdown-divider">
+                <form method="post" action="{% url 'account_logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item text-danger">
+                    <i data-feather="log-out" class="me-2"></i> Log out
+                  </button>
+                </form>
+              </ul>
+            </li>
+          </ul>
+        {% endif %}
+        {% if not user.is_authenticated %}
+          <div class="d-flex">
+            <a href="{% url 'account_login' %}" class="btn btn-outline-primary rounded-pill me-2" type="submit">Login</a>
+            <a href="{% url 'account_signup' %}" class="btn btn-primary rounded-pill">Sign up</a>
           </div>
-          {% endif %}
+        {% endif %}
       </div>
     </div>
   </nav>
-  
-  <!-- Main container -->
-  <div class="container mt-5">
+
+  <div class="container">
     <!-- Alert messages -->
     {% if messages %}
       {% for message in messages %}
-        <div class="mb-3 alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">{{ message }}</div>
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+          <div class="toast-container position-absolute top-0 end-0">
+            <!-- Then put toasts within -->
+            <div class="toast align-items-center {% if message.tags %}bg-{{ message.tags }}{% else %}bg-info{% endif %}" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div class="toast-body text-light">{{ message }}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     {% endif %}
+  </div>
 
+  <!-- Main container -->
+  <div class="container mt-5">
     <!-- Main content -->
     {% block content %}
       <p>Default content...</p>
     {% endblock content %}
   </div>
 
-  <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/combine/npm/jquery@3.5.1/dist/jquery.slim.min.js,npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
-  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'dist/main.js' %}"></script>
 </body>
 </html>

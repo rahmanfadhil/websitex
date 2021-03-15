@@ -5,7 +5,7 @@ A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvi
 ## Features
 
 - Django 3.1
-- Bootstrap 4.5
+- Bootstrap 5
 - PostgreSQL
 - SSL (in production).
 
