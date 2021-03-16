@@ -24,7 +24,7 @@ RUN pip install -r /requirements/dev.txt
 WORKDIR /code
 
 # Set environment variables
-ENV DJANGO_SETTINGS_MODULE config.settings
+ENV DJANGO_SETTINGS_MODULE config.settings.production
 
 # Copy project
 COPY . /code/

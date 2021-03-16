@@ -35,6 +35,8 @@ services:
       - db
       - redis
     environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.development
+      - READ_ENV_FILE=True
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
       - CELERY_BROKER_URL=redis://redis:6379
@@ -61,6 +63,8 @@ services:
     depends_on:
       - db
     environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.development
+      - READ_ENV_FILE=True
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
       - CELERY_BROKER_URL=redis://redis:6379

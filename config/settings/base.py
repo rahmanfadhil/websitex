@@ -5,21 +5,21 @@ import environ
 from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 # Get config from environment variables
 env = environ.Env()
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DEBUG", default=True)
-
-# If not in production, read the .env file
+# Read .env file if exists
 ENV_FILE = env.str("ENV_FILE", default=str(BASE_DIR / ".env"))
-if DEBUG and exists(ENV_FILE):
+READ_ENV_FILE = env.bool("READ_ENV_FILE", default=False)
+if READ_ENV_FILE and exists(ENV_FILE):
     env.read_env(ENV_FILE)
 
 # GENERAL
 # ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
+DEBUG = env.bool("DEBUG", default=True)
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-SECRET_KEY
 SECRET_KEY = env.str(
     "SECRET_KEY", default="43)%4yx)aa@a=+_c(fn&kf3g29xax+=+a&key9i=!98zyim=8j"
@@ -30,24 +30,28 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "0.0.0.0", "127.
 # APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.sites",
-    # Third-party
+    "django.contrib.humanize",
+]
+THIRD_PARTY_APPS = [
+    "whitenoise.runserver_nostatic",
     "allauth",
     "allauth.account",
     "crispy_forms",
     "crispy_bootstrap5",
-    # Local
-    "apps.accounts",
-    "apps.pages",
 ]
+LOCAL_APPS = [
+    "apps.users.apps.UsersConfig",
+    "apps.pages.apps.PagesConfig",
+]
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
@@ -76,7 +80,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [str(BASE_DIR / "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -125,17 +129,16 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
-
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
+STATICFILES_DIRS = [str(BASE_DIR / "static")]
 # http://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # MESSAGES
 # ------------------------------------------------------------------------------
@@ -159,16 +162,10 @@ vars().update(env.email("EMAIL_URL", default="consolemail://"))
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# DJANGO-DEBUG-TOOLBAR CONFIGS
-# ------------------------------------------------------------------------------
-# https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
-# https://docs.djangoproject.com/en/dev/ref/settings/#internal-ips
-INTERNAL_IPS = ["127.0.0.1"]
-
 # CUSTOM USER MODEL CONFIGS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = "users.User"
 
 # DJANGO-ALLAUTH CONFIGS
 # ------------------------------------------------------------------------------
@@ -190,34 +187,3 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-
-# ENVIRONMENT SPECIFIC CONFIGS
-# ------------------------------------------------------------------------------
-if DEBUG:
-    # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#prerequisites
-    INSTALLED_APPS += ["debug_toolbar"]
-    # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#enabling-middleware
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-else:
-    # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-    SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
-    # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
-    SESSION_COOKIE_SECURE = True
-    # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
-    CSRF_COOKIE_SECURE = True
-    # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
-    # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
-    # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
-    SECURE_HSTS_SECONDS = 60
-    # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-        "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
-    )
-    # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
-    SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
-    # https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
-    SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
-        "DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True
-    )

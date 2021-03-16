@@ -1,0 +1,7 @@
+from config.settings.base import *
+
+
+# Disable whitenoise
+INSTALLED_APPS.remove("whitenoise.runserver_nostatic")
+MIDDLEWARE.remove("whitenoise.middleware.WhiteNoiseMiddleware")
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
