@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import UpdateView
+from apps.users.models import User
 
-# Create your views here.
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ("full_name", "username")
+
+    def get_object(self, queryset=None) -> User:
+        return self.request.user
