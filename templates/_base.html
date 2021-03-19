@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <title>{% block title %}DjangoX{% endblock title %}</title>
+  <title>{% block title %}WebsiteX{% endblock title %}</title>
   <meta name="description" content="A framework for launching new Django projects quickly.">
   <meta name="author" content="">
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
@@ -72,19 +72,18 @@
   <div class="container">
     <!-- Alert messages -->
     {% if messages %}
-      {% for message in messages %}
         <div aria-live="polite" aria-atomic="true" class="position-relative">
           <div class="toast-container position-absolute top-0 end-0">
-            <!-- Then put toasts within -->
-            <div class="toast align-items-center {% if message.tags %}bg-{{ message.tags }}{% else %}bg-info{% endif %}" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="d-flex">
-                <div class="toast-body text-light">{{ message }}</div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            {% for message in messages %}
+              <div class="toast align-items-center {% if message.tags %}bg-{{ message.tags }}{% else %}bg-info{% endif %}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                  <div class="toast-body text-light">{{ message }}</div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
-      {% endfor %}
     {% endif %}
   </div>
 
