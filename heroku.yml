@@ -5,3 +5,7 @@ release:
   image: web
   command:
     - python manage.py migrate --noinput
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
