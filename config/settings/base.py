@@ -10,11 +10,6 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # Get config from environment variables
 env = environ.Env()
 
-# Read .env file if exists
-ENV_FILE = env.str("ENV_FILE", default=str(BASE_DIR / ".env"))
-READ_ENV_FILE = env.bool("READ_ENV_FILE", default=False)
-if READ_ENV_FILE and exists(ENV_FILE):
-    env.read_env(ENV_FILE)
 
 # GENERAL
 # ------------------------------------------------------------------------------

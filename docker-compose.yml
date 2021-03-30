@@ -27,7 +27,9 @@ services:
       - "1025:1025"
       - "8025:8025"
   celery:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     command: celery -A config worker -l info
     volumes:
       - .:/code
@@ -35,8 +37,6 @@ services:
       - db
       - redis
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.development
-      - READ_ENV_FILE=True
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
       - CELERY_BROKER_URL=redis://redis:6379
@@ -47,23 +47,22 @@ services:
   assets:
     build:
       context: .
-      dockerfile: assets.Dockerfile
+      dockerfile: Dockerfile.assets
     volumes:
       - ./assets:/code/assets
       - ./static/dist:/code/static/dist
   web:
-    build: .
-    command: python -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - "8000:8000"
-      - "5678:5678"
     depends_on:
       - db
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings.development
-      - READ_ENV_FILE=True
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
       - CELERY_BROKER_URL=redis://redis:6379
