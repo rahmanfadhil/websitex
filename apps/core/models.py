@@ -1,4 +1,3 @@
-from apps.core.utils import unique_slugify
 from django.db import models
 
 
