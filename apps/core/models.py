@@ -1,3 +1,4 @@
+from apps.core.utils import unique_slugify
 from django.db import models
 
 
@@ -29,7 +30,11 @@ class Publishable(models.Model):
     Implement draft and publish feature.
     """
 
-    is_published = models.BooleanField(default=False)
+    published_at = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def is_published(self) -> bool:
+        return self.published_at is not None
 
     class Meta:
         abstract = True
