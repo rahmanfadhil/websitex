@@ -6,16 +6,19 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <title>{% block title %}WebsiteX{% endblock title %}</title>
-  <meta name="description" content="A framework for launching new Django projects quickly.">
-  <meta name="author" content="">
+
+  <!-- Icon -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <!-- Meta -->
+  <title>{% block title %}{{ page_title|default:PROJECT_NAME }}{% endblock title %}</title>
+  <meta name="description" content="{{ meta_description|default:'A framework for launching new Django projects quickly.' }}">
+  <meta name="author" content="{{ meta_author }}">
+  <meta name="keywords" content="{{ meta_keywords }}">
 
   <!-- Styles -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'dist/main.css' %}">
 </head>
 
@@ -23,7 +26,7 @@
   <!-- Top navigation -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-md py-3">
-      <a class="navbar-brand" href="{% url 'pages:home' %}">WebsiteX</a>
+      <a class="navbar-brand" href="{% url 'pages:home' %}">{{ PROJECT_NAME }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

@@ -3,6 +3,7 @@ Pillow==8.1.0 # https://github.com/python-pillow/Pillow
 whitenoise==5.2.0 # https://github.com/evansd/whitenoise
 celery==5.0.5 # http://celeryproject.org/
 redis==3.5.3 # https://github.com/andymccurdy/redis-py
+python-magic==0.4.22 # https://github.com/ahupp/python-magic
 
 # Django
 # ------------------------------------------------------------------------------

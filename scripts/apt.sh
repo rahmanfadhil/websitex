@@ -8,6 +8,9 @@ apt-get install -y build-essential
 # psycopg2 dependencies
 apt-get install -y libpq-dev
 
+# python-magic dependencies
+apt-get install -y libmagic1
+
 # Translations dependencies
 apt-get install -y gettext
 

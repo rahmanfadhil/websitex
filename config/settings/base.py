@@ -80,6 +80,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.core.context_processors.project_name",
             ],
         },
     },
@@ -186,3 +187,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", default="")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+# CORE UTILITIES
+# ------------------------------------------------------------------------------
+PROJECT_NAME = "WebsiteX"  # help generate the full page title.
