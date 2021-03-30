@@ -2,6 +2,9 @@ from .base import *
 from .base import env
 
 
+# GENERAL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
 
 # PRODUCTION
