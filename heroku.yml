@@ -1,9 +1,11 @@
 build:
   docker:
     web: Dockerfile
-    worker: Dockerfile
 run:
-  worker: celery -A config worker -l INFO
+  worker:
+    command:
+      - celery -A config worker -l INFO
+    image: web
 release:
   image: web
   command:

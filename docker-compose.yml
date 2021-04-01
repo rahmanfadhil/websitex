@@ -40,6 +40,8 @@ services:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
       - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env
   redis:
     image: redis:alpine
     ports:
@@ -62,6 +64,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     environment:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
