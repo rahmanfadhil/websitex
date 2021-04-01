@@ -144,11 +144,6 @@ MESSAGE_TAGS = {
     messages.constants.ERROR: "danger",
 }
 
-# EMAIL
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-vars().update(env.email("EMAIL_URL", default="consolemail://"))
-
 # DJANGO-CRISPY-FORMS CONFIGS
 # ------------------------------------------------------------------------------
 # https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs

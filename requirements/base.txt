@@ -12,3 +12,4 @@ django-allauth==0.44.0 # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.11.1 # https://github.com/django-crispy-forms/django-crispy-forms
 django-environ==0.4.5 # https://github.com/joke2k/django-environ
 crispy-bootstrap5==0.3.1 # https://github.com/django-crispy-forms/crispy-bootstrap5
+django-redis==4.12.1 # https://github.com/jazzband/django-redis

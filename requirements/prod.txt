@@ -3,3 +3,4 @@
 gunicorn==20.0.4 # https://gunicorn.org/
 django-storages==1.11.1 # https://github.com/jschneier/django-storages
 boto3==1.17.42 # https://github.com/boto/boto3
+django-anymail[mailgun]==8.2 # https://github.com/anymail/django-anymail

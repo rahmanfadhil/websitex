@@ -11,7 +11,7 @@ test:
 	docker-compose run --rm -e DJANGO_SETTINGS_MODULE=config.settings.test web pytest --pdbcls=IPython.terminal.debugger:TerminalPdb
 
 test-coverage:
-	docker-compose run --rm web pytest --cov=apps/ --cov-report=html
+	docker-compose run --rm -e DJANGO_SETTINGS_MODULE=config.settings.test web pytest --cov=apps/ --cov-report=html
 
 shell:
 	docker-compose run --rm web python manage.py shell -i ipython

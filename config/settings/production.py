@@ -1,11 +1,18 @@
 from .base import *
-from .base import env
 
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
+
+# DJANGO-ANYMAIL CONFIG
+# ------------------------------------------------------------------------------
+# https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
+INSTALLED_APPS += ["anymail"]
+# https://anymail.readthedocs.io/en/stable/esps/sendgrid/#settings
+EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+ANYMAIL = {"SENDGRID_API_KEY": env.str("SENDGRID_API_KEY")}
 
 # PRODUCTION
 # ------------------------------------------------------------------------------

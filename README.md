@@ -1,30 +1,31 @@
-# DjangoX
+# WebsiteX
 
 A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvincent/djangox).
 
 ## Features
 
-- Django 3.1
-- Bootstrap 5
-- PostgreSQL
-- SSL (in production).
+-   Django 3.1
+-   Bootstrap 5
+-   PostgreSQL
+-   SSL (in production).
 
 **Other Dependencies**
 
-- [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms) to easily build forms.
-- [django-debug-toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) to debug the app.
-- [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) to work with authentication.
-- [django-environ](https://django-environ.readthedocs.io/en/latest/) to collect Django settings from environment variables.
-- [whitenoise](http://whitenoise.evans.io/en/stable/index.html) to serve static files in production.
-- [gunicorn](https://gunicorn.org/) to run server in production environment.
-- [psycopg2](https://www.psycopg.org/docs/) to work with PostgreSQL.
+-   [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms) to easily build forms.
+-   [django-debug-toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) to debug the app.
+-   [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) to work with authentication.
+-   [django-environ](https://django-environ.readthedocs.io/en/latest/) to collect Django settings from environment variables.
+-   [django-anymail](https://django-environ.readthedocs.io/en/latest/) to for sending emails in production.
+-   [whitenoise](http://whitenoise.evans.io/en/stable/index.html) to serve static files in production.
+-   [gunicorn](https://gunicorn.org/) to run server in production environment.
+-   [psycopg2](https://www.psycopg.org/docs/) to work with PostgreSQL.
 
 ## Installation
 
-Create a new virtual environment.
+Everything is bundled up in a single Docker Compose configuration. So, once you have [Docker](https://www.docker.com/) installed on your machine, all you need to do is run the command below.
 
 ```
-$ python -m venv venv
+$ docker-compose up -d --build
 ```
 
 Activate the virtual environment, and install the Python dependencies.
