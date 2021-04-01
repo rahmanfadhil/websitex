@@ -39,7 +39,7 @@ services:
     environment:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
-      - CELERY_BROKER_URL=redis://redis:6379
+      - REDIS_URL=redis://redis:6379
   redis:
     image: redis:alpine
     ports:
@@ -65,6 +65,6 @@ services:
     environment:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
-      - CELERY_BROKER_URL=redis://redis:6379
+      - REDIS_URL=redis://redis:6379
     env_file:
       - .env

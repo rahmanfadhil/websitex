@@ -89,12 +89,12 @@ TEMPLATES = [
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db(default="sqlite:///db.sqlite3")}
+DATABASES = {"default": env.db()}
 
 # CACHES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {"default": env.cache(default="filecache:///cache/")}
+CACHES = {"default": env.cache("REDIS_URL")}
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # CELERY
 # ------------------------------------------------------------------------------
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", default="")
+CELERY_BROKER_URL = env.str("REDIS_URL", default="")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
