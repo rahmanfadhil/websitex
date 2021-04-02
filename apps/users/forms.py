@@ -1,3 +1,5 @@
+from apps.core.forms import CrispyFormMixin
+from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
 from .models import User
@@ -10,6 +12,12 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ("email", "username")
+
+
+class UserUpdateForm(forms.ModelForm, CrispyFormMixin):
     class Meta:
         model = User
         fields = ("email", "username")
