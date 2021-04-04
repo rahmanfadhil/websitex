@@ -12,7 +12,7 @@ for (const el of document.querySelectorAll(".toast")) {
 
 flatpickr("input.datetimepickerinput");
 
-new Cleave(".priceinput", {
+new Cleave(".moneyinput", {
   numeral: true,
   numeralThousandsGroupStyle: "thousand",
 });
