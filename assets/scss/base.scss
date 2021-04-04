@@ -1,0 +1,38 @@
+@import "~flatpickr/dist/flatpickr.min.css";
+@import "~trix/dist/trix.css";
+
+/* FEATHER */
+
+.svg-icon {
+  display: inline-flex;
+  align-self: center;
+}
+
+.svg-icon svg.feather {
+  width: 1em;
+  height: 1em;
+  top: 0.125em;
+  position: relative;
+}
+
+/* FLATPICKR */
+
+.form-control.datetimeinput[readonly] {
+  background-color: $input-bg;
+  opacity: initial;
+}
+
+/* TRIX EDITOR */
+
+trix-toolbar {
+  margin-top: map-get($map: $spacers, $key: 4);
+}
+
+trix-editor {
+  min-height: 230px;
+  margin-bottom: map-get($map: $spacers, $key: 4);
+}
+
+.trix-button-group.trix-button-group--file-tools {
+  display: none; /* disable file attachments */
+}
