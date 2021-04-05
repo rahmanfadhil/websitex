@@ -12,8 +12,7 @@ class AuthorableCreateViewMeta(type):
     """
 
     def __new__(cls, name, bases, body):
-        is_authorable_subclass = issubclass(body.get("model"), Authorable)
-        if name != "AuthorableCreateView" and not is_authorable_subclass:
+        if name != "AuthorableCreateView" and not issubclass(body["model"], Authorable):
             raise ImproperlyConfigured(
                 "Model must be a subclass of Authorable in order to be used in the AuthorableCreateView"
             )
