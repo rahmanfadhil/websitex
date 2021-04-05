@@ -70,11 +70,27 @@ class Publishable(models.Model):
         self.save()
 
     @property
-    def is_published(self):
+    def is_published(self) -> bool:
         """
-        Determine if the record is published or not.
+        Determine if the record has been published.
         """
-        return self.publish_date < timezone.now()
+        return (
+            self.published_at < timezone.now()
+            if self.published_at is not None
+            else False
+        )
+
+    @property
+    def is_draft(self) -> bool:
+        """
+        Determine if the record is still a draft.
+        """
+
+        return (
+            self.published_at > timezone.now()
+            if self.published_at is not None
+            else True
+        )
 
     class Meta:
         abstract = True
