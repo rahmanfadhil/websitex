@@ -20,7 +20,7 @@ class AuthorableCreateViewMeta(type):
 
 
 class AuthorableCreateView(
-    CreateView, LoginRequiredMixin, metaclass=AuthorableCreateViewMeta
+    LoginRequiredMixin, CreateView, metaclass=AuthorableCreateViewMeta
 ):
     """
     Set the currently logged-in user as the author of the model.
