@@ -30,7 +30,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: celery -A config worker -l info
+    command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO
     volumes:
       - .:/code
     depends_on:
@@ -57,7 +57,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
