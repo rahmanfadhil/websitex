@@ -40,6 +40,7 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
 ]
 LOCAL_APPS = [
+    "apps.core.apps.CoreConfig",
     "apps.users.apps.UsersConfig",
     "apps.pages.apps.PagesConfig",
 ]
