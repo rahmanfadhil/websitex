@@ -1,7 +1,6 @@
-from django.db import models
-from django.db.models.query_utils import Q
-from django.utils import timezone
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.db import models
+from django.utils import timezone
 
 from apps.core.utils import unique_slugify
 
@@ -35,16 +34,6 @@ class Timestampable(models.Model):
 
     class Meta:
         abstract = True
-
-
-class PublishableQuerySet(models.QuerySet):
-    def published(self):
-        return self.filter(published_at__lte=timezone.now())
-
-    def draft(self):
-        return self.filter(
-            Q(published_at__isnull=True) | Q(published_at__gt=timezone.now())
-        )
 
 
 class Publishable(models.Model):
