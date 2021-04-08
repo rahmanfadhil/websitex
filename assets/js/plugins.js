@@ -19,7 +19,12 @@ feather.replace({ width: "1em", height: "1em", "stroke-width": 2 });
 // Flatpickr
 // -----------------------------------------------------------------------------
 
-flatpickr("input.datetimepickerinput");
+flatpickr("input.datetimepickerinput", {
+  enableTime: true,
+  altInput: true,
+  altFormat: "F j, Y H:i",
+  dateFormat: "Y-m-d H:i",
+});
 
 // Cleave.js
 // -----------------------------------------------------------------------------
