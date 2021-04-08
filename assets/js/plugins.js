@@ -30,7 +30,12 @@ flatpickr("input.datetimepickerinput", {
 // -----------------------------------------------------------------------------
 
 for (const element of document.querySelectorAll(".moneyinput")) {
-  const mask = IMask(element, { mask: Number, thousandsSeparator: "," });
+  const mask = IMask(element, {
+    mask: Number,
+    thousandsSeparator: ",",
+    scale: 2,
+    radix: ".",
+  });
   element.form.addEventListener("submit", function (event) {
     element.value = mask.unmaskedValue;
   });
