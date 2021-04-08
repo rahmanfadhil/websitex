@@ -1,7 +1,7 @@
 import { Toast } from "bootstrap";
 import feather from "feather-icons";
 import flatpickr from "flatpickr";
-import Cleave from "cleave.js";
+import IMask from "imask";
 import "trix";
 
 // Bootstrap
@@ -26,13 +26,13 @@ flatpickr("input.datetimepickerinput", {
   dateFormat: "Y-m-d H:i",
 });
 
-// Cleave.js
+// IMask
 // -----------------------------------------------------------------------------
 
 for (const element of document.querySelectorAll(".moneyinput")) {
-  new Cleave(element, {
-    numeral: true,
-    numeralThousandsGroupStyle: "thousand",
+  const mask = IMask(element, { mask: Number, thousandsSeparator: "," });
+  element.form.addEventListener("submit", function (event) {
+    element.value = mask.unmaskedValue;
   });
 }
 
