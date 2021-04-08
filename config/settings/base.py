@@ -184,6 +184,11 @@ CELERY_BROKER_URL = env.str("REDIS_URL")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
+# EMAIL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/3.1/ref/settings/#default-from-email
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
+
 # CORE UTILITIES
 # ------------------------------------------------------------------------------
 PROJECT_NAME = "WebsiteX"  # help generate the full page title.

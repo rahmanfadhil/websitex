@@ -1,3 +1,4 @@
+from typing import Iterable, List, Optional
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
 from django.utils import timezone
@@ -83,6 +84,27 @@ class Publishable(models.Model):
 
     class Meta:
         abstract = True
+
+
+class PermalinkableManager(models.Manager):
+    """
+    Enable automatic slug field generation using bulk_create method.
+    """
+
+    def bulk_create(
+        self,
+        objs: Iterable,
+        batch_size: Optional[int],
+        ignore_conflicts: bool,
+    ) -> List:
+        for obj in objs:
+            if not self.slug:
+                obj.slug = unique_slugify(self.__class__, self.get_slug_source())
+        return super().bulk_create(
+            objs,
+            batch_size=batch_size,
+            ignore_conflicts=ignore_conflicts,
+        )
 
 
 class Permalinkable(models.Model):

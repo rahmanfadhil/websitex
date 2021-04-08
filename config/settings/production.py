@@ -13,10 +13,8 @@ INSTALLED_APPS += ["anymail"]
 # https://anymail.readthedocs.io/en/stable/esps/sendgrid/#settings
 EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
 ANYMAIL = {"SENDGRID_API_KEY": env.str("SENDGRID_API_KEY")}
-# https://docs.djangoproject.com/en/3.1/ref/settings/#default-from-email
-DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 
-# PRODUCTION
+# SECURITY
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
