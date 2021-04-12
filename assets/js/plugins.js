@@ -2,7 +2,9 @@ import { Toast } from "bootstrap";
 import feather from "feather-icons";
 import flatpickr from "flatpickr";
 import IMask from "imask";
+import Swal from "sweetalert2";
 import "trix";
+import { getCookie } from "./utils";
 
 // Bootstrap
 // -----------------------------------------------------------------------------
