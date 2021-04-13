@@ -4,20 +4,24 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { SourceMapDevToolPlugin } = require("webpack");
 
 module.exports = {
-  entry: "./assets/js/main.js",
+  entry: ["./assets/js/main.js", "./assets/scss/main.scss"],
   output: {
-    filename: "main.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "static/dist"),
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
     new SourceMapDevToolPlugin({ filename: "[file].map" }),
   ],
   module: {
     rules: [
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: "css-loader", options: { url: false } },
+          "sass-loader",
+        ],
       },
     ],
   },

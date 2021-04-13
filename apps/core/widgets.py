@@ -28,3 +28,11 @@ class DateTimePickerInput(forms.DateTimeInput):
     """
 
     pass
+
+
+class TagsInput(forms.TextInput):
+    """
+    Use multiple tags input (@yaireo/tagify).
+    """
+
+    pass

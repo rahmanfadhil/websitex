@@ -1,3 +1,4 @@
+import Tagify from "@yaireo/tagify";
 import { Toast } from "bootstrap";
 import feather from "feather-icons";
 import flatpickr from "flatpickr";
@@ -31,7 +32,7 @@ flatpickr("input.datetimepickerinput", {
 // IMask
 // -----------------------------------------------------------------------------
 
-for (const element of document.querySelectorAll(".moneyinput")) {
+for (const element of document.querySelectorAll("input.moneyinput")) {
   const mask = IMask(element, {
     mask: Number,
     thousandsSeparator: ",",
@@ -91,5 +92,15 @@ for (const el of document.querySelectorAll("[data-confirm-submit]")) {
       document.body.appendChild(formElement);
       formElement.submit();
     }
+  });
+}
+
+// Tagify
+// -----------------------------------------------------------------------------
+
+for (const element of document.querySelectorAll("input.tagsinput")) {
+  new Tagify(element, {
+    originalInputValueFormat: (values) =>
+      values.map((item) => item.value).join(","),
   });
 }

@@ -1,3 +1,4 @@
+from apps.core.widgets import TagsInput
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
