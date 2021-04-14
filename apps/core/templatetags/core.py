@@ -9,7 +9,7 @@ def full_url(context, url):
     Build a full url with domain and scheme (http or https).
     """
     return (
-        context.request.build_absolute_uri(url) if hasattr(context, "context") else url
+        context.request.build_absolute_uri(url) if hasattr(context, "request") else url
     )
 
 
@@ -20,7 +20,7 @@ def active_link(context, url_name):
     """
     return (
         "active"
-        if hasattr(context, "context")
+        if hasattr(context, "request")
         and context.request.resolver_match.url_name == url_name
         else ""
     )
