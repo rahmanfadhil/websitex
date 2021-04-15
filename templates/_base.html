@@ -1,4 +1,5 @@
 {% load static %}
+{% load core %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,10 +12,10 @@
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
   <!-- Meta -->
-  <title>{% block title %}{{ page_title|default:PROJECT_NAME }}{% endblock title %}</title>
-  <meta name="description" content="{{ meta_description|default:'A framework for launching new Django projects quickly.' }}">
-  <meta name="author" content="{{ meta_author }}">
-  <meta name="keywords" content="{{ meta_keywords }}">
+  <title>{% block title %}{{ page_title|default:PAGE_TITLE }}{% endblock title %}</title>
+  <meta name="description" content="{{ meta_description|default:DEFAULT_META_DESCRIPTION }}">
+  <meta name="author" content="{{ meta_author|default:DEFAULT_META_AUTHOR }}">
+  <meta name="keywords" content="{{ meta_keywords|default:DEFAULT_META_KEYWORDS }}">
 
   <!-- Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,7 +27,7 @@
   <!-- Top navigation -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-md py-3">
-      <a class="navbar-brand" href="{% url 'pages:home' %}">{{ PROJECT_NAME }}</a>
+      <a class="navbar-brand" href="{% url 'pages:home' %}">{{ PAGE_TITLE }}</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,10 +35,10 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           {% with request.resolver_match.url_name as url_name %}
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'pages:home' %}">Home</a>
+              <a class="nav-link {% active_link 'home' %}" href="{% url 'pages:home' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'about' %}active{% endif %}" href="{% url 'pages:about' %}">About</a>
+              <a class="nav-link {% active_link 'about' %}" href="{% url 'pages:about' %}">About</a>
             </li>
           {% endwith %}
         </ul>

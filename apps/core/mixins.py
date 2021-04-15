@@ -16,7 +16,7 @@ class PageTitleMixin:
         return self.page_title
 
     def get_full_page_title(self) -> str:
-        return "{} - {}".format(self.get_page_title(), settings.PROJECT_NAME)
+        return "{} - {}".format(self.get_page_title(), settings.PAGE_TITLE)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,13 +26,13 @@ class PageTitleMixin:
 
 class MetaTagsMixin:
     def get_meta_description(self) -> str:
-        raise NotImplemented
+        return settings.DEFAULT_META_DESCRIPTION
 
     def get_meta_keywords(self) -> Iterable[str]:
-        raise NotImplemented
+        return settings.DEFAULT_META_KEYWORDS
 
     def get_meta_author(self) -> str:
-        raise NotImplemented
+        return settings.DEFAULT_META_AUTHOR
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -81,7 +81,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.core.context_processors.project_name",
+                "apps.core.context_processors.default_meta_tags",
             ],
         },
     },
@@ -191,4 +191,7 @@ DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", default="webmaster@localhost"
 
 # CORE UTILITIES
 # ------------------------------------------------------------------------------
-PROJECT_NAME = "WebsiteX"  # help generate the full page title.
+PAGE_TITLE = "Lifespan Advocacy"
+DEFAULT_META_DESCRIPTION = "Your home for longevity advocacy initiatives."
+DEFAULT_META_AUTHOR = "Lifespan Advocacy"
+DEFAULT_META_KEYWORDS = ["lifespan", "longevity", "advocacy"]
