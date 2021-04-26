@@ -1,8 +1,11 @@
-import os
 from io import BytesIO
-from typing import Optional, Tuple
+from typing import Tuple
 
+from django.conf import settings
 from django.core.files import File
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.utils.text import slugify
 from PIL import Image
 
@@ -22,29 +25,16 @@ def unique_slugify(klass: type, title: str, instance=None):
     unique_slug = origin_slug
     numb = 1
 
-    queryset = klass.objects.filter(slug=unique_slug)
-
     if instance is not None:
-        queryset = queryset.exclude(pk=instance.pk)
-
-    while queryset.exists():
-        unique_slug = "%s-%d" % (origin_slug, numb)
-        numb += 1
+        while klass.objects.filter(slug=unique_slug).exclude(pk=instance.pk).exists():
+            unique_slug = "%s-%d" % (origin_slug, numb)
+            numb += 1
+    else:
+        while klass.objects.filter(slug=unique_slug).exists():
+            unique_slug = "%s-%d" % (origin_slug, numb)
+            numb += 1
 
     return unique_slug
-
-
-def duplicate_image(image) -> Optional[File]:
-    """
-    Returns a duplicate image from other model field or None if the image is
-    not provided or something went wrong.
-    """
-    try:
-        im_io = BytesIO()
-        Image.open(image).save(im_io, "JPEG", quality=70)
-        return File(im_io, name=os.path.basename(image))
-    except:
-        return None
 
 
 def compress_image(image, size: Tuple[int, int] = (350, 350)) -> File:
@@ -55,8 +45,24 @@ def compress_image(image, size: Tuple[int, int] = (350, 350)) -> File:
     still preserving the aspect ratio.
     https://stackoverflow.com/a/33989023/11752450
     """
-    im = Image.open(image)
+    im = Image.open(image).convert("RGB")
     im.thumbnail(size)
     im_io = BytesIO()
     im.save(im_io, "JPEG", quality=70)
     return File(im_io, name=image.name)
+
+
+def send_html_email(subject: str, email: str, template_name: str, context: dict) -> int:
+    """
+    Send email from HTML template.
+    """
+    html_message = render_to_string(template_name, context)
+    message = strip_tags(html_message)
+    return send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [email],
+        html_message=html_message,
+        fail_silently=True,
+    )

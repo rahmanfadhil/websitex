@@ -90,7 +90,7 @@ TEMPLATES = [
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {"default": env.db()}
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", default="webmaster@localhost"
 
 # CORE UTILITIES
 # ------------------------------------------------------------------------------
-PAGE_TITLE = "Lifespan Advocacy"
-DEFAULT_META_DESCRIPTION = "Your home for longevity advocacy initiatives."
-DEFAULT_META_AUTHOR = "Lifespan Advocacy"
-DEFAULT_META_KEYWORDS = ["lifespan", "longevity", "advocacy"]
+PAGE_TITLE = "WebsiteX"
+DEFAULT_META_DESCRIPTION = "A framework for launching new Django projects quickly."
+DEFAULT_META_AUTHOR = "WebsiteX"
+DEFAULT_META_KEYWORDS = ["django", "python", "awesome"]

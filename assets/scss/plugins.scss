@@ -34,7 +34,3 @@ trix-editor {
   min-height: 230px;
   margin-bottom: map-get($map: $spacers, $key: 4);
 }
-
-.trix-button-group.trix-button-group--file-tools {
-  display: none; /* disable file attachments */
-}

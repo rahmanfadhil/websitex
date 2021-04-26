@@ -1,8 +1,12 @@
+from http import HTTPStatus
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ImproperlyConfigured
+from django.http.response import HttpResponse, JsonResponse
 from django.views.generic.edit import CreateView
 
-from apps.core.models import Authorable
+from apps.core.models import Authorable, Media
+from apps.core.utils import compress_image
 
 
 class AuthorableCreateViewMeta(type):
@@ -27,5 +31,32 @@ class AuthorableCreateView(
     """
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class MediaCreateView(CreateView):
+    model = Media
+    fields = ("file",)
+
+    def form_invalid(self, form) -> HttpResponse:
+        # Returns the form errors in a JSON format.
+        return JsonResponse(
+            {"errors": form.errors},
+            status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
+        )
+
+    def form_valid(self, form) -> HttpResponse:
+        # Compress the image before saving.
+        form.instance.file = compress_image(form.instance.file, (960, 960))
+
+        # If the user is logged in, save the user information who uploads the file.
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user
+
+        # Save the image to the database.
+        media = form.save()
+
+        # Return the absolute url of the file.
+        return JsonResponse({"url": self.request.build_absolute_uri(media.file.url)})

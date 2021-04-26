@@ -1,5 +1,4 @@
 from typing import Iterable, List, Optional
-from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.db import models
 from django.utils import timezone
 
@@ -25,14 +24,6 @@ class Timestampable(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    @property
-    def created_since(self) -> str:
-        return naturaltime(self.created_at)
-
-    @property
-    def updated_since(self) -> str:
-        return naturaltime(self.created_at)
-
     class Meta:
         abstract = True
 
@@ -44,13 +35,9 @@ class Publishable(models.Model):
 
     published_at = models.DateTimeField(null=True, blank=True)
 
-    @property
-    def published_since(self) -> str:
-        return naturaltime(self.published_at)
-
     def publish_on(self, datetime=None):
         """
-        Publish record at a certain time.
+        Publish record at a certain time (now if the datetime is not defined).
         """
         if not datetime:
             datetime = timezone.now()
@@ -75,12 +62,7 @@ class Publishable(models.Model):
         """
         Determine if the record is still a draft.
         """
-
-        return (
-            self.published_at > timezone.now()
-            if self.published_at is not None
-            else True
-        )
+        return not self.is_published
 
     class Meta:
         abstract = True
@@ -124,3 +106,12 @@ class Permalinkable(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Media(Authorable, Timestampable):
+    """
+    Store user-uploaded images from /upload-image/ API endpoint, used by the
+    rich text editor.
+    """
+
+    file = models.ImageField(upload_to="uploads/")
