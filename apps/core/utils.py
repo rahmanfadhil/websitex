@@ -1,9 +1,11 @@
 from io import BytesIO
+from os import path
 from typing import Tuple
 
 from django.conf import settings
 from django.core.files import File
 from django.core.mail import send_mail
+from django.db.models.fields.files import ImageFieldFile
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.text import slugify
@@ -37,7 +39,7 @@ def unique_slugify(klass: type, title: str, instance=None):
     return unique_slug
 
 
-def compress_image(image, size: Tuple[int, int] = (350, 350)) -> File:
+def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (350, 350)) -> File:
     """
     Compress image using Pillow.
 
@@ -45,11 +47,12 @@ def compress_image(image, size: Tuple[int, int] = (350, 350)) -> File:
     still preserving the aspect ratio.
     https://stackoverflow.com/a/33989023/11752450
     """
-    im = Image.open(image).convert("RGB")
-    im.thumbnail(size)
+    im = Image.open(image)
+    im.thumbnail(size, Image.ANTIALIAS)
     im_io = BytesIO()
-    im.save(im_io, "JPEG", quality=70)
-    return File(im_io, name=image.name)
+    im.save(im_io, "WEBP")
+    filename = path.splitext(image.name)[0] + ".webp"
+    return File(im_io, name=filename)
 
 
 def send_html_email(subject: str, email: str, template_name: str, context: dict) -> int:

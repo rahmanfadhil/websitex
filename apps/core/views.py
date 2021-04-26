@@ -8,6 +8,9 @@ from django.views.generic.edit import CreateView
 from apps.core.models import Authorable, Media
 from apps.core.utils import compress_image
 
+# ABSTRACT VIEWS
+# ------------------------------------------------------------------------------
+
 
 class AuthorableCreateViewMeta(type):
     """
@@ -31,12 +34,19 @@ class AuthorableCreateView(
     """
 
     def form_valid(self, form):
-        if self.request.user.is_authenticated:
-            form.instance.author = self.request.user
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 
+# URL VIEWS
+# ------------------------------------------------------------------------------
+
+
 class MediaCreateView(CreateView):
+    """
+    Handle media uploads from Trix editor.
+    """
+
     model = Media
     fields = ("file",)
 
@@ -49,7 +59,7 @@ class MediaCreateView(CreateView):
 
     def form_valid(self, form) -> HttpResponse:
         # Compress the image before saving.
-        form.instance.file = compress_image(form.instance.file, (960, 960))
+        form.instance.file = compress_image(form.instance.file, (1400, 1400))
 
         # If the user is logged in, save the user information who uploads the file.
         if self.request.user.is_authenticated:
