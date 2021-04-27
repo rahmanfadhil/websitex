@@ -1,0 +1,89 @@
+<form data-table method="post">
+  {% csrf_token %}
+
+  {% if datatable.action_choices %}
+    <div class="row justify-content-between mb-4 gy-2">
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-text" id="id_datatable_action_label">Action:</span>
+          <select class="form-select" name="datatable_action" aria-describedby="id_datatable_action_label">
+            <option selected>---------</option>
+            {% for action, name in datatable.action_choices %}<option value="{{ action }}">{{ name }}</option>{% endfor %}
+          </select>
+          <button class="btn btn-primary" type="submit">Go</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label class="input-group-text" for="id_per_page">Per page:</label>
+          <select name="per_page" class="form-select" id="id_per_page">
+            {% for per_page in datatable.per_page_choices %}
+              <option value="{{ per_page }}" {% if datatable.per_page == per_page %}selected{% endif %}>{{ per_page }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th scope="col">
+          <input class="form-check-input" type="checkbox" value="{{ object.pk }}" data-table-select-all>
+        </th>
+        {% for column in datatable.columns %}
+          <th scope="col">{{ column|capfirst }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for pk, values in datatable.rows %}
+        <tr>
+          <th scope="row">
+            <input class="form-check-input" type="checkbox" value="{{ pk }}" name="pk" data-table-select-item>
+          </th>
+          {% for value in values %}
+            <td>{{ value }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <nav aria-label="Pagination">
+    <ul class="pagination justify-content-center mt-4">
+      {% if datatable.page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ datatable.page_obj.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&lsaquo;</span>
+          </a>
+        </li>
+      {% endif %}
+      {% for num in datatable.page_obj.paginator.page_range %}
+        {% if datatable.page_obj.number == num %}
+          <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% elif num > datatable.page_obj.number|add:'-5' and num < datatable.page_obj.number|add:'5' %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if datatable.page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ datatable.page_obj.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&rsaquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ datatable.page_obj.paginator.num_pages }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</form>

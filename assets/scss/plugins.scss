@@ -3,6 +3,13 @@
 @import "~trix/dist/trix.css";
 @import "~@yaireo/tagify/src/tagify.scss";
 
+/* DJANGO CRISPY FORMS */
+
+.asteriskField {
+  color: $danger;
+  margin-left: map-get($map: $spacers, $key: 1);
+}
+
 /* FEATHER */
 
 .svg-icon {
@@ -19,7 +26,8 @@
 
 /* FLATPICKR */
 
-.form-control.datetimepickerinput[readonly] {
+.form-control.datetimeinput[readonly],
+.form-control.dateinput[readonly] {
   background-color: $input-bg;
   opacity: initial;
 }

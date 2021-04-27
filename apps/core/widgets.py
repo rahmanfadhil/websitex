@@ -22,14 +22,6 @@ class MoneyInput(forms.TextInput):
     pass
 
 
-class DateTimePickerInput(forms.DateTimeInput):
-    """
-    Use Flatpickr to select date & time.
-    """
-
-    pass
-
-
 class TagsInput(forms.TextInput):
     """
     Use multiple tags input (@yaireo/tagify).

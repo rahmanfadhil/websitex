@@ -1,4 +1,5 @@
 from typing import Iterable, List, Optional
+
 from django.db import models
 from django.utils import timezone
 
