@@ -28,11 +28,7 @@ class DataTable:
     template_name = "core/datatable.html"
     per_page_choices = (10, 20, 50, 100, 200, 500)
 
-    def __init__(
-        self,
-        request: HttpRequest,
-        queryset: QuerySet,
-    ) -> None:
+    def __init__(self, request: HttpRequest, queryset: QuerySet) -> None:
         self.request = request
         self.queryset = queryset
 
@@ -52,11 +48,31 @@ class DataTable:
         """Get the column names for the table."""
         for field in self.fields:
             try:
+                # 1. First, check if the field is available in the model.
                 yield self.model._meta.get_field(field).verbose_name
             except FieldDoesNotExist as e:
-                if not hasattr(self.model, field):
-                    raise e
-                yield capfirst(field.replace("_", " ").strip())
+                # 2. Then, check if the inherited DataTable class has a method
+                # registered in the `fields` property.
+                if hasattr(self, field) and callable(getattr(self, field)):
+                    if hasattr(getattr(self, field), "column_name"):
+                        yield getattr(self, field).column_name
+                    else:
+                        yield capfirst(field.replace("_", " ").strip())
+                # 3. Finally, check if the model has a computed property
+                # registered in the `fields` property.
+                elif hasattr(self.model, field) and not callable(
+                    getattr(self.model, field)
+                ):
+                    yield capfirst(field.replace("_", " ").strip())
+                # 4. If nothing found, raise an exception.
+                else:
+                    raise InvalidColumnException(
+                        "Field '{}' is not available in both the '{}' model and '{}' class.".format(
+                            field,
+                            self.model._meta.label,
+                            self.__class__.__name__,
+                        )
+                    )
 
     @property
     def rows(self):
@@ -68,22 +84,18 @@ class DataTable:
         """
         Returns an iterable of each column values for a model instance.
 
-        First, it will check if the inherited DataTable class has a property or
-        method with it's name is registered in the `fields` property. Then, it
-        will check if the model has a property of that name. If neither found,
-        it will raise an InvalidColumnException.
+        First, it will check if the inherited DataTable class has a method with
+        it's name is registered in the `fields` property. Then, it will check if
+        the model has a property of that name. If neither found, it will raise
+        an InvalidColumnException.
         """
         for field in self.fields:
             if hasattr(self, field):
-                value = getattr(self, field)
-                if callable(value):
-                    value = value(instance)
-                yield value
+                yield getattr(self, field)(instance)
             elif hasattr(instance, field):
                 yield getattr(instance, field)
             else:
                 raise InvalidColumnException
-
     @property
     def action_choices(self):
         """Get the available action."""
