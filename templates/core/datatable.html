@@ -30,7 +30,7 @@
     <thead>
       <tr>
         <th scope="col">
-          <input class="form-check-input" type="checkbox" value="{{ object.pk }}" data-table-select-all>
+          <input class="form-check-input" type="checkbox" data-table-select-all>
         </th>
         {% for column in datatable.columns %}
           <th scope="col">{{ column|capfirst }}</th>
