@@ -48,11 +48,12 @@ def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (512, 512)) ->
     https://stackoverflow.com/a/33989023/11752450
     """
     im = Image.open(image)
-    format = im.format
-    im = im.quantize()
+    im_format = im.format
     im.thumbnail(size)
+    if im.mode in ("P", "RGBA"):
+        im = im.quantize()
     im_io = BytesIO()
-    im.save(im_io, format)
+    im.save(im_io, im_format)
     return File(im_io, name=image.name)
 
 

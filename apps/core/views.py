@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView
 from apps.core.models import Authorable, Media
 from apps.core.utils import compress_image
 
+
 # ABSTRACT VIEWS
 # ------------------------------------------------------------------------------
 
