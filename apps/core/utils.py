@@ -39,7 +39,7 @@ def unique_slugify(klass: type, title: str, instance=None):
     return unique_slug
 
 
-def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (350, 350)) -> File:
+def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (512, 512)) -> File:
     """
     Compress image using Pillow.
 
@@ -48,11 +48,12 @@ def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (350, 350)) ->
     https://stackoverflow.com/a/33989023/11752450
     """
     im = Image.open(image)
-    im.thumbnail(size, Image.ANTIALIAS)
+    format = im.format
+    im = im.quantize()
+    im.thumbnail(size)
     im_io = BytesIO()
-    im.save(im_io, "WEBP")
-    filename = path.splitext(image.name)[0] + ".webp"
-    return File(im_io, name=filename)
+    im.save(im_io, format)
+    return File(im_io, name=image.name)
 
 
 def send_html_email(subject: str, email: str, template_name: str, context: dict) -> int:

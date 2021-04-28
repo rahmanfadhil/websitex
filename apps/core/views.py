@@ -59,7 +59,7 @@ class MediaCreateView(CreateView):
 
     def form_valid(self, form) -> HttpResponse:
         # Compress the image before saving.
-        form.instance.file = compress_image(form.instance.file, (1400, 1400))
+        form.instance.file = compress_image(form.instance.file, (2048, 2048))
 
         # If the user is logged in, save the user information who uploads the file.
         if self.request.user.is_authenticated:
