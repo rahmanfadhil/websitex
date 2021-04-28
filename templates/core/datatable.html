@@ -18,7 +18,7 @@
           <label class="input-group-text" for="id_per_page">Per page:</label>
           <select name="per_page" class="form-select" id="id_per_page">
             {% for per_page in datatable.per_page_choices %}
-              <option value="{{ per_page }}" {% if datatable.per_page == per_page %}selected{% endif %}>{{ per_page }}</option>
+              <option value="{{ per_page }}" {% if datatable.page_obj.paginator.per_page == per_page %}selected{% endif %}>{{ per_page }}</option>
             {% endfor %}
           </select>
         </div>
