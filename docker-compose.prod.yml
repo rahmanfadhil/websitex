@@ -28,8 +28,6 @@ services:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379
-    env_file:
-      - .env.prod
   web:
     image: rahmanfadhil/websitex-web:latest
     build:
@@ -42,7 +40,5 @@ services:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379
-    env_file:
-      - .env.prod
     volumes:
       - static_volume:/code/staticfiles
