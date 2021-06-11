@@ -1,2 +1,6 @@
 @import "./variables.scss";
 @import "./plugins.scss";
+
+body {
+  background-color: $gray-100;
+}

@@ -1,0 +1,75 @@
+version: "3.9"
+
+# TODO: use networks to connect for:
+# - nginx -> web
+# - web -> redis
+# - web -> db
+# - celery -> redis
+# - celery -> db
+
+volumes:
+  prod_postgres_data: {}
+  prod_postgres_data_backups: {}
+  static_volume: {}
+  media_volume: {}
+
+services:
+  db:
+    image: postgres:13.2
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - prod_postgres_data:/var/lib/postgresql/data:Z
+      - prod_postgres_data_backups:/backups:z
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  nginx:
+    build:
+      context: ./docker/nginx
+      image: rahmanfadhil/websitex-nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod-celery
+      image: rahmanfadhil/websitex-celery
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env.prod
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod-web
+      image: rahmanfadhil/websitex-web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
+      - REDIS_URL=redis://redis:6379
+    env_file:
+      - .env.prod
+    volumes:
+      - static_volume:/code/staticfiles
+      - media_volume:/code/media

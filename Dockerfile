@@ -1,4 +1,6 @@
-FROM node:14-alpine AS builder
+# WEBPACK
+# ------------------------------------------------------------------------------
+FROM node:14-alpine AS webpack
 
 # Create app directory
 WORKDIR /code
@@ -11,31 +13,58 @@ RUN npm install
 COPY ./assets /code/assets
 COPY ./webpack.config.js .
 
+# Build assets and watch for changes
+CMD [ "npm", "run", "dev" ]
+
 # Build the production JS and CSS
+FROM webpack AS webpack-builder
 RUN npm run build
 
-FROM python:3.9-slim-buster
+# BASE (PYTHON)
+# ------------------------------------------------------------------------------
+
+FROM python:3.9-slim-buster AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV DJANGO_SETTINGS_MODULE config.settings.production
 
 # Install system dependencies
-COPY ./scripts/apt.sh /apt.sh
-RUN /apt.sh
+RUN apt-get update && apt-get install -y \
+    # dependencies for building Python packages
+    build-essential \
+    # psycopg2 dependencies
+    libpq-dev \
+    # watchdog dependencies
+    libyaml-dev \
+    # python-magic dependencies
+    libmagic1 \
+    # Translations dependencies
+    gettext \
+    # Celery SQS dependencies
+    libcurl4-openssl-dev libssl-dev \
+    # cleaning up unused files
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY ./requirements /requirements
-RUN pip install -r /requirements/prod.txt
+RUN pip install --upgrade pip
 
-# Set work directory
+# RELEASES
+# ------------------------------------------------------------------------------
+
+FROM base AS development
+COPY ./requirements /tmp/requirements
+RUN pip install -r /tmp/requirements/dev.txt
+ENV DJANGO_SETTINGS_MODULE config.settings.development
 WORKDIR /code
+COPY . .
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
 
-# Copy project
-COPY . /code/
-
-# Copy bundled JS and CSS
-COPY --from=builder /code/static/dist/ /code/static/dist/
-
-CMD [ "/code/scripts/entrypoint.sh" ]
+FROM base
+COPY --from=webpack-builder /code/static/dist/ /code/static/dist/
+COPY ./requirements /tmp/requirements
+RUN pip install -r /tmp/requirements/prod.txt
+ENV DJANGO_SETTINGS_MODULE config.settings.production
+WORKDIR /code
+COPY . .
+CMD [ "./entrypoint.sh" ]

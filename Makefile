@@ -25,4 +25,8 @@ migrate:
 createsuperuser:
 	docker-compose run --rm web python manage.py createsuperuser
 
+push:
+	docker build -t rahmanfadhil/websitex:$(version) --target production .
+	docker push rahmanfadhil/websitex:$(version)
+
 .PHONY: clean run stop test test-debug shell makemigrations migrate createsuperuser

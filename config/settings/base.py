@@ -38,6 +38,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "crispy_forms",
     "crispy_bootstrap5",
+    "django_celery_results",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -50,6 +51,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
+    "config.middleware.HealthCheckMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -176,13 +178,17 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_FORMS = {
+    "login": "apps.users.forms.CustomLoginForm",
+    "signup": "apps.users.forms.CustomSignupForm",
+}
 
 # CELERY
 # ------------------------------------------------------------------------------
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL = env.str("REDIS_URL")
+CELERY_BROKER_URL = env.str("BROKER_URL")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
-CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_RESULT_BACKEND = "django-db"
 
 # EMAIL
 # ------------------------------------------------------------------------------

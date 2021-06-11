@@ -29,8 +29,9 @@ services:
   celery:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO
+      dockerfile: Dockerfile
+      target: development
+    command: "watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO"
     volumes:
       - .:/code
     depends_on:
@@ -39,6 +40,7 @@ services:
     environment:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
+      - BROKER_URL=redis://redis:6379
       - REDIS_URL=redis://redis:6379
     env_file:
       - .env
@@ -49,14 +51,16 @@ services:
   assets:
     build:
       context: .
-      dockerfile: Dockerfile.assets
+      dockerfile: Dockerfile
+      target: webpack
     volumes:
       - ./assets:/code/assets
       - ./static/dist:/code/static/dist
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      target: development
     volumes:
       - .:/code
     ports:
@@ -67,6 +71,7 @@ services:
     environment:
       - DATABASE_URL=psql://postgres:postgres@db:5432/postgres
       - EMAIL_URL=smtp://mailhog:1025
+      - BROKER_URL=redis://redis:6379
       - REDIS_URL=redis://redis:6379
     env_file:
       - .env

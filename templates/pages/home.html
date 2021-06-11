@@ -1,6 +1,9 @@
 {% extends '_base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
   <h1 class="text-center mb-4">WebsiteX</h1>
   <p class="text-center lead">A Django starter project with batteries.</p>
+  {% crispy form %}
 {% endblock content %}

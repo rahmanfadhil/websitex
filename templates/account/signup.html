@@ -1,13 +1,37 @@
 {% extends '_base.html' %}
+
 {% load crispy_forms_tags %}
+{% load core %}
 
 {% block title %}Sign up - {{ PAGE_TITLE }}{% endblock %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post" class="mt-4">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-success" type="submit">Sign up</button>
-  </form>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      {% crispy form %}
+    </div>
+    {% comment %} <form class="col-md-6 col-lg-4 signup-form" method="post">
+      {% csrf_token %}
+      {% for field in form.errors %}
+        {{ field }}
+      {% endfor %}
+      <h2 class="mb-5 text-center">Sign up</h2>
+      <div class="form-floating mb-2">
+        {% form_field form.email %}
+        <label for="{{ form.email.id_for_label }}">Email address</label>
+      </div>
+      <div class="form-floating mb-2">
+        {% form_field form.password1 %}
+        <label for="{{ form.password1.id_for_label }}">Password</label>
+      </div>
+      <div class="form-floating mb-2">
+        {% form_field form.password2 %}
+        <label for="{{ form.password2.id_for_label }}">Confirm password</label>
+      </div>
+      <button class="btn btn-lg btn-success d-block w-100 mt-4" type="submit">Log in</button>
+      <p class="text-center mb-0 mt-3">
+        <a class="#" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+      </p>
+    </form> {% endcomment %}
+  </div>
 {% endblock content %}

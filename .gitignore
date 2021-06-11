@@ -34,3 +34,6 @@ static/dist
 # Test coverge
 .coverage
 htmlcov/
+
+# Terraform
+.terraform/

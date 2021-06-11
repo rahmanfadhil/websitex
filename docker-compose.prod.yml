@@ -7,7 +7,7 @@ services:
   redis:
     image: redis:alpine
   nginx:
-    image: rahmanfadhil/websitex-nginx:latest
+    image: rahmanfadhil/websitex-nginx:1.2.1
     build:
       context: ./docker/nginx
     volumes:
@@ -17,7 +17,7 @@ services:
     depends_on:
       - web
   celery:
-    image: rahmanfadhil/websitex-celery:latest
+    image: rahmanfadhil/websitex-celery:1.2.1
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
   web:
-    image: rahmanfadhil/websitex-web:latest
+    image: rahmanfadhil/websitex-web:1.2.1
     build:
       context: .
       dockerfile: Dockerfile
