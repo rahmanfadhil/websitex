@@ -1,0 +1,48 @@
+@import "~bootswatch/dist/zephyr/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/zephyr/bootswatch";
+
+body {
+  background-color: $gray-100;
+}
+
+// NAV
+// -----------------------------------------------------------------------------
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  background-color: initial;
+}
+
+// NAVBAR
+// -----------------------------------------------------------------------------
+
+@include media-breakpoint-down(lg) {
+  .navbar {
+    .nav-item {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .navbar-nav .nav-link {
+      padding-right: $nav-link-padding-y;
+      padding-left: $nav-link-padding-y;
+    }
+
+    .navbar-collapse {
+      margin-top: $spacer;
+    }
+  }
+}
+
+// TABLE
+// -----------------------------------------------------------------------------
+
+.table {
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.card .table tbody tr:last-child {
+  border-color: transparent;
+}

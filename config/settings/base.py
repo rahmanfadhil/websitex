@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import environ
-from django.contrib import messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
@@ -84,6 +84,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.default_meta_tags",
+                "apps.core.context_processors.json_messages",
             ],
         },
     },
@@ -136,17 +137,6 @@ STATICFILES_DIRS = [str(BASE_DIR / "static")]
 # http://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# MESSAGES
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/contrib/messages/#message-tags
-MESSAGE_TAGS = {
-    messages.constants.DEBUG: "info",
-    messages.constants.INFO: "info",
-    messages.constants.SUCCESS: "success",
-    messages.constants.WARNING: "warning",
-    messages.constants.ERROR: "danger",
-}
-
 # DJANGO-CRISPY-FORMS CONFIGS
 # ------------------------------------------------------------------------------
 # https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
@@ -178,10 +168,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_FORMS = {
-    "login": "apps.users.forms.CustomLoginForm",
-    "signup": "apps.users.forms.CustomSignupForm",
-}
 
 # CELERY
 # ------------------------------------------------------------------------------

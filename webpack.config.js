@@ -1,31 +1,32 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { SourceMapDevToolPlugin } = require("webpack");
 
 module.exports = {
-  entry: ["./assets/js/main.js", "./assets/scss/main.scss"],
+  entry: "./assets/js/main.js",
   output: {
-    filename: "[name].js",
+    filename: "main.js",
     path: path.resolve(__dirname, "static/dist"),
   },
-  plugins: [
-    new MiniCssExtractPlugin({ filename: "[name].css" }),
-    new SourceMapDevToolPlugin({ filename: "[file].map" }),
-  ],
+  devtool: false,
+  plugins: [new SourceMapDevToolPlugin()],
   module: {
     rules: [
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.s?[ac]ss$/i, // include .css, .scss, .sass
+        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
-          MiniCssExtractPlugin.loader,
-          { loader: "css-loader", options: { url: false } },
-          "sass-loader",
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/",
+            },
+          },
         ],
       },
     ],
-  },
-  optimization: {
-    minimizer: ["...", new CssMinimizerPlugin({ parallel: true })],
   },
 };

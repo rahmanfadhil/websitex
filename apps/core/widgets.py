@@ -16,7 +16,7 @@ class TrixEditorInput(forms.HiddenInput):
 
 class MoneyInput(forms.TextInput):
     """
-    Format money in text input, can be used in DecimalField.
+    Format money in text input, can be used with DecimalField.
     """
 
     pass

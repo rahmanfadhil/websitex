@@ -1,0 +1,79 @@
+{% extends "_base.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% trans "E-mail Addresses" %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center my-5">
+    <div class="col-lg-9">
+      {% include 'users/components/settings_header.html' %}
+      {% with user.emailaddress_set.all as emailaddress_list %}
+        {% if emailaddress_list %}
+          {% csrf_token %}
+          <div class="table-responsive card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Email</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for emailaddress in emailaddress_list %}
+                  <tr>
+                    <th class="align-middle" scope="row">{{ emailaddress.email }}</th>
+                    <td class="align-middle text-nowrap">
+                      {% if emailaddress.verified %}
+                        <span class="badge bg-success">{% trans "Verified" %}</span>
+                      {% else %}
+                        <span class="badge bg-danger">{% trans "Unverified" %}</span>
+                      {% endif %}
+                      {% if emailaddress.primary %}<span class="badge bg-primary">{% trans "Primary" %}</span>{% endif %}
+                    </td>
+                    <td class="align-middle text-nowrap text-end">
+                      <form action="{% url 'account_email' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="email" value="{{ emailaddress.email }}">
+                        {% if emailaddress.verified and not emailaddress.primary %}
+                          <button class="btn btn-sm me-2 btn-primary" type="submit" name="action_primary">{% trans 'Make primary' %}</button>
+                        {% endif %}
+                        {% if not emailaddress.verified %}
+                          <button class="btn btn-sm me-2 btn-outline-primary" type="submit" name="action_send">{% trans 'Re-send verification' %}</button>
+                        {% endif %}
+                        {% if not emailaddress.primary %}
+                          <button class="btn btn-sm me-2 btn-danger" type="submit" name="action_remove">{% trans 'Remove' %}</button>
+                        {% endif %}
+                      </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="alert alert-warning" role="alert">
+            {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% if can_add_email %}
+        <div class="card mt-5">
+          <div class="card-header fw-bold">
+            {% trans "Add email address" %}
+          </div>
+          <div class="card-body p-4">
+            <form method="post" action="{% url 'account_email' %}">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <button type="submit" name="action_add" class="btn btn-primary">Add email</button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

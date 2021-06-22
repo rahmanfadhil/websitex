@@ -1,6 +1,31 @@
 @import "./variables.scss";
-@import "./plugins.scss";
+@import "./bootstrap.scss";
 
-body {
-  background-color: $gray-100;
+// DJANGO CRISPY FORMS
+// -----------------------------------------------------------------------------
+
+.asteriskField {
+  color: $danger;
+  margin-left: map-get($map: $spacers, $key: 1);
+}
+
+// FLATPICKR
+// -----------------------------------------------------------------------------
+
+.form-control.datetimeinput[readonly],
+.form-control.dateinput[readonly] {
+  background-color: $input-bg;
+  opacity: initial;
+}
+
+// TRIX EDITOR
+// -----------------------------------------------------------------------------
+
+trix-toolbar {
+  margin-top: map-get($map: $spacers, $key: 4);
+}
+
+trix-editor {
+  min-height: 230px;
+  margin-bottom: map-get($map: $spacers, $key: 4);
 }

@@ -1,0 +1,14 @@
+{% load core %}
+
+<h2 class="mb-5">My account</h2>
+<ul class="nav nav-tabs mb-5">
+  <li class="nav-item">
+    <a class="nav-link {% active_link 'user_update' %}" href="{% url 'users:user_update' %}">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% active_link 'account_email' %}" href="{% url 'account_email' %}">Emails</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% active_link 'account_change_password' %}" href="{% url 'account_change_password' %}">Security</a>
+  </li>
+</ul>

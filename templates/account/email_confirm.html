@@ -3,18 +3,26 @@
 {% load account %}
 
 {% block content %}
-	<h1>Confirm E-mail Address</h1>
-	{% if confirmation %}
-		{% user_display confirmation.email_address.user as user_display %}
-		{% with confirmation.email_address.email as email %}
-			<p>Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.</p>
-		{% endwith %}
-		<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-			{% csrf_token %}
-			<button type="submit" class="btn btn-success">Confirm</button>
-		</form>
-	{% else %}
-		{% url 'account_email' as email_url %}
-		<p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a></p>
-	{% endif %}
+  <div class="row justify-content-center my-7">
+    <div class="col-lg-6 col-xl-5">
+      <div class="card">
+        <div class="card-header fw-bold">Forgot your password?</div>
+        <div class="card-body">
+          {% if confirmation %}
+            {% user_display confirmation.email_address.user as user_display %}
+            {% with confirmation.email_address.email as email %}
+              <p class="card-text">Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.</p>
+            {% endwith %}
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+          {% else %}
+            {% url 'account_email' as email_url %}
+            <p class="card-text">This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

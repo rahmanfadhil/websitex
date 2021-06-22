@@ -8,9 +8,9 @@ django-celery-results==2.0.1 # https://github.com/celery/django-celery-results
 
 # Django
 # ------------------------------------------------------------------------------
-Django==3.2 # https://www.djangoproject.com/
+Django==3.2.4 # https://www.djangoproject.com/
 django-allauth==0.44.0 # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.11.2 # https://github.com/django-crispy-forms/django-crispy-forms
 django-environ==0.4.5 # https://github.com/joke2k/django-environ
-crispy-bootstrap5==0.3.1 # https://github.com/django-crispy-forms/crispy-bootstrap5
+crispy-bootstrap5==0.4 # https://github.com/django-crispy-forms/crispy-bootstrap5
 django-redis==4.12.1 # https://github.com/jazzband/django-redis
