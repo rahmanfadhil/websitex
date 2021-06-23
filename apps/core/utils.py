@@ -1,11 +1,9 @@
 from io import BytesIO
-from os import path
-from typing import Tuple
+from typing import BinaryIO, Tuple
 
 from django.conf import settings
 from django.core.files import File
 from django.core.mail import send_mail
-from django.db.models.fields.files import ImageFieldFile
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.text import slugify
@@ -39,7 +37,7 @@ def unique_slugify(klass: type, title: str, instance=None):
     return unique_slug
 
 
-def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (512, 512)) -> File:
+def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
     """
     Compress image using Pillow.
 
@@ -54,7 +52,7 @@ def compress_image(image: ImageFieldFile, size: Tuple[int, int] = (512, 512)) ->
         im = im.quantize()
     im_io = BytesIO()
     im.save(im_io, im_format)
-    return File(im_io, name=image.name)
+    return File(im_io, image.name)
 
 
 def send_html_email(subject: str, email: str, template_name: str, context: dict) -> int:

@@ -5,5 +5,6 @@ debugpy==1.2.1 # https://github.com/microsoft/debugpy/
 factory-boy==3.2.0 # https://github.com/FactoryBoy/factory_boy
 pytest-django==4.2.0 # https://pytest-django.readthedocs.io/en/latest/
 pytest-cov==2.11.1 # https://github.com/pytest-dev/pytest-cov
+pytest-mock==3.6.1 # https://github.com/pytest-dev/pytest-mock/
 ipython==7.22.0 # https://ipython.org/
 watchdog[watchmedo]==2.0.3 # https://github.com/gorakhargosh/watchdog
