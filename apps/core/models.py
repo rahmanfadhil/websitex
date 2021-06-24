@@ -116,3 +116,6 @@ class Media(Authorable, Timestampable):
     """
 
     file = models.ImageField(upload_to="uploads/")
+
+    def __str__(self) -> str:
+        return self.file.name

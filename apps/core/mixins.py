@@ -3,6 +3,20 @@ from typing import Iterable, Optional
 from django.conf import settings
 
 
+class PaginationMixin:
+    """ListView pagination on steroids."""
+
+    paginate_by = [10, 20, 50, 100, 200, 500]
+
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get("paginate_by", self.paginate_by[0])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["paginate_by_choices"] = self.paginate_by
+        return context
+
+
 class PageTitleMixin:
     """Customize the page title."""
 

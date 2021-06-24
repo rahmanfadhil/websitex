@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     enableChangeAvatarButton();
   }
 
-  enableDataTable();
+  enableSubmitOn();
 });
 
 /**
@@ -68,31 +68,13 @@ export function enableChangeAvatarButton() {
 }
 
 /**
- * Initialize the data table element from the DataTableView.
- *
- * Make sure when the user select or deselect all item checkbox in the table
- * heading, all checkboxes in table changed accordingly.
+ * Submit the parent form when an event is triggered.
  */
-export function enableDataTable() {
-  for (const element of document.querySelectorAll("form[data-table]")) {
-    // When the user select or deselect all item checkbox in the table heading,
-    // all checkboxes in table changed accordingly.
-    element
-      .querySelector("input[data-table-select-all]")
-      .addEventListener("change", function (event) {
-        element
-          .querySelectorAll("input[data-table-select-item]")
-          .forEach((item) => (item.checked = event.target.checked));
-      });
-
-    // When the user change how much entries to display per page, change the URL
-    // search params, which will refetch the page.
-    element
-      .querySelector('select[name="per_page"]')
-      .addEventListener("change", function (event) {
-        const url = new URL(window.location.href);
-        url.searchParams.set("per_page", event.target.value);
-        location.href = url.href;
-      });
-  }
+function enableSubmitOn() {
+  document.querySelectorAll("[data-submit-on]").forEach((element) => {
+    const eventName = element.getAttribute("data-submit-on");
+    element.addEventListener(eventName, function (event) {
+      element.form.submit();
+    });
+  });
 }

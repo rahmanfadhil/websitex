@@ -11,5 +11,6 @@
       <a href="{% url 'account_signup' %}" class="btn btn-lg btn-primary">Get Started</a>
     </div>
   </div>
-  {% comment %} {% crispy form %} {% endcomment %}
+  {{ page_obj }}
+  {% include 'core/pagination.html' %}
 {% endblock content %}

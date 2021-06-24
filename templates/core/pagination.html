@@ -1,0 +1,57 @@
+<div class="row mt-4 gy-3 justify-content-center">
+  {% if paginate_by_choices %}
+    <div class="col-md-4 col-lg-3">
+      <form method="get">
+        <div class="input-group">
+          <label class="input-group-text" for="id_paginate_by">Show</label>
+          <select name="paginate_by" class="form-select" id="id_paginate_by" data-submit-on="change">
+            {% for per_page in paginate_by_choices %}
+              <option value="{{ per_page }}" {% if paginator.per_page == per_page %}selected{% endif %}>{{ per_page }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+    </div>
+  {% endif %}
+  {% if page_obj.has_other_pages %}
+    <div class="col d-flex justify-content-center {% if paginate_by_choices %}justify-content-md-end{% endif %}">
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&lsaquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&rsaquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
+</div>
+
+
