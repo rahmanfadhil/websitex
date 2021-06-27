@@ -1,10 +1,17 @@
 from typing import Iterable, Optional
 
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import HttpResponse
+from django.utils import timezone
+from django.contrib.messages import views as messages_views
 
 
 class PaginationMixin:
-    """ListView pagination on steroids."""
+    """
+    ListView pagination on steroids.
+    """
 
     paginate_by = [10, 20, 50, 100, 200, 500]
 
@@ -18,7 +25,9 @@ class PaginationMixin:
 
 
 class PageTitleMixin:
-    """Customize the page title."""
+    """
+    Customize the page title.
+    """
 
     page_title: Optional[str] = None
 
@@ -39,6 +48,10 @@ class PageTitleMixin:
 
 
 class MetaTagsMixin:
+    """
+    Customize page meta tags for SEO.
+    """
+
     def get_meta_description(self) -> str:
         return settings.DEFAULT_META_DESCRIPTION
 
@@ -54,3 +67,41 @@ class MetaTagsMixin:
         context["meta_keywords"] = ", ".join(self.get_meta_keywords())
         context["meta_author"] = self.get_meta_author()
         return context
+
+
+class OnlyPublishedMixin:
+    """
+    Mixin that filters the queryset to only return published objects.
+    """
+
+    def get_queryset(self):
+        return super().get_queryset().filter(published_at__gte=timezone.now())
+
+
+class AuthorableMixin(LoginRequiredMixin):
+    """
+    Mixin for a generic view that uses Authorable model.
+    """
+
+    def get_queryset(self):
+        # Make sure it only return objects created by the current user.
+        return super().get_queryset().filter(author=self.request.user)
+
+    def form_valid(self, form) -> HttpResponse:
+        # Assign the current user as the author of the model.
+        if form.instance.author is None:
+            form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class SuccessMessageMixin(messages_views.SuccessMessageMixin):
+    """
+    Add a success message on successful form submission and object deletion.
+    """
+
+    def delete(self, *args, **kwargs):
+        response = super().delete(*args, **kwargs)
+        success_message = self.get_success_message(self.object.__dict__)
+        if success_message:
+            messages.success(self.request, success_message)
+        return response

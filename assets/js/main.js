@@ -9,7 +9,7 @@ import "bootstrap/js/dist/dropdown"; // for dropdowns
 
 import { showMessages } from "./plugins/notyf";
 
-window.addEventListener("DOMContentLoaded", async function () {
+window.addEventListener("DOMContentLoaded", function () {
   // notyf
   showMessages();
 
@@ -38,11 +38,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     import("./plugins/sweetalert2").then(({ initialize }) => initialize());
   }
 
-  if (location.pathname === "/account/update/") {
-    enableChangeAvatarButton();
-  }
-
   enableSubmitOn();
+  enableChangeAvatarButton();
 });
 
 /**
@@ -53,18 +50,22 @@ window.addEventListener("DOMContentLoaded", async function () {
  * View class: UserUpdateView
  */
 export function enableChangeAvatarButton() {
-  const changeAvatarButton = document.getElementById("change_avatar_button"),
-    changeAvatarInput = document.getElementById("change_avatar_input");
+  if (location.pathname === "/account/update/") {
+    const changeAvatarButton = document.getElementById("change_avatar_button");
+    const changeAvatarInput = document.getElementById("change_avatar_input");
 
-  // When the user clicked the change avatar button, open the file browser.
-  changeAvatarButton.addEventListener("click", () => changeAvatarInput.click());
+    // When the user clicked the change avatar button, open the file browser.
+    changeAvatarButton.addEventListener("click", function () {
+      changeAvatarInput.click();
+    });
 
-  // When the user has selected the file to upload, submit the form.
-  changeAvatarInput.addEventListener("change", async function (event) {
-    if (changeAvatarInput.files.length >= 1) {
-      changeAvatarButton.form.submit();
-    }
-  });
+    // When the user has selected the file to upload, submit the form.
+    changeAvatarInput.addEventListener("change", async function (event) {
+      if (changeAvatarInput.files.length >= 1) {
+        changeAvatarButton.form.submit();
+      }
+    });
+  }
 }
 
 /**

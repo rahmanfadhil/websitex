@@ -1,46 +1,15 @@
+import json
 from http import HTTPStatus
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ImproperlyConfigured
+from django.http.request import HttpRequest
 from django.http.response import HttpResponse, JsonResponse
+from django.urls.base import reverse
+from django.urls.exceptions import NoReverseMatch
+from django.views.decorators.http import require_POST
 from django.views.generic.edit import CreateView
 
-from apps.core.models import Authorable, Media
+from apps.core.models import Media
 from apps.core.utils import compress_image
-
-
-# ABSTRACT VIEWS
-# ------------------------------------------------------------------------------
-
-
-class AuthorableCreateViewMeta(type):
-    """
-    Make sure that the model used in AuthorableCreateView is a subclass of
-    Authorable abstract model.
-    """
-
-    def __new__(cls, name, bases, body):
-        if name != "AuthorableCreateView" and not issubclass(body["model"], Authorable):
-            raise ImproperlyConfigured(
-                "Model must be a subclass of Authorable in order to be used in the AuthorableCreateView"
-            )
-        return super().__new__(cls, name, bases, body)
-
-
-class AuthorableCreateView(
-    LoginRequiredMixin, CreateView, metaclass=AuthorableCreateViewMeta
-):
-    """
-    Set the currently logged-in user as the author of the model.
-    """
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-
-# URL VIEWS
-# ------------------------------------------------------------------------------
 
 
 class MediaCreateView(CreateView):
@@ -71,3 +40,13 @@ class MediaCreateView(CreateView):
 
         # Return the absolute url of the file.
         return JsonResponse({"url": self.request.build_absolute_uri(media.file.url)})
+
+
+@require_POST
+def js_reverse(request: HttpRequest) -> HttpResponse:
+    try:
+        data = json.loads(request.body)
+        url = reverse(data["name"], args=data.get("args"), kwargs=data.get("kwargs"))
+        return HttpResponse(url)
+    except NoReverseMatch:
+        return HttpResponse("No reverse match!", status=400)
