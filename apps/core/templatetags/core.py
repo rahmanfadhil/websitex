@@ -28,3 +28,20 @@ def active_link(context, *view_names) -> str:
             except:
                 pass
     return ""
+
+
+@register.simple_tag(takes_context=True)
+def is_link_active(context, *view_names) -> bool:
+    """
+    Returns a boolean indicating if the nav link is the current page.
+    """
+
+    if hasattr(context, "request"):
+        for view_name in view_names:
+            try:
+                match = resolve(context.request.path_info)
+                if match.view_name == view_name:
+                    return True
+            except:
+                pass
+    return False

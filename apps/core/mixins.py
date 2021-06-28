@@ -94,14 +94,27 @@ class AuthorableMixin(LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class SuccessMessageMixin(messages_views.SuccessMessageMixin):
+class SuccessMessageMixin:
     """
     Add a success message on successful form submission and object deletion.
     """
 
+    success_message = ""
+
     def delete(self, *args, **kwargs):
         response = super().delete(*args, **kwargs)
+        self._show_message()
+        return response
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self._show_message()
+        return response
+
+    def _show_message(self):
         success_message = self.get_success_message(self.object.__dict__)
         if success_message:
             messages.success(self.request, success_message)
-        return response
+
+    def get_success_message(self, data):
+        return self.success_message % data

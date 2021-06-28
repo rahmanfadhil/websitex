@@ -27,16 +27,18 @@
     <nav class="navbar navbar-expand-lg navbar-light mb-5 bg-white shadow border-bottom">
       <div class="container">
         <a class="navbar-brand" href="{% url 'pages:home' %}">{{ PAGE_TITLE }}</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavigation" aria-controls="mobileNavigation" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link {% active_link 'pages:home' %}" href="{% url 'pages:home' %}">Home</a>
+              {% is_link_active 'pages:home' as is_home_active %}
+              <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% active_link 'pages:about' %}" href="{% url 'pages:about' %}">About</a>
+              {% is_link_active 'pages:about' as is_about_active %}
+              <a class="nav-link {% if is_about_active %}active{% endif %}" {% if is_about_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
             </li>
           </ul>
           {% if user.is_authenticated %}
@@ -69,6 +71,54 @@
       </div>
     </nav>
   {% endblock header %}
+
+  <!-- Mobile navigation-->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavigation" aria-labelledby="mobileNavigationLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileNavigationLabel">Menu</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav nav-pills flex-column mb-4">
+        <li class="nav-item">
+          {% is_link_active 'pages:home' as is_home_active %}
+          <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          {% is_link_active 'pages:about' as is_about_active %}
+          <a class="nav-link {% if is_about_active %}active{% endif %}" {% if is_about_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
+        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+              @{{ user.username }}
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'users:user_update' %}">
+                <i class="bi-gear-fill me-2"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button class="dropdown-item text-danger" type="submit">
+                  <i class="bi-x-circle-fill me-2"></i> Log out
+                </button>
+              </form>
+            </div>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            {% is_link_active 'account_login' as is_login_active %}
+            <a class="nav-link {% if is_login_active %}active{% endif %}" {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            {% is_link_active 'account_signup' as is_signup_active %}
+            <a class="nav-link {% if is_signup_active %}active{% endif %}" {% if is_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}">Sign up</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
 
   <!-- Main content -->
   <div class="container">

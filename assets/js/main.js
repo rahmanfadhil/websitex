@@ -4,8 +4,9 @@ import "@fontsource/lexend/700.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../scss/main.scss";
 
-import "bootstrap/js/dist/collapse"; // for responsive navbar menu
+// import "bootstrap/js/dist/collapse"; // for responsive navbar menu
 import "bootstrap/js/dist/dropdown"; // for dropdowns
+import "bootstrap/js/dist/offcanvas"; // for mobile navigation
 
 import { showMessages } from "./plugins/notyf";
 

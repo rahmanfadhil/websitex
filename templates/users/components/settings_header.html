@@ -3,12 +3,15 @@
 <h2 class="mb-5">My account</h2>
 <ul class="nav nav-tabs mb-5">
   <li class="nav-item">
-    <a class="nav-link {% active_link 'users:user_update' %}" href="{% url 'users:user_update' %}">Profile</a>
+    {% active_link 'users:user_update' as is_profile_active %}
+    <a class="nav-link {% if is_profile_active %}active{% endif %}" {% if is_profile_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {% active_link 'account_email' %}" href="{% url 'account_email' %}">Emails</a>
+    {% active_link 'account_email' as is_emails_active %}
+    <a class="nav-link {% if is_emails_active %}active{% endif %}" {% if is_emails_active %}aria-current="page"{% endif %} href="{% url 'account_email' %}">Emails</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {% active_link 'account_change_password' %}" href="{% url 'account_change_password' %}">Security</a>
+    {% active_link 'account_change_password' as is_security_active %}
+    <a class="nav-link {% if is_security_active %}active{% endif %}" {% if is_security_active %}aria-current="page"{% endif %} href="{% url 'account_change_password' %}">Security</a>
   </li>
 </ul>
