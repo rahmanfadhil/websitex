@@ -1,6 +1,7 @@
 import "trix";
 import "trix/dist/trix.css";
 import Swal from "sweetalert2";
+import reverse from "../utils/reverse";
 
 /**
  * Initialize the Trix editor.
@@ -12,7 +13,7 @@ export function initialize() {
 /**
  * Handle when the user upload an image to the Trix editor.
  */
-function handleTrixAttachment({ attachment }) {
+async function handleTrixAttachment({ attachment }) {
   if (attachment.file) {
     // Store the image to a form data.
     const formData = new FormData();
@@ -20,7 +21,8 @@ function handleTrixAttachment({ attachment }) {
 
     // Initialize
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/upload-media/", true);
+    const url = await reverse("core:media_create");
+    xhr.open("POST", url, true);
 
     // Send the CSRF token to prevent the 403 forbidden error.
     xhr.setRequestHeader("X-CSRFToken", Cookies.get("csrftoken"));

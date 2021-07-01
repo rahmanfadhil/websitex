@@ -29,3 +29,20 @@ trix-editor {
   min-height: 230px;
   margin-bottom: map-get($map: $spacers, $key: 4);
 }
+
+// FEATHER
+// -----------------------------------------------------------------------------
+
+.feather {
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.feather-bold {
+  stroke-width: 3;
+}

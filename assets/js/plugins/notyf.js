@@ -1,5 +1,6 @@
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
+import getPageData from "../utils/pageData";
 
 /**
  * Display notifications from the Django messages framework using Notyf.
@@ -15,11 +16,8 @@ export function showMessages() {
     ],
   });
 
-  const messagesElement = document.getElementById("json_messages");
-  if (messagesElement) {
-    const messages = JSON.parse(messagesElement.textContent);
-    for (const message of messages) {
-      notyf.open(message);
-    }
+  const { messages } = getPageData();
+  for (const message of messages) {
+    notyf.open(message);
   }
 }

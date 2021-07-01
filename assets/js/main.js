@@ -1,13 +1,13 @@
 import "@fontsource/lexend";
 import "@fontsource/lexend/500.css";
 import "@fontsource/lexend/700.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import "feather-icons/dist/feather-sprite.svg";
 import "../scss/main.scss";
 
-// import "bootstrap/js/dist/collapse"; // for responsive navbar menu
 import "bootstrap/js/dist/dropdown"; // for dropdowns
 import "bootstrap/js/dist/offcanvas"; // for mobile navigation
 
+import getPageData from "./utils/pageData";
 import { showMessages } from "./plugins/notyf";
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -47,11 +47,13 @@ window.addEventListener("DOMContentLoaded", function () {
  * Enable change/upload avatar button in the update user profile page.
  *
  * Path:       /account/update/
+ * View name:  users:user_update
  * Template:   users/user_form.html
  * View class: UserUpdateView
  */
 export function enableChangeAvatarButton() {
-  if (location.pathname === "/account/update/") {
+  const { view_name } = getPageData();
+  if (view_name === "users:user_update") {
     const changeAvatarButton = document.getElementById("change_avatar_button");
     const changeAvatarInput = document.getElementById("change_avatar_input");
 

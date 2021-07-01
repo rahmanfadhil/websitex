@@ -84,7 +84,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.default_meta_tags",
-                "apps.core.context_processors.json_messages",
+                "apps.core.context_processors.page_data",
             ],
         },
     },
