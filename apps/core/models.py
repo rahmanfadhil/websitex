@@ -36,7 +36,7 @@ class Publishable(models.Model):
 
     published_at = models.DateTimeField(null=True, blank=True)
 
-    def publish_on(self, datetime=None):
+    def publish(self, datetime=None):
         """
         Publish record at a certain time (now if the datetime is not defined).
         """
@@ -44,7 +44,7 @@ class Publishable(models.Model):
             datetime = timezone.now()
         elif timezone.is_naive(datetime):
             datetime = timezone.make_aware(datetime)
-        self.publish_date = datetime
+        self.published_at = datetime
         self.save()
 
     @property
