@@ -75,7 +75,12 @@ class OnlyPublishedMixin:
     """
 
     def get_queryset(self):
-        return super().get_queryset().filter(published_at__gte=timezone.now())
+        return (
+            super()
+            .get_queryset()
+            .filter(published_at__lte=timezone.now())
+            .order_by("-published_at")
+        )
 
 
 class AuthorableMixin(LoginRequiredMixin):

@@ -34,8 +34,6 @@ class Publishable(models.Model):
     Implement draft and publish feature.
     """
 
-    published_at = models.DateTimeField(null=True, blank=True)
-
     def publish(self, datetime=None):
         """
         Publish record at a certain time (now if the datetime is not defined).
@@ -53,7 +51,7 @@ class Publishable(models.Model):
         Determine if the record has been published.
         """
         return (
-            self.published_at < timezone.now()
+            self.published_at <= timezone.now()
             if self.published_at is not None
             else False
         )
