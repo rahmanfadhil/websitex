@@ -23,7 +23,6 @@
     "@popperjs/core": "^2.9.3",
     "@yaireo/tagify": "^4.6.0",
     "bootstrap": "^5.1.0",
-    "bootswatch": "^5.1.0",
     "flatpickr": "^4.6.9",
     "imask": "^6.1.0",
     "js-cookie": "^3.0.0",
