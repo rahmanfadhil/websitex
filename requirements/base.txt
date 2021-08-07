@@ -5,6 +5,7 @@ celery[redis]==5.1.2 # http://celeryproject.org/
 redis==3.5.3 # https://github.com/andymccurdy/redis-py
 python-magic==0.4.24 # https://github.com/ahupp/python-magic
 django-celery-results==2.2.0 # https://github.com/celery/django-celery-results
+wagtail==2.14 # https://wagtail.io/
 
 # Django
 # ------------------------------------------------------------------------------

@@ -9,5 +9,8 @@ class User(AbstractUser):
     last_name = None
     avatar = models.ImageField(upload_to="user_avatar/", null=True, blank=True)
 
+    def get_full_name(self) -> str:
+        return self.full_name
+
     def __str__(self):
         return self.email

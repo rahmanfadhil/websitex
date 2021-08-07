@@ -1,5 +1,6 @@
 {% load static %}
 {% load core %}
+{% load wagtailcore_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +37,10 @@
             <li class="nav-item">
               {% is_link_active 'pages:home' as is_home_active %}
               <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              {% is_link_active 'wagtail_serve' as is_blog_active %}
+              <a class="nav-link {% if is_blog_active %}active{% endif %}" {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">Blog</a>
             </li>
             <li class="nav-item">
               {% is_link_active 'pages:about' as is_about_active %}

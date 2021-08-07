@@ -39,18 +39,33 @@ THIRD_PARTY_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "django_celery_results",
+    "wagtail.contrib.forms",
+    "wagtail.contrib.redirects",
+    "wagtail.embeds",
+    "wagtail.sites",
+    "wagtail.users",
+    "wagtail.snippets",
+    "wagtail.documents",
+    "wagtail.images",
+    "wagtail.search",
+    "wagtail.admin",
+    "wagtail.core",
+    "modelcluster",
+    "taggit",
 ]
 LOCAL_APPS = [
     "apps.core",
     "apps.users",
     "apps.pages",
+    "apps.blog",
 ]
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS + DJANGO_APPS
 
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "config.middleware.HealthCheckMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -180,6 +195,11 @@ CELERY_RESULT_BACKEND = "django-db"
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/3.1/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
+
+# WAGTAIL
+# ------------------------------------------------------------------------------
+
+WAGTAIL_SITE_NAME = "WebsiteX Blog"
 
 # CORE UTILITIES
 # ------------------------------------------------------------------------------
