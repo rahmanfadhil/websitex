@@ -1,6 +1,3 @@
-import Tagify from "@yaireo/tagify";
-import "@yaireo/tagify/src/tagify.scss";
-
 /**
  * Initialize the Tagify plugin for multi-tags input.
  *
@@ -8,6 +5,8 @@ import "@yaireo/tagify/src/tagify.scss";
  * SimpleArrayField can handle it.
  */
 export async function initialize() {
+  const { default: Tagify } = await import("@yaireo/tagify");
+
   for (const element of document.querySelectorAll("input.tagsinput")) {
     new Tagify(element, {
       originalInputValueFormat: (values) =>

@@ -1,12 +1,31 @@
+// FONTS
+// -----------------------------------------------------------------------------
+
+@import "~@fontsource/commissioner/variable.css";
+
+// PLUGINS
+// -----------------------------------------------------------------------------
+
+@import "~notyf/notyf.min.css";
+@import "~flatpickr/dist/flatpickr.min.css";
+@import "~@yaireo/tagify/src/tagify.scss";
+@import "~trix/dist/trix.css";
+
+// BOOTSTRAP
+// -----------------------------------------------------------------------------
+
 @import "./variables.scss";
 @import "./bootstrap.scss";
 
 // DJANGO CRISPY FORMS
 // -----------------------------------------------------------------------------
 
+label.requiredField {
+  font-weight: bold;
+}
+
 .asteriskField {
-  color: $danger;
-  margin-left: map-get($map: $spacers, $key: 1);
+  display: none;
 }
 
 // FLATPICKR
@@ -34,8 +53,8 @@ trix-editor {
 // -----------------------------------------------------------------------------
 
 .feather {
-  width: 1em;
-  height: 1em;
+  width: 0.9em;
+  height: 0.9em;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;

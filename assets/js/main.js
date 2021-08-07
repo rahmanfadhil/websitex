@@ -1,18 +1,18 @@
-import "@fontsource/lexend";
-import "@fontsource/lexend/500.css";
-import "@fontsource/lexend/700.css";
-import "feather-icons/dist/feather-sprite.svg";
 import "../scss/main.scss";
 
 import "bootstrap/js/dist/dropdown"; // for dropdowns
-import "bootstrap/js/dist/offcanvas"; // for mobile navigation
+import "bootstrap/js/dist/collapse"; // for mobile navigation
 
 import getPageData from "./utils/pageData";
-import { showMessages } from "./plugins/notyf";
+import * as notyf from "./plugins/notyf";
+import * as imask from "./plugins/imask";
+import * as sweetalert2 from "./plugins/sweetalert2";
+import * as flatpickr from "./plugins/flatpickr";
+import * as tagify from "./plugins/tagify";
 
 window.addEventListener("DOMContentLoaded", function () {
   // notyf
-  showMessages();
+  notyf.initialize();
 
   // trix
   if (document.querySelector("trix-editor")) {
@@ -21,22 +21,22 @@ window.addEventListener("DOMContentLoaded", function () {
 
   // @yaireo/tagify
   if (document.querySelector("input.tagsinput")) {
-    import("./plugins/tagify").then(({ initialize }) => initialize());
+    tagify.initialize();
   }
 
   // imask
   if (document.querySelector("input.moneyinput")) {
-    import("./plugins/imask").then(({ initialize }) => initialize());
+    imask.initialize();
   }
 
   // flatpickr
   if (document.querySelector("input.dateinput, input.datetimeinput")) {
-    import("./plugins/flatpickr").then(({ initialize }) => initialize());
+    flatpickr.initialize();
   }
 
   // sweetalert2
   if (document.querySelector("form[data-confirm]")) {
-    import("./plugins/sweetalert2").then(({ initialize }) => initialize());
+    sweetalert2.initialize();
   }
 
   enableSubmitOn();

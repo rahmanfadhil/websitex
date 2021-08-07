@@ -1,16 +1,16 @@
-psycopg2==2.8.6 # https://github.com/psycopg/psycopg2
-Pillow==8.2.0 # https://github.com/python-pillow/Pillow
-whitenoise==5.2.0 # https://github.com/evansd/whitenoise
-celery[sqs]==5.1.0 # http://celeryproject.org/
+psycopg2==2.9.1 # https://github.com/psycopg/psycopg2
+Pillow==8.3.1 # https://github.com/python-pillow/Pillow
+whitenoise==5.3.0 # https://github.com/evansd/whitenoise
+celery[redis]==5.1.2 # http://celeryproject.org/
 redis==3.5.3 # https://github.com/andymccurdy/redis-py
-python-magic==0.4.22 # https://github.com/ahupp/python-magic
-django-celery-results==2.0.1 # https://github.com/celery/django-celery-results
+python-magic==0.4.24 # https://github.com/ahupp/python-magic
+django-celery-results==2.2.0 # https://github.com/celery/django-celery-results
 
 # Django
 # ------------------------------------------------------------------------------
-Django==3.2.4 # https://www.djangoproject.com/
-django-allauth==0.44.0 # https://github.com/pennersr/django-allauth
-django-crispy-forms==1.11.2 # https://github.com/django-crispy-forms/django-crispy-forms
+Django==3.2.6 # https://www.djangoproject.com/
+django-allauth==0.45.0 # https://github.com/pennersr/django-allauth
+django-crispy-forms==1.12.0 # https://github.com/django-crispy-forms/django-crispy-forms
 django-environ==0.4.5 # https://github.com/joke2k/django-environ
 crispy-bootstrap5==0.4 # https://github.com/django-crispy-forms/crispy-bootstrap5
-django-redis==4.12.1 # https://github.com/jazzband/django-redis
+django-redis==5.0.0 # https://github.com/jazzband/django-redis

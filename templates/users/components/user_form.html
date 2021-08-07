@@ -1,0 +1,29 @@
+{% load crispy_forms_tags %}
+{% load core %}
+
+{% csrf_token %}
+<div class="mb-3">
+  {% form_label form.username %}
+  {% form_field form.username %}
+</div>
+<div class="mb-3">
+  {% form_label form.full_name %}
+  {% form_field form.full_name %}
+</div>
+<div class="mb-3">
+  {% form_label form.gender %}
+  {% form_field form.gender %}
+</div>
+<div class="mb-3">
+  {% form_label form.avatar %}
+  <div>
+    {% form_field form.avatar %}
+  </div>
+</div>
+<div class="mb-3">
+  <div class="form-check">
+    {% form_field form.is_true %}
+    {% form_label form.is_true %}
+  </div>
+</div>
+<button type="submit" class="btn btn-primary">Save changes</button>

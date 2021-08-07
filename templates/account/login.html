@@ -10,12 +10,14 @@
   <div class="row justify-content-center my-5 my-md-7">
     <div class="col-lg-6 col-xl-5">
       <div class="card">
-        <div class="card-header fw-bold">Login</div>
+        <div class="card-header">
+          <h5 class="my-2">Login</h5>
+        </div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
             {{ form|crispy }}
-            <div class="d-flex align-items-center mt-4">
+            <div class="d-flex align-items-center justify-content-between mt-4">
               <button type="submit" class="btn btn-primary me-4">Login</button>
               <a class="small" href="{% url 'account_reset_password' %}">Forgot password?</a>
             </div>

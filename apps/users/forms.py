@@ -20,4 +20,4 @@ class CustomUserChangeForm(UserChangeForm):
 class UserUpdateForm(forms.ModelForm, CrispyFormMixin):
     class Meta:
         model = User
-        fields = ("full_name", "username")
+        fields = ("username", "full_name")

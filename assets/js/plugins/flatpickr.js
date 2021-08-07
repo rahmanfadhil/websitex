@@ -1,10 +1,9 @@
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
-
 /**
  * Enable flatpickr plugin for date & time inputs.
  */
-export function initialize() {
+export async function initialize() {
+  const { default: flatpickr } = await import("flatpickr");
+
   // Date input
   flatpickr("input.dateinput", {
     enableTime: false,

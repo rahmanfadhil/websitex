@@ -1,9 +1,9 @@
-import Swal from "sweetalert2";
-
 /**
  * Show confirmation popup before submitting a form.
  */
-export function initialize() {
+export async function initialize() {
+  const { default: Swal } = await import("sweetalert2");
+
   for (const element of document.querySelectorAll("form[data-confirm]")) {
     // Determine if the user has confirmed the form submission.
     let isConfirmed = false;

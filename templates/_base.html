@@ -17,21 +17,22 @@
   <meta name="author" content="{% firstof meta_author DEFAULT_META_AUTHOR %}">
   <meta name="keywords" content="{% firstof meta_keywords DEFAULT_META_KEYWORDS %}">
 
-  <!-- JS -->
-  <script src="{% static 'dist/main.js' %}"></script>
+  <!-- CSS & JS -->
+  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
+  <script defer src="{% static 'dist/main.js' %}"></script>
 </head>
 
 <body>
   <!-- Top navigation -->
   {% block header %}
-    <nav class="navbar navbar-expand-lg navbar-light mb-5 bg-white shadow border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-5">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'pages:home' %}">{{ PAGE_TITLE }}</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavigation" aria-controls="mobileNavigation" aria-label="Toggle navigation">
+        <a class="navbar-brand h1 mb-0" href="{% url 'pages:home' %}">{{ PAGE_TITLE }}</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto py-3 py-lg-0">
             <li class="nav-item">
               {% is_link_active 'pages:home' as is_home_active %}
               <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
@@ -45,81 +46,34 @@
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                  {% icon 'user' 'feather-bold me-2' %}
-                  {{ user.username }}
+                  @{{ user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                  <a class="dropdown-item" href="{% url 'users:user_update' %}">
-                    {% icon 'settings' 'me-2' %} Settings
-                  </a>
+                  <a class="dropdown-item" href="{% url 'users:user_update' %}">Settings</a>
                   <div class="dropdown-divider"></div>
                   <form method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
-                    <button class="dropdown-item" type="submit">
-                      {% icon 'log-out' 'me-2' %} Log out
-                    </button>
+                    <button class="dropdown-item text-danger" type="submit">Log out</button>
                   </form>
                 </div>
               </li>
             </ul>
           {% else %}
-            <div class="d-flex">
-              <a href="{% url 'account_login' %}" class="btn btn-outline-primary text-decoration-none me-3" type="submit">Login</a>
-              <a href="{% url 'account_signup' %}" class="btn btn-primary">Sign up</a>
-            </div>
+            <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
+              <li class="nav-item col-6 col-md-auto">
+                {% is_link_active 'account_login' as is_login_active %}
+                <a class="nav-link {% if is_login_active %}active{% endif %}" {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Login</a>
+              </li>
+              <li class="nav-item col-6 col-md-auto">
+                {% is_link_active 'account_signup' as is_signup_active %}
+                <a class="nav-link {% if is_signup_active %}active{% endif %}" {% if is_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}">Sign up</a>
+              </li>
+            </ul>
           {% endif %}
         </div>
       </div>
     </nav>
   {% endblock header %}
-
-  <!-- Mobile navigation-->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNavigation" aria-labelledby="mobileNavigationLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="mobileNavigationLabel">Menu</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="nav nav-pills flex-column mb-4">
-        <li class="nav-item">
-          {% is_link_active 'pages:home' as is_home_active %}
-          <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          {% is_link_active 'pages:about' as is_about_active %}
-          <a class="nav-link {% if is_about_active %}active{% endif %}" {% if is_about_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
-        </li>
-        {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-              @{{ user.username }}
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="{% url 'users:user_update' %}">
-                {% icon 'settings' 'me-2' %} Settings
-              </a>
-              <div class="dropdown-divider"></div>
-              <form method="post" action="{% url 'account_logout' %}">
-                {% csrf_token %}
-                <button class="dropdown-item" type="submit">
-                  {% icon 'log-out' 'me-2' %} Log out
-                </button>
-              </form>
-            </div>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            {% is_link_active 'account_login' as is_login_active %}
-            <a class="nav-link {% if is_login_active %}active{% endif %}" {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            {% is_link_active 'account_signup' as is_signup_active %}
-            <a class="nav-link {% if is_signup_active %}active{% endif %}" {% if is_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}">Sign up</a>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
 
   <!-- Main content -->
   <div class="container">

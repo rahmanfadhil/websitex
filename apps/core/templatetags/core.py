@@ -1,5 +1,7 @@
 from django import template
+from django.forms.boundfield import BoundField
 from django.urls import resolve
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -31,19 +33,11 @@ def is_link_active(context, *view_names) -> bool:
     """
 
     if hasattr(context, "request"):
+        match = resolve(context.request.path_info)
         for view_name in view_names:
             try:
-                match = resolve(context.request.path_info)
                 if match.view_name == view_name:
                     return True
             except:
                 pass
     return False
-
-
-@register.inclusion_tag("core/icon.html")
-def icon(name, css_class=None):
-    """
-    Renders a feather icon.
-    """
-    return {"name": name, "css_class": css_class}

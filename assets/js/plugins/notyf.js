@@ -1,11 +1,10 @@
 import { Notyf } from "notyf";
-import "notyf/notyf.min.css";
 import getPageData from "../utils/pageData";
 
 /**
  * Display notifications from the Django messages framework using Notyf.
  */
-export function showMessages() {
+export function initialize() {
   const notyf = new Notyf({
     duration: 5000,
     dismissible: true,

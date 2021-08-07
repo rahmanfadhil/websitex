@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+
 {% load crispy_forms_tags %}
 
 {% block title %}Edit profile - {{ PAGE_TITLE }}{% endblock %}
@@ -8,13 +9,21 @@
     <div class="col-lg-9">
       {% include 'users/components/settings_header.html' %}
       <div class="card">
-        <div class="card-header fw-bold">Basic information</div>
-        <div class="card-body mb-n3">
-          {% crispy form %}
+        <div class="card-header">
+          <h5 class="my-2">Basic information</h5>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary mt-2">Save changes</button>
+          </form>
         </div>
       </div>
       <div class="card mt-5">
-        <div class="card-header fw-bold">Media</div>
+        <div class="card-header">
+          <h5 class="my-2">Media</h5>
+        </div>
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="flex-grow-1 d-flex align-items-center">
@@ -46,7 +55,9 @@
         </div>
       </div>
       <div class="card mt-5">
-        <div class="card-header fw-bold">Delete account</div>
+        <div class="card-header">
+          <h5 class="my-2">Delete account</h5>
+        </div>
         <div class="card-body">
           <p class="mb-4 text-muted">Once you delete your account, there is no going back. Please be certain.</p>
           <form action="{% url 'users:user_delete' %}" method="post" data-confirm data-confirm-button-title="Yes, delete my account">

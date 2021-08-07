@@ -1,9 +1,9 @@
-import IMask from "imask";
-
 /**
  * Initialize the IMask plugin for currency/price form inputs.
  */
-export function initialize() {
+export async function initialize() {
+  const { default: IMask } = await import("imask");
+
   for (const element of document.querySelectorAll("input.moneyinput")) {
     // Create the mask for currency inputs.
     const mask = IMask(element, {

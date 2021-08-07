@@ -2,23 +2,58 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 960px,
   xxl: 1140px,
 );
 
-$font-family-sans-serif: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto,
-  "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-sans-serif: "CommissionerVariable", system-ui, -apple-system,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans",
+  sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji" !default;
 
-$enable-negative-margins: true;
-$card-spacer-y: 1.5rem;
-$web-font-path: false;
+// Colors
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$blue: #3459e6 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #d63384 !default;
+$red: #da292e !default;
+$orange: #f8765f !default;
+$yellow: #f4bd61 !default;
+$green: #2fb380 !default;
+$teal: #20c997 !default;
+$cyan: #287bb5 !default;
+
+$primary: $blue !default;
+$secondary: $white !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
+
+$body-color: $gray-700 !default;
+$headings-color: $gray-900 !default;
+
+// SPACING
 
 $spacer: 1rem;
 $spacers: (
   0: 0,
-  1: $spacer / 4,
-  2: $spacer / 2,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
   3: $spacer,
   4: $spacer * 1.5,
   5: $spacer * 3,
@@ -28,3 +63,37 @@ $spacers: (
   9: $spacer * 9,
   10: $spacer * 10.5,
 );
+$enable-negative-margins: true;
+
+// Inputs
+
+$input-btn-padding-y: 0.5rem !default;
+$input-btn-padding-x: 1rem !default;
+$input-btn-padding-y-sm: 0.25rem !default;
+$input-btn-padding-x-sm: 0.5rem !default;
+$input-btn-padding-y-lg: 1rem !default;
+$input-btn-padding-x-lg: 1.5rem !default;
+$input-bg: $white !default;
+
+// Cards
+
+$card-spacer-y: $spacer * 1.5 !default;
+$card-spacer-x: $spacer * 1.5 !default;
+
+// Navs
+
+$nav-link-color: $body-color !default;
+$nav-link-hover-color: $body-color !default;
+$nav-tabs-border-radius: 0 !default;
+$nav-tabs-link-active-color: $primary !default;
+
+// Navbar
+$navbar-nav-link-padding-x: 0.75rem !default;
+$navbar-padding-y: $spacer * 1.25 !default;
+
+// Tables
+
+$table-cell-padding-y: 1.25rem !default;
+$table-cell-padding-x: 1.5rem !default;
+$table-cell-padding-y-sm: 1rem !default;
+$table-cell-padding-x-sm: 1rem !default;

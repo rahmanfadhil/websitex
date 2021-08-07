@@ -1,6 +1,3 @@
-import "trix";
-import "trix/dist/trix.css";
-import Swal from "sweetalert2";
 import reverse from "../utils/reverse";
 
 /**
@@ -14,6 +11,9 @@ export function initialize() {
  * Handle when the user upload an image to the Trix editor.
  */
 async function handleTrixAttachment({ attachment }) {
+  await import("trix");
+  const { default: Swal } = await import("sweetalert2");
+
   if (attachment.file) {
     // Store the image to a form data.
     const formData = new FormData();

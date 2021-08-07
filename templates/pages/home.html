@@ -1,14 +1,41 @@
 {% extends '_base.html' %}
 
 {% load static %}
+{% load core %}
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="row justify-content-center py-5">
-    <div class="col-lg-7 text-center">
-      <h1 class="display-4 fw-bold lh-1 mb-5">WebsiteX</h1>
-      <p class="fs-5 text-muted mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, dolorem aliquam, perspiciatis laboriosam modi accusamus, sapiente quo enim deleniti tempora doloribus culpa accusantium iste. Nesciunt at voluptate vitae! Iusto, aliquid.</p>
+  <div class="row gx-5 justify-content-center align-items-center pt-5 pb-7">
+    <div class="col-lg-6">
+      <h1 class="display-4 fw-bold mb-0">WebsiteX</h1>
+      <p class="fs-5 text-muted lh-lg mt-4 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, dolorem aliquam.</p>
       <a href="{% url 'account_signup' %}" class="btn btn-lg btn-primary">Get Started</a>
+    </div>
+    <div class="col">
+      <img src="{% static 'images/home.jpg' %}" class="img-fluid rounded-3" alt="WebsiteX" width="640" height="427">
+    </div>
+  </div>
+  <div class="row g-5 py-5 row-cols-1 row-cols-lg-3">
+    <div class="col">
+      <h3>Featured title</h3>
+      <p class="mt-3 mb-4">Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      <a href="#" class="btn btn-primary">
+        Primary button
+      </a>
+    </div>
+    <div class="col">
+      <h3>Featured title</h3>
+      <p class="mt-3 mb-4">Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      <a href="#" class="btn btn-primary">
+        Primary button
+      </a>
+    </div>
+    <div class="col">
+      <h3>Featured title</h3>
+      <p class="mt-3 mb-4">Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      <a href="#" class="btn btn-primary">
+        Primary button
+      </a>
     </div>
   </div>
 {% endblock content %}

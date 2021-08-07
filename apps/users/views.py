@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import redirect
+from django.http.response import HttpResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, View
+from django.template.response import TemplateResponse
 
 from apps.core.utils import compress_image
 from apps.users.forms import UserUpdateForm
@@ -15,6 +17,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = UserUpdateForm
     success_url = reverse_lazy("users:user_update")
     success_message = "Successfully updated your profile!"
+    template_name = "users/user_update.html"
 
     def get_object(self, queryset=None) -> User:
         return self.request.user

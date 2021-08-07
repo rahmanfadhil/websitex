@@ -1,5 +1,9 @@
 const path = require("path");
 const { SourceMapDevToolPlugin } = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   entry: "./assets/js/main.js",
@@ -8,25 +12,34 @@ module.exports = {
     path: path.resolve(__dirname, "static/dist"),
   },
   devtool: false,
-  plugins: [new SourceMapDevToolPlugin()],
+  plugins: [
+    new SourceMapDevToolPlugin({ filename: "sourcemaps/[file].map" }),
+    new MiniCssExtractPlugin(),
+    // new BundleAnalyzerPlugin(),
+  ],
   module: {
     rules: [
       {
-        test: /\.s?[ac]ss$/i, // include .css, .scss, .sass
-        use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.s?css$/i, // include .css and .scss
         use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "[name].[ext]",
-              outputPath: "fonts/",
-            },
-          },
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
     ],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
 };
