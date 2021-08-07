@@ -41,8 +41,6 @@ RUN apt-get update && apt-get install -y \
     libmagic1 \
     # Translations dependencies
     gettext \
-    # Celery SQS dependencies
-    libcurl4-openssl-dev libssl-dev \
     # cleaning up unused files
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && rm -rf /var/lib/apt/lists/*

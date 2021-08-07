@@ -45,17 +45,6 @@ AWS_S3_FILE_OVERWRITE = False
 # LOGGING
 # ------------------------------------------------------------------------------
 
-CELERY_BROKER_TRANSPORT_OPTIONS = {
-    "predefined_queues": {
-        "celery": {
-            "url": env.str("AWS_SQS_QUEUE_URL"),
-        }
-    }
-}
-
-# LOGGING
-# ------------------------------------------------------------------------------
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
