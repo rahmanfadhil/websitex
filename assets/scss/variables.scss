@@ -24,6 +24,18 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black: #000 !default;
 
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+) !default;
+
 $blue: #3459e6 !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
@@ -44,10 +56,18 @@ $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
 
+$min-contrast-ratio: 1.65 !default;
+
 $body-color: $gray-700 !default;
 $headings-color: $gray-900 !default;
 
-// SPACING
+@each $color, $value in $grays {
+  .bg-gray-#{$color} {
+    background-color: $value !important;
+  }
+}
+
+// Spacer
 
 $spacer: 1rem;
 $spacers: (

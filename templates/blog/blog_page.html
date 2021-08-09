@@ -2,12 +2,21 @@
 
 {% load wagtailcore_tags %}
 
+{% block wide_content %}
+  <div class="border-bottom bg-gray-100 mt-n5 py-6 mb-5 ">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <h1 class="display-3">{{ page.title }}</h1>
+          <p class="lead text-muted mt-5 mb-4">{{ page.intro|richtext }}</p>
+          <div class="lead text-muted">&mdash; {{ page.date }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
-  <h1>{{ page.title }}</h1>
-  <p class="meta">{{ page.date }}</p>
-
-  <div class="intro">{{ page.intro }}</div>
-
   {{ page.body|richtext }}
 
   <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>

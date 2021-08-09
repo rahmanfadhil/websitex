@@ -37,8 +37,6 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     # watchdog dependencies
     libyaml-dev \
-    # python-magic dependencies
-    libmagic1 \
     # Translations dependencies
     gettext \
     # cleaning up unused files

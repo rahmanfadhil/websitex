@@ -16,7 +16,10 @@ MEDIA_URL = "/media/"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-vars().update(env.email("EMAIL_URL", default="consolemail://"))
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_USER = os.environ.get("EMAIL_USER")
+EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 # DJANGO-DEBUG-TOOLBAR CONFIGS
 # ------------------------------------------------------------------------------
