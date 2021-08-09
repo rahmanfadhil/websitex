@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 if [ ! -d ".terraform" ]
 then
     terraform init
