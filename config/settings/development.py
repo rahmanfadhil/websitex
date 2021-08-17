@@ -7,12 +7,6 @@ import socket
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
-# MEDIA
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/topics/files/
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "/media/"
-
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend

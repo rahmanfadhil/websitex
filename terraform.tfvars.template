@@ -1,10 +1,10 @@
 region             = "ap-southeast-1"
 availability_zones = ["ap-southeast-1a", "ap-southeast-1b"]
-docker_image_name  = "rahmanfadhil/websitex"
-docker_image_tag   = "1.6"
+docker_image_name  = "rahmanfadhil/websitex:1.7"
 project_name       = "websitex"
 environment        = "production"
 
 # TODO: Change this to your own values
-s3_bucket_name    = null
 ses_email_address = null
+domain_name       = null
+certificate_arn   = null

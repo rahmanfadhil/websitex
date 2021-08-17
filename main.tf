@@ -5,7 +5,6 @@
 # - https://testdriven.io/blog/deploying-django-to-ecs-with-terraform/
 
 # TODOS:
-# - setup SSL
 # - autoscale ecs tasks
 # - seperate everything to individual modules
 # - move from Docker HUB to ECR
@@ -80,6 +79,7 @@ variable "database_username" {
 
 variable "s3_bucket_name" {
   description = "S3 bucket name for user-uploaded files"
+  default     = null
 }
 
 variable "project_name" {
@@ -89,12 +89,7 @@ variable "project_name" {
 
 variable "docker_image_name" {
   description = "The project image repository"
-  default     = "rahmanfadhil/websitex"
-}
-
-variable "docker_image_tag" {
-  description = "The project image tag"
-  default     = "latest"
+  default     = "rahmanfadhil/websitex:latest"
 }
 
 variable "health_check_path" {
@@ -117,6 +112,11 @@ variable "elasticache_node_type" {
   default     = "cache.t2.micro"
 }
 
+variable "elasticache_nodes" {
+  description = "The Memcached nodes count"
+  default     = 1
+}
+
 variable "broker_engine_version" {
   description = "The RabbitMQ engine version in Amazon MQ"
   default     = "3.8.17"
@@ -129,6 +129,21 @@ variable "broker_node_type" {
 
 variable "ses_email_address" {
   description = "Email address to send emails via SES"
+}
+
+variable "certificate_arn" {
+  description = "The SSL certificate in AWS Certificate Manager (ACM)"
+  default     = null
+}
+
+variable "domain_name" {
+  description = "The website domain name"
+  default     = null
+}
+
+variable "subdomain" {
+  description = "The website subdomain"
+  default     = "www"
 }
 
 # PROVIDER
@@ -184,6 +199,10 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
   count          = length(var.public_subnets_cidr)
   subnet_id      = element(aws_subnet.public.*.id, count.index)
+}
+
+output "public_subnets" {
+  value = aws_subnet.public.*.id
 }
 
 # PRIVATE SUBNETS
@@ -254,8 +273,8 @@ resource "aws_security_group" "ecs_tasks" {
 
   ingress {
     protocol         = "tcp"
-    from_port        = var.container_port
-    to_port          = var.container_port
+    from_port        = 80
+    to_port          = 80
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
     security_groups  = [aws_security_group.alb.id]
@@ -274,6 +293,10 @@ resource "aws_security_group" "ecs_tasks" {
     Name        = "${var.project_name}-sg-task-${var.environment}"
     Environment = var.environment
   }
+}
+
+output "security_groups" {
+  value = [aws_security_group.ecs_tasks.id]
 }
 
 resource "aws_security_group" "database" {
@@ -361,8 +384,8 @@ resource "aws_security_group" "broker" {
 # ------------------------------------------------------------------------------
 
 # Cluster
-resource "aws_ecs_cluster" "app_cluster" {
-  name = "${var.project_name}-cluster"
+resource "aws_ecs_cluster" "main" {
+  name = "${var.project_name}-${var.environment}-cluster"
 
   setting {
     name  = "containerInsights"
@@ -372,13 +395,13 @@ resource "aws_ecs_cluster" "app_cluster" {
 
 output "ecs_cluster_name" {
   description = "ECS cluster name"
-  value       = aws_ecs_cluster.app_cluster.name
+  value       = aws_ecs_cluster.main.name
 }
 
 # Service
-resource "aws_ecs_service" "app_service" {
+resource "aws_ecs_service" "web" {
   name        = "web"
-  cluster     = aws_ecs_cluster.app_cluster.arn
+  cluster     = aws_ecs_cluster.main.arn
   launch_type = "FARGATE"
 
   enable_execute_command             = true
@@ -395,20 +418,20 @@ resource "aws_ecs_service" "app_service" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.app_alb_tg.arn
+    target_group_arn = aws_alb_target_group.main.arn
     container_name   = "app"
-    container_port   = var.container_port
+    container_port   = 80
   }
 
-  #   deployment_circuit_breaker {
-  #     enable   = true
-  #     rollback = true
-  #   }
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
 }
 
 resource "aws_ecs_service" "celery" {
   name        = "celery"
-  cluster     = aws_ecs_cluster.app_cluster.arn
+  cluster     = aws_ecs_cluster.main.arn
   launch_type = "FARGATE"
 
   enable_execute_command             = true
@@ -423,10 +446,10 @@ resource "aws_ecs_service" "celery" {
     subnets          = aws_subnet.public.*.id
   }
 
-  #   deployment_circuit_breaker {
-  #     enable   = true
-  #     rollback = true
-  #   }
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
 }
 
 # CloudWatch logs
@@ -448,20 +471,21 @@ resource "aws_ecs_task_definition" "web" {
   container_definitions = jsonencode([
     {
       "name" : "app",
-      "image" : "${var.docker_image_name}:${var.docker_image_tag}",
+      "image" : "${var.docker_image_name}",
       "cpu" : 256,
       "memory" : 512,
       "essential" : true,
       "environment" : [
+        { "name" : "PORT", "value" : "80" },
         { "name" : "DATABASE_NAME", "value" : "${aws_db_instance.main.name}" },
         { "name" : "DATABASE_USER", "value" : "${aws_db_instance.main.username}" },
         { "name" : "DATABASE_PASSWORD", "value" : "${aws_db_instance.main.password}" },
         { "name" : "DATABASE_HOST", "value" : "${aws_db_instance.main.address}" },
         { "name" : "DATABASE_PORT", "value" : "${tostring(aws_db_instance.main.port)}" },
         { "name" : "SECRET_KEY", "value" : "${random_password.app_secret_key.result}" },
-        { "name" : "ALLOWED_HOSTS", "value" : "${aws_alb.app_alb.dns_name}" },
-        { "name" : "USE_HTTPS", "value" : "False" },
-        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${var.ses_email_address}" },
+        { "name" : "ALLOWED_HOSTS", "value" : "${var.domain_name != null ? "${var.subdomain}.${var.domain_name}" : aws_alb.app_alb.dns_name}" },
+        { "name" : "USE_HTTPS", "value" : "${var.certificate_arn != null ? "True" : "False"}" },
+        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${aws_ses_email_identity.main.email}" },
         { "name" : "AWS_STORAGE_BUCKET_NAME", "value" : "${aws_s3_bucket.main.bucket}" },
         { "name" : "MEMCACHED_URL", "value" : "${aws_elasticache_cluster.main.cluster_address}:${aws_elasticache_cluster.main.port}" },
         { "name" : "BROKER_URL", "value" : "amqps://ExampleUser:${random_password.broker_password.result}@${substr(aws_mq_broker.main.instances.0.endpoints.0, 8, -1)}" },
@@ -471,8 +495,8 @@ resource "aws_ecs_task_definition" "web" {
       }
       "portMappings" : [
         {
-          "containerPort" : "${var.container_port}",
-          "hostPort" : "${var.container_port}",
+          "containerPort" : 80,
+          "hostPort" : 80,
           "protocol" : "tcp"
         }
       ],
@@ -486,7 +510,7 @@ resource "aws_ecs_task_definition" "web" {
       },
     }
   ])
-  family                   = "${var.project_name}-web"
+  family                   = "${var.project_name}-${var.environment}-web"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
@@ -496,6 +520,7 @@ resource "aws_ecs_task_definition" "web" {
   network_mode = "awsvpc"
 
   tags = {
+    Project     = var.project_name
     Environment = var.environment
   }
 }
@@ -504,19 +529,11 @@ output "latest_task_definition" {
   value = aws_ecs_task_definition.web.arn
 }
 
-output "public_subnets" {
-  value = aws_subnet.public.*.id
-}
-
-output "security_groups" {
-  value = [aws_security_group.ecs_tasks.id]
-}
-
 resource "aws_ecs_task_definition" "celery" {
   container_definitions = jsonencode([
     {
       "name" : "app",
-      "image" : "${var.docker_image_name}:${var.docker_image_tag}",
+      "image" : "${var.docker_image_name}",
       "cpu" : 256,
       "memory" : 512,
       "essential" : true,
@@ -528,9 +545,9 @@ resource "aws_ecs_task_definition" "celery" {
         { "name" : "DATABASE_HOST", "value" : "${aws_db_instance.main.address}" },
         { "name" : "DATABASE_PORT", "value" : "${tostring(aws_db_instance.main.port)}" },
         { "name" : "SECRET_KEY", "value" : "${random_password.app_secret_key.result}" },
-        { "name" : "ALLOWED_HOSTS", "value" : "${aws_alb.app_alb.dns_name}" },
-        { "name" : "USE_HTTPS", "value" : "False" },
-        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${var.ses_email_address}" },
+        { "name" : "ALLOWED_HOSTS", "value" : "${var.domain_name != null ? "${var.subdomain}.${var.domain_name}" : aws_alb.app_alb.dns_name}" },
+        { "name" : "USE_HTTPS", "value" : "${var.certificate_arn != null ? "True" : "False"}" },
+        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${aws_ses_email_identity.main.email}" },
         { "name" : "AWS_STORAGE_BUCKET_NAME", "value" : "${aws_s3_bucket.main.bucket}" },
         { "name" : "MEMCACHED_URL", "value" : "${aws_elasticache_cluster.main.cluster_address}:${aws_elasticache_cluster.main.port}" },
         { "name" : "BROKER_URL", "value" : "amqps://ExampleUser:${random_password.broker_password.result}@${substr(aws_mq_broker.main.instances.0.endpoints.0, 8, -1)}" },
@@ -575,9 +592,9 @@ resource "random_string" "alb_prefix" {
   special = false
 }
 
-resource "aws_alb_target_group" "app_alb_tg" {
+resource "aws_alb_target_group" "main" {
   name        = "${var.project_name}-alb-tg-${random_string.alb_prefix.result}"
-  port        = var.container_port
+  port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
@@ -597,14 +614,58 @@ resource "aws_alb_target_group" "app_alb_tg" {
   }
 }
 
-resource "aws_alb_listener" "app_alb_listener" {
+resource "aws_alb_listener" "http" {
   load_balancer_arn = aws_alb.app_alb.id
   port              = 80
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_alb_target_group.app_alb_tg.id
+    type             = var.certificate_arn != null ? "redirect" : "forward"
+    target_group_arn = var.certificate_arn != null ? null : aws_alb_target_group.main.id
+
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      host        = "${var.subdomain}.${var.domain_name}"
+    }
+  }
+}
+
+resource "aws_alb_listener_rule" "subdomain" {
+  count        = var.certificate_arn != null ? 1 : 0
+  listener_arn = aws_alb_listener.https[0].arn
+  priority     = 100
+
+  action {
+    type = "redirect"
+
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      host        = "${var.subdomain}.${var.domain_name}"
+    }
+  }
+
+  condition {
+    host_header {
+      values = [var.domain_name]
+    }
+  }
+}
+
+resource "aws_alb_listener" "https" {
+  count             = var.certificate_arn != null ? 1 : 0
+  load_balancer_arn = aws_alb.app_alb.id
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.certificate_arn
+
+  default_action {
     type             = "forward"
+    target_group_arn = aws_alb_target_group.main.id
   }
 }
 
@@ -741,7 +802,7 @@ resource "aws_elasticache_cluster" "main" {
   cluster_id           = "tf-memcached-${var.project_name}-${var.environment}"
   engine               = "memcached"
   node_type            = var.elasticache_node_type
-  num_cache_nodes      = 2
+  num_cache_nodes      = var.elasticache_nodes
   parameter_group_name = "default.memcached1.6"
   port                 = 11211
   subnet_group_name    = aws_elasticache_subnet_group.main.name
@@ -774,5 +835,50 @@ resource "aws_mq_broker" "main" {
   user {
     username = "ExampleUser"
     password = random_password.broker_password.result
+  }
+}
+
+# SES
+# ------------------------------------------------------------------------------
+
+resource "aws_ses_email_identity" "main" {
+  email = var.ses_email_address
+}
+
+# ROUTE 53
+# ------------------------------------------------------------------------------
+
+resource "aws_route53_zone" "primary" {
+  count = var.domain_name != null ? 1 : 0
+  name  = var.domain_name
+}
+
+output "name_servers" {
+  value = var.domain_name != null ? aws_route53_zone.primary[0].name_servers : null
+}
+
+resource "aws_route53_record" "main" {
+  count   = var.domain_name != null ? 1 : 0
+  zone_id = aws_route53_zone.primary[0].zone_id
+  name    = var.domain_name
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.app_alb.dns_name
+    zone_id                = aws_alb.app_alb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "www" {
+  count   = var.domain_name != null ? 1 : 0
+  zone_id = aws_route53_zone.primary[0].zone_id
+  name    = "${var.subdomain}.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.app_alb.dns_name
+    zone_id                = aws_alb.app_alb.zone_id
+    evaluate_target_health = true
   }
 }

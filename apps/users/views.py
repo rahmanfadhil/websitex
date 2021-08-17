@@ -1,11 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, View
-from django.template.response import TemplateResponse
 
 from apps.core.utils import compress_image
 from apps.users.forms import UserUpdateForm

@@ -63,4 +63,13 @@ RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY . .
-CMD [ "./entrypoint.sh" ]
+RUN DATABASE_NAME="" \
+    DATABASE_PORT="" \
+    DATABASE_USER="" \
+    DATABASE_PASSWORD="" \
+    DATABASE_HOST="" \
+    MEMCACHED_URL="" \
+    BROKER_URL="" \
+    AWS_STORAGE_BUCKET_NAME="" \
+    python manage.py collectstatic --no-input
+CMD [ "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:$PORT" ]

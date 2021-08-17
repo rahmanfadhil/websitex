@@ -1,6 +1,3 @@
-from io import BytesIO
-from PIL import Image
-from django.core.files.uploadedfile import InMemoryUploadedFile
 import factory
 
 from apps.users.models import User

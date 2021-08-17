@@ -8,19 +8,31 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-
-  <!-- Icon -->
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-
-  <!-- Meta -->
-  <title>{% block title %}{% firstof page_title PAGE_TITLE %}{% endblock title %}</title>
-  <meta name="description" content="{% firstof meta_description DEFAULT_META_DESCRIPTION %}">
-  <meta name="author" content="{% firstof meta_author DEFAULT_META_AUTHOR %}">
-  <meta name="keywords" content="{% firstof meta_keywords DEFAULT_META_KEYWORDS %}">
+  <title>{% block title %}{{ DEFAULT_PAGE_TITLE }}{% endblock title %}</title>
 
   <!-- CSS & JS -->
   <link rel="stylesheet" href="{% static 'dist/main.css' %}">
   <script defer src="{% static 'dist/main.js' %}"></script>
+
+  {% block head %}
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="A framework for launching new Django projects quickly.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ DEFAULT_PAGE_TITLE }}">
+    <meta property="og:description" content="A framework for launching new Django projects quickly.">
+    <meta property="og:image" content="{% static 'og_image.png' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{{ DEFAULT_PAGE_TITLE }}">
+    <meta property="twitter:description" content="A framework for launching new Django projects quickly.">
+    <meta property="twitter:image" content="{% static 'og_image.png' %}">
+  {% endblock head %}
 </head>
 
 <body>
@@ -28,21 +40,21 @@
   {% block header %}
     <nav class="navbar navbar-expand-lg navbar-dark mb-5">
       <div class="container">
-        <a class="navbar-brand h1 mb-0" href="{% url 'pages:home' %}">{{ PAGE_TITLE }}</a>
+        <a class="navbar-brand h1 mb-0" href="{% url 'pages:home' %}">{{ DEFAULT_PAGE_TITLE }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mx-auto py-3 py-lg-0">
-            <li class="nav-item">
+          <ul class="navbar-nav mx-auto py-3 py-lg-0 flex-row flex-wrap">
+            <li class="nav-item col-6 col-md-auto">
               {% is_link_active 'pages:home' as is_home_active %}
               <a class="nav-link {% if is_home_active %}active{% endif %}" {% if is_home_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item col-6 col-md-auto">
               {% is_link_active 'wagtail_serve' as is_blog_active %}
               <a class="nav-link {% if is_blog_active %}active{% endif %}" {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">Blog</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item col-6 col-md-auto">
               {% is_link_active 'pages:about' as is_about_active %}
               <a class="nav-link {% if is_about_active %}active{% endif %}" {% if is_about_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
             </li>
@@ -64,7 +76,7 @@
               </li>
             </ul>
           {% else %}
-            <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
+            <ul class="navbar-nav flex-row flex-wrap">
               <li class="nav-item col-6 col-md-auto">
                 {% is_link_active 'account_login' as is_login_active %}
                 <a class="nav-link {% if is_login_active %}active{% endif %}" {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Login</a>

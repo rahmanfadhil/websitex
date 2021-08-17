@@ -4,16 +4,11 @@ from django.http import HttpRequest
 from django.urls.base import resolve
 
 
-def default_meta_tags(request: HttpRequest):
+def default_page_title(request: HttpRequest):
     """
-    Provides the default meta tags for SEO.
+    Provides the default page title for every page
     """
-    return {
-        "PAGE_TITLE": settings.PAGE_TITLE,
-        "DEFAULT_META_DESCRIPTION": settings.DEFAULT_META_DESCRIPTION,
-        "DEFAULT_META_KEYWORDS": settings.DEFAULT_META_KEYWORDS,
-        "DEFAULT_META_AUTHOR": settings.DEFAULT_META_AUTHOR,
-    }
+    return {"DEFAULT_PAGE_TITLE": settings.DEFAULT_PAGE_TITLE}
 
 
 def page_data(request: HttpRequest):

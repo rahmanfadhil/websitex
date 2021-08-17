@@ -50,11 +50,6 @@ services:
       - EMAIL_PORT=1025
     env_file:
       - .env
-  memcached:
-    image: memcached:1.6.10-alpine
-    mem_limit: 64m
-    ports:
-      - "11211:11211"
   rabbitmq:
     image: rabbitmq:3.9.1-management-alpine
     ports:

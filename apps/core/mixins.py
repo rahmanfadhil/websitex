@@ -1,11 +1,10 @@
-from typing import Iterable, Optional
+from typing import Optional
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponse
 from django.utils import timezone
-from django.contrib.messages import views as messages_views
 
 
 class PaginationMixin:
@@ -32,40 +31,11 @@ class PageTitleMixin:
     page_title: Optional[str] = None
 
     def get_page_title(self) -> str:
-        if self.page_title is None:
-            raise NotImplementedError(
-                "Please implement either the `page_title` property, `get_page_title` method, or `get_full_page_title` method."
-            )
-        return self.page_title
-
-    def get_full_page_title(self) -> str:
-        return "{} - {}".format(self.get_page_title(), settings.PAGE_TITLE)
+        return self.page_title or settings.DEFAULT_PAGE_TITLE
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["page_title"] = self.get_full_page_title()
-        return context
-
-
-class MetaTagsMixin:
-    """
-    Customize page meta tags for SEO.
-    """
-
-    def get_meta_description(self) -> str:
-        return settings.DEFAULT_META_DESCRIPTION
-
-    def get_meta_keywords(self) -> Iterable[str]:
-        return settings.DEFAULT_META_KEYWORDS
-
-    def get_meta_author(self) -> str:
-        return settings.DEFAULT_META_AUTHOR
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["meta_description"] = self.get_meta_description()
-        context["meta_keywords"] = ", ".join(self.get_meta_keywords())
-        context["meta_author"] = self.get_meta_author()
+        context["DEFAULT_PAGE_TITLE"] = self.get_page_title()
         return context
 
 
