@@ -1,13 +1,16 @@
 from io import BytesIO
-from typing import BinaryIO, Tuple
+from typing import Any, BinaryIO, Dict, List, Tuple, Union
 
 from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.files import File
 from django.core.mail import send_mail
+from django.core.mail.message import EmailMessage
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.text import slugify
 from PIL import Image
+from premailer import transform
 
 
 def unique_slugify(klass: type, title: str, instance=None):
@@ -55,17 +58,22 @@ def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
     return File(im_io, image.name)
 
 
-def send_html_email(subject: str, email: str, template_name: str, context: dict) -> int:
+def send_html_email(
+    subject: str,
+    email: Union[str, List[str]],
+    template_name: str,
+    context: Dict[str, Any],
+) -> int:
     """
-    Send email from HTML template.
+    Renders an HTML template and sends it as email.
     """
-    html_message = render_to_string(template_name, context)
+    context["current_site"] = get_current_site()
+    html_message = transform(render_to_string(template_name, context))
     message = strip_tags(html_message)
     return send_mail(
         subject,
         message,
         settings.DEFAULT_FROM_EMAIL,
-        [email],
+        [email] if isinstance(email, str) else email,
         html_message=html_message,
-        fail_silently=True,
     )

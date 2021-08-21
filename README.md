@@ -21,7 +21,6 @@ A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvi
 
 **Other Dependencies**
 
--   [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms) to easily build forms.
 -   [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) to work with authentication.
 -   [django-anymail](https://django-environ.readthedocs.io/en/latest/) to for sending emails in production.
 -   [whitenoise](http://whitenoise.evans.io/en/stable/index.html) to serve static files in production.

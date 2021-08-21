@@ -7,7 +7,7 @@ volumes:
 
 services:
   postgres:
-    image: postgres:13.2
+    image: postgres:13.4
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -17,6 +17,11 @@ services:
       - dev_postgres_data_backups:/backups:z
     ports:
       - "5432:5432"
+  rabbitmq:
+    image: rabbitmq:3.9.1-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
   mailhog:
     image: mailhog/mailhog:v1.0.0
     user: root
@@ -36,7 +41,6 @@ services:
       - .:/code
     depends_on:
       - postgres
-      - memcached
       - rabbitmq
     environment:
       - DATABASE_NAME=postgres
@@ -45,24 +49,8 @@ services:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
-      - MEMCACHED_URL=memcached:11211
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
-    env_file:
-      - .env
-  rabbitmq:
-    image: rabbitmq:3.9.1-management-alpine
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-  assets:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: webpack
-    volumes:
-      - ./assets:/code/assets
-      - ./static/dist:/code/static/dist
   web:
     build:
       context: .
@@ -74,7 +62,6 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
-      - memcached
       - rabbitmq
     environment:
       - DATABASE_NAME=postgres
@@ -83,8 +70,5 @@ services:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
-      - MEMCACHED_URL=memcached:11211
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
-    env_file:
-      - .env

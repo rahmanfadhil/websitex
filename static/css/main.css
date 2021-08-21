@@ -1,0 +1,439 @@
+/* Variables */
+
+:root {
+  --black: #000;
+  --white: #fff;
+  --blue: #00f;
+  --red: #f00;
+  --gray: #eee;
+  --border: #ccc;
+
+  --border-radius: 3px;
+}
+
+/* Global styles */
+
+body {
+  font-family: "Commissioner", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* Typography */
+
+h1,
+.display-1 {
+  font-size: 2.5em;
+}
+h2,
+.display-2 {
+  font-size: 2em;
+}
+h3,
+.display-3 {
+  font-size: 1.75em;
+}
+h4,
+.display-4 {
+  font-size: 1.5em;
+}
+h5,
+.display-5 {
+  font-size: 1.25em;
+}
+h6,
+.display-6 {
+  font-size: 1em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+a {
+  color: var(--blue);
+}
+
+hr {
+  margin: 3rem 0;
+}
+
+/* Forms */
+
+form section {
+  margin-bottom: 1.5rem;
+}
+
+form section > label {
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+form section.invalid input,
+form section.invalid select,
+form section input:invalid:not(:placeholder-shown) {
+  border: 1px solid var(--red) !important;
+}
+
+/* Add a little extra space between a checkbox input and the label */
+form section input[type="checkbox"],
+form section input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+form section input[type="radio"],
+form section input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  border-radius: var(--border-radius);
+}
+
+form section input[type="radio"]:checked,
+form section input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-check' viewBox='0 0 16 16'%3E%3Cpath d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z'/%3E%3C/svg%3E%0A");
+  background-color: var(--gray);
+}
+
+form section input[type="text"],
+form section input[type="email"],
+form section input[type="password"],
+form section input[type="file"],
+form section input[type="date"],
+form section select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--white);
+}
+
+form section input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Add upload icon to the right side of the input */
+form section input[type="file"] {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-upload' viewBox='0 0 16 16'%3E%3Cpath d='M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z'/%3E%3Cpath d='M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px 12px;
+}
+
+/* Style the browser's default "Choose File" button */
+form section input[type="file"]::file-selector-button {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  margin-top: -0.75rem;
+  margin-bottom: -0.75rem;
+  margin-left: -1rem;
+  margin-right: 1rem;
+  line-height: inherit;
+  background-color: var(--gray);
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: 1px solid var(--border);
+}
+
+/* Style the current display and the clear checkbox on Django's clearable file input */
+form section .current-file {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Add a chevron down icon to the right side of the input */
+form section select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 16px 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Style the default django forms errors */
+.errorlist {
+  color: var(--red);
+}
+
+form section .errorlist {
+  margin-top: 0.25rem;
+}
+
+/* Style the non-field errors in django forms */
+.errorlist.nonfield {
+  margin-bottom: 1.5rem;
+}
+
+/* Utilities */
+
+.container {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+/* Header */
+
+header {
+  border-bottom: 1px solid var(--gray);
+  margin-bottom: 3rem;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  header nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 0;
+  }
+}
+
+header a {
+  color: inherit;
+}
+
+header nav a.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-right: 1.5rem;
+}
+
+header nav #menu {
+  width: 100%;
+}
+
+header nav button#toggle {
+  display: none;
+}
+
+header nav #menu {
+  display: flex;
+  align-items: center;
+}
+
+header nav #menu a {
+  margin-left: 1.5rem;
+}
+
+header nav #menu a.divider {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  header {
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  header nav #menu {
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: start;
+  }
+
+  header nav #menu.open {
+    display: flex;
+  }
+
+  header nav #menu a {
+    width: 50%;
+    margin-top: 1.5rem;
+    margin-left: 0;
+  }
+
+  header nav #menu a.button {
+    width: 100%;
+  }
+
+  header nav button#toggle svg {
+    display: block;
+  }
+
+  header nav button#toggle {
+    display: inline-block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-list' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: center;
+
+    /* The height of the navbar title */
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+/* Buttons */
+
+button,
+a.button {
+  padding: 0.75rem 1rem;
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: var(--border-radius);
+  display: inline-block;
+  text-align: center;
+}
+
+button.outline,
+a.button.outline {
+  background: transparent;
+  border: 1px solid var(--black);
+  color: inherit;
+}
+
+/* Authentication form */
+
+.auth-form {
+  max-width: 450px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+}
+
+@media (max-width: 768px) {
+  .auth-form {
+    margin: 2.5rem auto;
+    padding: 1.5rem;
+  }
+}
+
+/* Tab navigation */
+
+nav.tabs {
+  display: flex;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--gray);
+}
+
+nav.tabs a {
+  color: inherit;
+  padding: 0.75rem 1rem;
+}
+
+nav.tabs a.active {
+  color: var(--black);
+  font-weight: 500;
+  border-bottom: 2px solid var(--black);
+}
+
+/* Home page */
+
+section.home-intro {
+  display: grid;
+  gap: 2.5rem;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+
+section.home-intro img {
+  display: block;
+  width: 100%;
+  border-radius: var(--border-radius);
+}
+
+/* Content */
+
+section.content {
+  margin-bottom: 3rem;
+}
+
+/* Email card */
+
+.email-card {
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.email-card form button {
+  margin-right: 0.75rem;
+}
+
+.email-card form button:last-child {
+  margin-right: 0;
+}
+
+.email-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.email-card p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .email-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .email-card p {
+    margin-bottom: 1.5rem;
+  }
+}

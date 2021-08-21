@@ -1,71 +1,21 @@
 {% extends '_base.html' %}
 
-{% load crispy_forms_tags %}
 
 {% block title %}Edit profile - {{ DEFAULT_PAGE_TITLE }}{% endblock %}
 
 {% block content %}
-  <div class="row justify-content-center my-5">
-    <div class="col-lg-9">
-      {% include 'users/components/settings_header.html' %}
-      <div class="card">
-        <div class="card-header">
-          <h5 class="my-2">Basic information</h5>
-        </div>
-        <div class="card-body">
-          <form method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-primary mt-2">Save changes</button>
-          </form>
-        </div>
-      </div>
-      <div class="card mt-5">
-        <div class="card-header">
-          <h5 class="my-2">Media</h5>
-        </div>
-        <div class="card-body">
-          <div class="d-flex align-items-center">
-            <div class="flex-grow-1 d-flex align-items-center">
-              {% if user.avatar %}
-                <div class="flex-shrink-0 me-3">
-                  <img src="{{ user.avatar.url }}" alt="{{ user.username }} profile picture" style="height: 4rem; width: 4rem;" class="rounded-circle">
-                </div>
-              {% endif %}
-              <div>
-                <h5>{% if user.avatar %}Your profile picture{% else %}Upload profile picture{% endif %}</h5>
-                <p class="text-muted small m-0">PNG or JPG no larger than 1000px</p>
-              </div>
-            </div>
-            <form action="{% url 'users:update_avatar' %}" method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              <input id="change_avatar_input" name="avatar" type="file" accept="image/*" hidden />
-              <button id="change_avatar_button" type="button" class="btn btn-primary">
-                {% if user.avatar %}Change{% else %}Upload{% endif %}
-              </button>
-            </form>
-            {% if user.avatar %}
-              <form action="{% url 'users:update_avatar' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="avatar-clear" value="on">
-                <button type="submit" class="btn btn-danger ms-3">Remove</button>
-              </form>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="card mt-5">
-        <div class="card-header">
-          <h5 class="my-2">Delete account</h5>
-        </div>
-        <div class="card-body">
-          <p class="mb-4 text-muted">Once you delete your account, there is no going back. Please be certain.</p>
-          <form action="{% url 'users:user_delete' %}" method="post" data-confirm data-confirm-button-title="Yes, delete my account">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete account</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include 'users/components/settings_header.html' %}
+  <h2 class="display-4">Basic information</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'snippets/form.html' %}
+    <button>Save changes</button>
+  </form>
+  <hr>
+  <h2 class="display-4">Delete account</h2>
+  <p>Once you delete your account, there is no going back. Please be certain.</p>
+  <form action="{% url 'users:user_delete' %}" method="post" data-confirm data-confirm-button-title="Yes, delete my account">
+    {% csrf_token %}
+    <button>Delete account</button>
+  </form>
 {% endblock content %}

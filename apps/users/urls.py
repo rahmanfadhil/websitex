@@ -1,11 +1,15 @@
 from django.urls import path
 
-from apps.users.views import DeleteUserView, UserUpdateAvatarView, UserUpdateView
+from apps.users.views import DeleteUserView, UserUpdateView, WellKnownChangePasswordView
 
 app_name = "users"
 
 urlpatterns = [
-    path("account/update/", UserUpdateView.as_view(), name="user_update"),
-    path("update-avatar/", UserUpdateAvatarView.as_view(), name="update_avatar"),
-    path("account/delete/", DeleteUserView.as_view(), name="user_delete"),
+    path(
+        ".well-known/change-password/",
+        WellKnownChangePasswordView.as_view(),
+        name="well_known_change_password",
+    ),
+    path("accounts/update/", UserUpdateView.as_view(), name="user_update"),
+    path("accounts/delete/", DeleteUserView.as_view(), name="user_delete"),
 ]

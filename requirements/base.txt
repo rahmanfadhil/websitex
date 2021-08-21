@@ -3,12 +3,11 @@ Pillow==8.3.1 # https://github.com/python-pillow/Pillow
 whitenoise[brotli]==5.3.0 # https://github.com/evansd/whitenoise
 celery==5.1.2 # http://celeryproject.org/
 pymemcache==3.5.0 # https://github.com/pinterest/pymemcache
-django-celery-results==2.2.0 # https://github.com/celery/django-celery-results
-wagtail==2.14 # https://wagtail.io/
+premailer==3.10.0 # https://github.com/peterbe/premailer
 
 # Django
 # ------------------------------------------------------------------------------
 Django==3.2.6 # https://www.djangoproject.com/
+wagtail==2.14 # https://wagtail.io/
 django-allauth==0.45.0 # https://github.com/pennersr/django-allauth
-django-crispy-forms==1.12.0 # https://github.com/django-crispy-forms/django-crispy-forms
-crispy-bootstrap5==0.4 # https://github.com/django-crispy-forms/crispy-bootstrap5
+django-celery-results==2.2.0 # https://github.com/celery/django-celery-results

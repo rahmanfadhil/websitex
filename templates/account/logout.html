@@ -1,24 +1,12 @@
 {% extends '_base.html' %}
-{% load crispy_forms_tags %}
 
 {% block title %}Log out - {{ DEFAULT_PAGE_TITLE }}{% endblock %}
 
 {% block content %}
-  <div class="row justify-content-center my-5 my-md-7">
-    <div class="col-lg-6 col-xl-5">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="my-2">Log out</h5>
-        </div>
-        <div class="card-body">
-          <p class="card-text">Are you sure you want to log out?</p>
-          <form method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-danger mt-2">Log out</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <form method="post" class="auth-form">
+    <h1>Log out</h1>
+    <p>Are you sure you want to log out?</p>
+    {% csrf_token %}
+    <button>Log out</button>
+  </form>
 {% endblock content %}

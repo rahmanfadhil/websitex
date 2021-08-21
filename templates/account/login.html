@@ -2,30 +2,17 @@
 
 {% load static %}
 {% load core %}
-{% load crispy_forms_tags %}
 
-{% block title %}Log in - {{ DEFAULT_PAGE_TITLE }}{% endblock title %}
+{% block title %}Login - {{ DEFAULT_PAGE_TITLE }}{% endblock title %}
 
 {% block content %}
-  <div class="row justify-content-center my-5 my-md-7">
-    <div class="col-lg-6 col-xl-5">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="my-2">Login</h5>
-        </div>
-        <div class="card-body">
-          <form method="post">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <div class="d-flex align-items-center justify-content-between mt-4">
-              <button type="submit" class="btn btn-primary me-4">Login</button>
-              <a class="small" href="{% url 'account_reset_password' %}">Forgot password?</a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <form method="post" class="auth-form">
+    <h1>Login</h1>
+    {% csrf_token %}
+    {% include 'snippets/form.html' %}
+    <p>Forgot your password? <a href="{% url 'account_reset_password' %}">Reset password</a></p>
+    <button>Login</button>
+  </form>
 {% endblock content %}
 
 {% block footer %}{% endblock footer %}

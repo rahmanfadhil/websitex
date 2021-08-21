@@ -1,0 +1,18 @@
+{{ form.non_field_errors }}
+
+{% for hidden in form.hidden_fields %}
+  {{ hidden }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+  <section class="{% if field.errors %}invalid{% endif %}">
+    {% if field.field.widget.input_type == 'checkbox' %}
+      {{ field }}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% else %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+    {% endif %}
+    {{ field.errors }}
+  </section>
+{% endfor %}

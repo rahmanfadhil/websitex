@@ -28,12 +28,11 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.humanize",
+    "django.forms",
 ]
 THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
-    "crispy_forms",
-    "crispy_bootstrap5",
     "django_celery_results",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -100,6 +99,11 @@ TEMPLATES = [
     },
 ]
 
+# FORM RENDERER
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/forms/renderers/#built-in-template-form-renderers
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -157,12 +161,6 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
-# DJANGO-CRISPY-FORMS CONFIGS
-# ------------------------------------------------------------------------------
-# https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-
 # CUSTOM USER MODEL CONFIGS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
@@ -183,7 +181,7 @@ AUTHENTICATION_BACKENDS = (
 )
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True

@@ -1,17 +1,11 @@
 {% load core %}
 
-<h2 class="mb-5">My account</h2>
-<ul class="nav nav-tabs mb-5">
-  <li class="nav-item">
-    {% active_link 'users:user_update' as is_profile_active %}
-    <a class="nav-link {% if is_profile_active %}active{% endif %}" {% if is_profile_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">Profile</a>
-  </li>
-  <li class="nav-item">
-    {% active_link 'account_email' as is_emails_active %}
-    <a class="nav-link {% if is_emails_active %}active{% endif %}" {% if is_emails_active %}aria-current="page"{% endif %} href="{% url 'account_email' %}">Emails</a>
-  </li>
-  <li class="nav-item">
-    {% active_link 'account_change_password' as is_security_active %}
-    <a class="nav-link {% if is_security_active %}active{% endif %}" {% if is_security_active %}aria-current="page"{% endif %} href="{% url 'account_change_password' %}">Security</a>
-  </li>
-</ul>
+<h1 class="display-2">My account</h1>
+<nav class="tabs">
+  {% is_link_active 'users:user_update' as is_profile_active %}
+  <a class="{% if is_profile_active %}active{% endif %}" {% if is_profile_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">Profile</a>
+  {% is_link_active 'account_email' as is_emails_active %}
+  <a class="{% if is_emails_active %}active{% endif %}" {% if is_emails_active %}aria-current="page"{% endif %} href="{% url 'account_email' %}">Emails</a>
+  {% is_link_active 'account_change_password' as is_security_active %}
+  <a class="{% if is_security_active %}active{% endif %}" {% if is_security_active %}aria-current="page"{% endif %} href="{% url 'account_change_password' %}">Security</a>
+</nav>
