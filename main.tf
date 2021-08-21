@@ -97,13 +97,8 @@ variable "health_check_path" {
   default     = "/ping/"
 }
 
-variable "container_port" {
-  description = "The app port"
-  default     = 8000
-}
-
 variable "environment" {
-  description = "The app port"
+  description = "The app environment"
   default     = "production"
 }
 
@@ -476,7 +471,6 @@ resource "aws_ecs_task_definition" "web" {
       "memory" : 512,
       "essential" : true,
       "environment" : [
-        { "name" : "PORT", "value" : "80" },
         { "name" : "DATABASE_NAME", "value" : "${aws_db_instance.main.name}" },
         { "name" : "DATABASE_USER", "value" : "${aws_db_instance.main.username}" },
         { "name" : "DATABASE_PASSWORD", "value" : "${aws_db_instance.main.password}" },
@@ -562,7 +556,7 @@ resource "aws_ecs_task_definition" "celery" {
       },
     }
   ])
-  family                   = "${var.project_name}-celery"
+  family                   = "${var.project_name}-${var.environment}-celery"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = aws_iam_role.ecs_task_role.arn
@@ -627,7 +621,7 @@ resource "aws_alb_listener" "http" {
       port        = 443
       protocol    = "HTTPS"
       status_code = "HTTP_301"
-      host        = "${var.subdomain}.${var.domain_name}"
+      host        = var.domain_name != null ? "${var.subdomain}.${var.domain_name}" : null
     }
   }
 }
@@ -766,7 +760,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
 
 resource "aws_s3_bucket" "main" {
   bucket = var.s3_bucket_name
-  acl    = "public-read"
+  acl    = "authenticated-read"
 }
 
 # RDS
@@ -777,9 +771,8 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "random_password" "database_password" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
+  length  = 16
+  special = false
 }
 
 resource "aws_db_instance" "main" {

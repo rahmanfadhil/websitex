@@ -13,6 +13,9 @@
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>
       {{ field }}
     {% endif %}
+    {% if field.field.widget.input_type == 'password' %}
+      <button type="button" data-toggle-password="{{ field.id_for_label }}">Show password</button>
+    {% endif %}
     {{ field.errors }}
   </section>
 {% endfor %}

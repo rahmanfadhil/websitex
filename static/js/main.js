@@ -4,6 +4,7 @@ import "./plugins/sweetalert2.js";
 const { messages } = getPageData();
 
 // Load messages
+
 if (messages.length) {
   const { Notyf } = await import("notyf");
   const notyf = new Notyf({
@@ -20,6 +21,8 @@ if (messages.length) {
   }
 }
 
+// Mobile responsive navigation menu
+
 const toggle = document.querySelector("#toggle");
 const menu = document.querySelector("#menu");
 
@@ -32,3 +35,26 @@ toggle.addEventListener("click", function () {
     this.setAttribute("aria-expanded", "true");
   }
 });
+
+// Toggle password visibility
+// https://web.dev/sign-in-form-best-practices/#password-display
+
+for (const button of document.querySelectorAll("[data-toggle-password]")) {
+  const inputId = button.getAttribute("data-toggle-password");
+  const passwordInput = document.getElementById(inputId);
+
+  button.addEventListener("click", function () {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      button.textContent = "Hide password";
+      button.setAttribute("aria-label", "Hide password.");
+    } else {
+      passwordInput.type = "password";
+      button.textContent = "Show password";
+      button.setAttribute(
+        "aria-label",
+        "Show password as plain text. Warning: this will display your password on the screen."
+      );
+    }
+  });
+}

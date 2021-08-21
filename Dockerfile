@@ -49,4 +49,4 @@ RUN DATABASE_NAME="" \
     BROKER_URL="" \
     AWS_STORAGE_BUCKET_NAME="" \
     python manage.py collectstatic --no-input
-CMD [ "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:$PORT" ]
+CMD [ "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:80" ]

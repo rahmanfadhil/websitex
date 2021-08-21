@@ -1,14 +1,17 @@
 /* Variables */
 
 :root {
-  --black: #000;
-  --white: #fff;
-  --blue: #00f;
-  --red: #f00;
-  --gray: #eee;
-  --border: #ccc;
+  --black: #1e293b;
+  --white: #ffffff;
+  --blue: #2563eb;
+  --red: #dc2626;
+  --button: #1e293b;
+
+  --background: #f8fafc;
+  --border: #cbd5e1;
 
   --border-radius: 3px;
+  --box-shadow: 0 2px 3px rgb(0 0 0 / 16%);
 }
 
 /* Global styles */
@@ -16,6 +19,8 @@
 body {
   font-family: "Commissioner", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: var(--black);
+  background-color: var(--background);
 }
 
 /* Typography */
@@ -67,9 +72,11 @@ p {
 
 a {
   color: var(--blue);
+  position: relative;
 }
 
 hr {
+  border-color: var(--border);
   margin: 3rem 0;
 }
 
@@ -77,6 +84,7 @@ hr {
 
 form section {
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 form section > label {
@@ -84,9 +92,8 @@ form section > label {
   display: inline-block;
 }
 
-form section.invalid input,
-form section.invalid select,
-form section input:invalid:not(:placeholder-shown) {
+form section.invalid :is(input, select):not(:focus),
+form section input:invalid:not(:placeholder-shown, :focus) {
   border: 1px solid var(--red) !important;
 }
 
@@ -117,8 +124,10 @@ form section input[type="checkbox"] {
 
 form section input[type="radio"]:checked,
 form section input[type="checkbox"]:checked {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-check' viewBox='0 0 16 16'%3E%3Cpath d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z'/%3E%3C/svg%3E%0A");
-  background-color: var(--gray);
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-check' viewBox='0 0 16 16'%3E%3Cpath d='M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z'/%3E%3C/svg%3E%0A"); */
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-color: var(--blue);
+  border-color: var(--blue);
 }
 
 form section input[type="text"],
@@ -126,6 +135,7 @@ form section input[type="email"],
 form section input[type="password"],
 form section input[type="file"],
 form section input[type="date"],
+form section .current-file,
 form section select {
   padding: 0.75rem 1rem;
   border: 1px solid var(--border);
@@ -133,6 +143,13 @@ form section select {
   width: 100%;
   overflow: hidden;
   background-color: var(--white);
+  box-shadow: var(--box-shadow);
+}
+
+form section input:focus {
+  border-color: var(--blue);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 form section input[type="date"] {
@@ -159,7 +176,7 @@ form section input[type="file"]::file-selector-button {
   margin-left: -1rem;
   margin-right: 1rem;
   line-height: inherit;
-  background-color: var(--gray);
+  background-color: var(--background);
   border-top: none;
   border-bottom: none;
   border-left: none;
@@ -172,9 +189,6 @@ form section .current-file {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--border-radius);
   flex-wrap: wrap;
   gap: 0.5rem;
 }
@@ -221,8 +235,10 @@ form section .errorlist {
 /* Header */
 
 header {
-  border-bottom: 1px solid var(--gray);
   margin-bottom: 3rem;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  border-bottom: 1px solid var(--border);
 }
 
 header nav {
@@ -240,18 +256,11 @@ header nav {
   }
 }
 
-header a {
-  color: inherit;
-}
-
 header nav a.title {
   font-size: 1.5rem;
   font-weight: 500;
   margin-right: 1.5rem;
-}
-
-header nav #menu {
-  width: 100%;
+  color: var(--black);
 }
 
 header nav button#toggle {
@@ -259,6 +268,7 @@ header nav button#toggle {
 }
 
 header nav #menu {
+  width: 100%;
   display: flex;
   align-items: center;
 }
@@ -267,8 +277,8 @@ header nav #menu a {
   margin-left: 1.5rem;
 }
 
-header nav #menu a.divider {
-  margin-left: auto;
+header nav #menu a:not(.button) {
+  color: var(--black);
 }
 
 @media (max-width: 768px) {
@@ -315,6 +325,7 @@ header nav #menu a.divider {
     background-repeat: no-repeat;
     background-size: 1.5rem;
     background-position: center;
+    box-shadow: none;
 
     /* The height of the navbar title */
     width: 2.25rem;
@@ -324,21 +335,21 @@ header nav #menu a.divider {
 
 /* Buttons */
 
-button,
+button:not([data-toggle-password]),
 a.button {
   padding: 0.75rem 1rem;
-  background-color: var(--black);
+  background-color: var(--button);
+  box-shadow: var(--box-shadow);
   color: var(--white);
   border-radius: var(--border-radius);
   display: inline-block;
   text-align: center;
 }
 
-button.outline,
-a.button.outline {
-  background: transparent;
-  border: 1px solid var(--black);
-  color: inherit;
+button[data-toggle-password] {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /* Authentication form */
@@ -346,16 +357,6 @@ a.button.outline {
 .auth-form {
   max-width: 450px;
   margin: 0 auto;
-  border: 1px solid var(--border);
-  padding: 2.5rem;
-  border-radius: var(--border-radius);
-}
-
-@media (max-width: 768px) {
-  .auth-form {
-    margin: 2.5rem auto;
-    padding: 1.5rem;
-  }
 }
 
 /* Tab navigation */
@@ -363,7 +364,7 @@ a.button.outline {
 nav.tabs {
   display: flex;
   margin-bottom: 3rem;
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid var(--border);
 }
 
 nav.tabs a {
