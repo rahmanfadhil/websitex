@@ -1,0 +1,27 @@
+<section class="pagination">
+  <nav aria-label="Pagination" class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page=1" aria-label="First">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+      <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&lsaquo;</span>
+      </a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a aria-current="page" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+        <a href="?page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&rsaquo;</span>
+      </a>
+      <a href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    {% endif %}
+  </nav>
+</section>

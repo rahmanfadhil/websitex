@@ -1,4 +1,5 @@
 {% load static %}
+{% load core %}
 {% load wagtailcore_tags %}
 
 <!DOCTYPE html>
@@ -57,16 +58,23 @@
         <a class="title" href="{% url 'pages:home' %}">WebsiteX</a>
         <button id="toggle" aria-expanded="false" aria-label="Menu"></button>
         <div id="menu">
-          <a href="{% url 'pages:home' %}">Home</a>
-          <a href="{% slugurl 'blog' %}">Blog</a>
-          <a href="{% url 'pages:about' %}">About</a>
+          {% is_link_active 'pages:home' as is_pages_active %}
+          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
+          {% is_link_active 'wagtail_serve' as is_blog_active %}
+          <a {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">Blog</a>
+          {% is_link_active 'pages:about' as is_pages_active %}
+          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
           <div class="flex-grow"></div>
           {% if user.is_authenticated %}
-            <a href="{% url 'users:user_update' %}">My account</a>
-            <a href="{% url 'account_logout' %}" class="button">Log out</a>
+            {% is_link_active 'users:user_update' as is_users_active %}
+            <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">My account</a>
+            <button href="{% url 'account_logout' %}" form="logout_form">Log out</button>
+            <form id="logout_form" action="{% url 'account_logout' %}" method="post">{% csrf_token %}</form>
           {% else %}
-            <a href="{% url 'account_login' %}">Log in</a>
-            <a href="{% url 'account_signup' %}" class="button">Sign up</a>
+            {% is_link_active 'account_login' as is_account_login_active %}
+            <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Log in</a>
+            {% is_link_active 'account_signup' as is_account_signup_active %}
+            <a {% if is_account_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}" class="button">Sign up</a>
           {% endif %}
         </div>
       </nav>
@@ -76,9 +84,9 @@
   {% block wide_content %}{% endblock wide_content %}
 
   <!-- Main content -->
-  <section class="content container">
+  <main class="container">
     {% block content %}{% endblock content %}
-  </section>
+  </main>
 
   {{ page_data|json_script:"page_data" }}
 </body>
