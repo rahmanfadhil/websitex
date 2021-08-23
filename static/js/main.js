@@ -1,12 +1,44 @@
+import dialogPolyfill from "https://cdn.jsdelivr.net/npm/dialog-polyfill@0.5.6/dist/dialog-polyfill.esm.js";
+import { Notyf } from "https://cdn.jsdelivr.net/npm/notyf@3.10.0/notyf.es.js";
 import getPageData from "./utils/pageData.js";
-import "./plugins/sweetalert2.js";
 
-const { messages } = getPageData();
+// Currently, we are using the dialog polyfill to show the dialogs if the
+// browser does not support the dialog API.
+if (navigator.userAgent.indexOf("Chrome") == -1) {
+  const stylesheet = document.createElement("link");
+  stylesheet.setAttribute("rel", "stylesheet");
+  stylesheet.setAttribute(
+    "href",
+    "https://cdn.jsdelivr.net/npm/dialog-polyfill@0.5.6/dist/dialog-polyfill.css"
+  );
+  stylesheet.setAttribute(
+    "integrity",
+    "sha256-hT0ET4tfm+7MyjeBepBgV2N5tOmsAVKcTWhH82jvoaA="
+  );
+  stylesheet.setAttribute("crossorigin", "anonymous");
+  document.head.appendChild(stylesheet);
+
+  for (const dialog of document.querySelectorAll("dialog")) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+}
+
+for (const dialog of document.querySelectorAll("dialog")) {
+  dialog
+    .querySelector("[data-close-dialog]")
+    .addEventListener("click", () => dialog.close());
+}
+
+for (const button of document.querySelectorAll("[data-open-dialog]")) {
+  button.addEventListener("click", () => {
+    document.querySelector(button.getAttribute("data-open-dialog")).showModal();
+  });
+}
 
 // Load messages
 
+const { messages } = getPageData();
 if (messages.length) {
-  const { Notyf } = await import("notyf");
   const notyf = new Notyf({
     duration: 5000,
     dismissible: true,

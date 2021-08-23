@@ -17,17 +17,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/base.min.css" integrity="sha256-STIVYkHwFag01s3iswwlYF29G3i1qvGX08dJsn7eCgQ=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3.10.0/notyf.min.css" integrity="sha256-IwkvZNRC/3S26O1gWwjBINmrPZ4zYvPX4z/98OKWHkQ=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css" integrity="sha256-efpbrI2Lqi2sL5L5kT7wt6m7B2OsxlrH4sC+e1bBEk4=" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-
-  <script type="importmap">
-    {
-      "imports": {
-        "sweetalert2": "https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/src/sweetalert2.js",
-        "notyf": "https://cdn.jsdelivr.net/npm/notyf@3.10.0/notyf.es.js"
-      }
-    }
-  </script>
   <script type="module" src="{% static 'js/main.js' %}"></script>
 
   {% block head %}
@@ -51,12 +41,20 @@
 </head>
 
 <body>
+  <!-- Display messages for screen reader -->
+  {% if messages %}
+    {% for message in messages %}
+      <p class="visually-hidden" role="alert">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
   <!-- Top navigation -->
   {% block header %}
-    <header>
-      <nav role="navigation" aria-label="Main menu" class="open container">
+    <header class="navbar">
+      <nav role="navigation" aria-label="Main menu" class="open">
         <a class="title" href="{% url 'pages:home' %}">WebsiteX</a>
-        <button id="toggle" aria-expanded="false" aria-label="Menu"></button>
+        <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
+        <button id="toggle" aria-expanded="false" aria-label="Menu" class="icon"></button>
         <div id="menu">
           {% is_link_active 'pages:home' as is_pages_active %}
           <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
@@ -68,8 +66,7 @@
           {% if user.is_authenticated %}
             {% is_link_active 'users:user_update' as is_users_active %}
             <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">My account</a>
-            <button href="{% url 'account_logout' %}" form="logout_form">Log out</button>
-            <form id="logout_form" action="{% url 'account_logout' %}" method="post">{% csrf_token %}</form>
+            <button data-open-dialog="#logout-dialog">Log out</button>
           {% else %}
             {% is_link_active 'account_login' as is_account_login_active %}
             <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Log in</a>
@@ -79,12 +76,22 @@
         </div>
       </nav>
     </header>
+
+    <dialog id="logout-dialog">
+      <button data-close-dialog class="icon" aria-label="Close"></button>
+      <h1 class="display-3">Log out</h1>
+      <p>Are you sure you want to log out?</p>
+      <form action="{% url 'account_logout' %}" method="post">
+        {% csrf_token %}
+        <button>Log out</button>
+      </form>
+    </dialog>
   {% endblock header %}
 
   {% block wide_content %}{% endblock wide_content %}
 
   <!-- Main content -->
-  <main class="container">
+  <main id="main-content" class="container">
     {% block content %}{% endblock content %}
   </main>
 

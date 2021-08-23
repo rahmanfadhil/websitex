@@ -233,65 +233,80 @@ form section .errorlist {
   flex-grow: 1;
 }
 
+/* https://getbootstrap.com/docs/5.1/helpers/visually-hidden/ */
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* Header */
 
-header {
+header.navbar {
   margin-bottom: 3rem;
   background-color: var(--white);
   box-shadow: var(--box-shadow);
   border-bottom: 1px solid var(--border);
 }
 
-header nav {
+header.navbar nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 0;
+  padding: 1.5rem 1rem;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
-  header nav {
+  header.navbar nav {
     flex-direction: column;
     align-items: flex-start;
-    padding: 1rem 0;
+    padding: 1rem;
   }
 }
 
-header nav a.title {
+header.navbar nav a.title {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
   margin-right: 1.5rem;
   color: var(--black);
 }
 
-header nav button#toggle {
+header.navbar nav button#toggle {
   display: none;
 }
 
-header nav #menu {
+header.navbar nav #menu {
   width: 100%;
   display: flex;
   align-items: center;
 }
 
-header nav #menu a,
-header nav #menu button {
+header.navbar nav #menu a,
+header.navbar nav #menu button {
   margin-left: 1.5rem;
 }
 
-header nav #menu a:not(.button) {
+header.navbar nav #menu a:not(.button) {
   color: var(--black);
-  padding: 0.75rem 0;
 }
 
 @media (max-width: 768px) {
-  header {
+  header.navbar {
     position: relative;
     flex-direction: column;
     align-items: stretch;
   }
 
-  header nav #menu {
+  header.navbar nav #menu {
     display: none;
     flex-direction: row;
     flex-wrap: wrap;
@@ -299,38 +314,31 @@ header nav #menu a:not(.button) {
     justify-content: start;
   }
 
-  header nav #menu.open {
+  header.navbar nav #menu.open {
     display: flex;
   }
 
-  header nav #menu a,
-  header nav #menu button {
+  header.navbar nav #menu a,
+  header.navbar nav #menu button {
     width: 50%;
     margin-top: 1.5rem;
     margin-left: 0;
   }
 
-  header nav #menu a.button,
-  header nav #menu button {
+  header.navbar nav #menu a.button,
+  header.navbar nav #menu button {
     width: 100%;
   }
 
-  header nav button#toggle svg {
-    display: block;
-  }
-
-  header nav button#toggle {
+  header.navbar nav button#toggle {
     display: inline-block;
     position: absolute;
     top: 1rem;
     right: 1rem;
-    padding: 0;
-    background-color: transparent;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-list' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E%0A");
     background-repeat: no-repeat;
     background-size: 1.5rem;
     background-position: center;
-    box-shadow: none;
 
     /* The height of the navbar title */
     width: 2.25rem;
@@ -340,7 +348,7 @@ header nav #menu a:not(.button) {
 
 /* Buttons */
 
-button:not([data-toggle-password]),
+button:not([data-toggle-password], .icon),
 a.button {
   padding: 0.75rem 1rem;
   background-color: var(--button);
@@ -411,7 +419,7 @@ section.home-intro img {
 
 /* Content */
 
-main {
+main#main-content {
   margin-bottom: 3rem;
 }
 
@@ -537,4 +545,56 @@ section.pagination nav a:first-child {
 section.pagination nav a:last-child {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
+}
+
+/* Dialog */
+
+dialog {
+  background-color: var(--white) !important;
+  border: 2px solid var(--black) !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: var(--box-shadow) !important;
+  max-width: 450px !important;
+  padding: 1.5rem !important;
+}
+
+dialog button.icon {
+  display: inline-block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  background-position: center;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+dialog + .backdrop {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Toast */
+
+.toast {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toast div {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--blue);
+  color: var(--white);
+  border-radius: var(--border-radius);
 }
