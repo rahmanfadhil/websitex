@@ -15,8 +15,6 @@ EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
 
 # WHITENOISE
 # ------------------------------------------------------------------------------
-# https://whitenoise.evans.io/en/stable/django.html#enable-whitenoise
-MIDDLEWARE.insert(2, "whitenoise.middleware.WhiteNoiseMiddleware")
 # https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 

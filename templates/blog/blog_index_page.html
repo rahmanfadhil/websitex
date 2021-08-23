@@ -2,26 +2,12 @@
 
 {% load wagtailcore_tags %}
 
-{% block wide_content %}
-  <div class="border-bottom bg-gray-100 mt-n5 py-6 mb-5 ">
-    <div class="container">
-      <h1 class="display-3 mb-4">{{ page.title }}</h1>
-      <div class="lead">{{ page.intro|richtext }}</div>
-    </div>
-  </div>
-{% endblock %}
-
 {% block content %}
-  <div class="row">
+  <h1>{{ page.title }}</h1>
+  <p>{{ page.intro|richtext }}</p>
+  <ul>
     {% for post in page.get_children %}
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <a class="h3 mb-4 d-block text-decoration-none stretched-link" href="{% pageurl post %}">{{ post.title }}</a>
-            <p class="card-subtitle">{{ post.specific.intro }}</p>
-          </div>
-        </div>
-      </div>
+      <li><a href="{% pageurl post %}">{{ post.title }}</a></li>
     {% endfor %}
-  </div>
+  </ul>
 {% endblock content %}

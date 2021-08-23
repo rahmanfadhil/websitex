@@ -31,6 +31,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "whitenoise.runserver_nostatic",
     "allauth",
     "allauth.account",
     "django_celery_results",
@@ -62,6 +63,7 @@ INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS + DJANGO_APPS
 MIDDLEWARE = [
     "config.middleware.HealthCheckMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -152,8 +154,18 @@ STATIC_ROOT = str(BASE_DIR / "staticfiles")
 STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [str(BASE_DIR / "static")]
-# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-STATICFILES_STORAGE
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
+# WHITENOISE
+# ------------------------------------------------------------------------------
+
+
+def whitenoise_add_headers(headers, path, url):
+    if path.endswith(".js"):
+        headers["Service-Worker-Allowed"] = "/"
+
+
+# https://whitenoise.evans.io/en/stable/django.html#WHITENOISE_ADD_HEADERS_FUNCTION
+WHITENOISE_ADD_HEADERS_FUNCTION = whitenoise_add_headers
 
 # MEDIA
 # ------------------------------------------------------------------------------

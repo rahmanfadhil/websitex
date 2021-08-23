@@ -348,7 +348,7 @@ header.navbar nav #menu a:not(.button) {
 
 /* Buttons */
 
-button:not([data-toggle-password], .icon),
+button:not([data-toggle-password], .icon, .notyf__dismiss-btn),
 a.button {
   padding: 0.75rem 1rem;
   background-color: var(--button);

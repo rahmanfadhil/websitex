@@ -11,6 +11,11 @@
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
   <title>{% block title %}{{ DEFAULT_PAGE_TITLE }}{% endblock title %}</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500&display=swap" rel="stylesheet">
@@ -29,14 +34,14 @@
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:title" content="{{ DEFAULT_PAGE_TITLE }}">
     <meta property="og:description" content="A framework for launching new Django projects quickly.">
-    <meta property="og:image" content="{% static 'og_image.png' %}">
+    <meta property="og:image" content="{% static 'images/og_image.png' %}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
     <meta property="twitter:title" content="{{ DEFAULT_PAGE_TITLE }}">
     <meta property="twitter:description" content="A framework for launching new Django projects quickly.">
-    <meta property="twitter:image" content="{% static 'og_image.png' %}">
+    <meta property="twitter:image" content="{% static 'images/og_image.png' %}">
   {% endblock head %}
 </head>
 

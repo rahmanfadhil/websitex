@@ -1,0 +1,36 @@
+{
+  "short_name": "WebsiteX",
+  "name": "WebsiteX: A modern Django app.",
+  "icons": [
+    {
+      "src": "/static/images/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/images/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#1e293b",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#1e293b",
+  "description": "A framework for launching new Django projects quickly.",
+  "screenshots": [
+    {
+      "src": "/static/images/screenshot1.jpg",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    },
+    {
+      "src": "/static/images/screenshot2.jpg",
+      "type": "image/jpg",
+      "sizes": "540x720"
+    }
+  ]
+}
