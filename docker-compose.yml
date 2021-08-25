@@ -72,3 +72,11 @@ services:
       - BROKER_URL=amqp://guest:guest@rabbitmq:5672//
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
+  assets:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: webpack
+    volumes:
+      - ./assets:/code/assets
+      - ./static/dist:/code/static/dist

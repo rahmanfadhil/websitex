@@ -16,7 +16,7 @@ EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
 # WHITENOISE
 # ------------------------------------------------------------------------------
 # https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # SECURITY
 # ------------------------------------------------------------------------------
@@ -87,3 +87,21 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html#broker-use-ssl
 CELERY_BROKER_USE_SSL = True
+
+# SENTRY
+# ------------------------------------------------------------------------------
+if SENTRY_DSN := os.environ.get("SENTRY_DSN"):
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True,
+    )

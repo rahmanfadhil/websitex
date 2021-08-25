@@ -126,6 +126,11 @@ variable "ses_email_address" {
   description = "Email address to send emails via SES"
 }
 
+variable "sentry_dsn" {
+  description = "DSN for logging errors on Sentry"
+  default     = ""
+}
+
 variable "certificate_arn" {
   description = "The SSL certificate in AWS Certificate Manager (ACM)"
   default     = null
@@ -451,6 +456,7 @@ resource "aws_ecs_service" "celery" {
 resource "aws_cloudwatch_log_group" "web_task" {
   name = "/ecs/${var.project_name}/web-task"
 }
+
 resource "aws_cloudwatch_log_group" "celery_task" {
   name = "/ecs/${var.project_name}/celery-task"
 }
@@ -477,9 +483,10 @@ resource "aws_ecs_task_definition" "web" {
         { "name" : "DATABASE_HOST", "value" : "${aws_db_instance.main.address}" },
         { "name" : "DATABASE_PORT", "value" : "${tostring(aws_db_instance.main.port)}" },
         { "name" : "SECRET_KEY", "value" : "${random_password.app_secret_key.result}" },
-        { "name" : "ALLOWED_HOSTS", "value" : "${var.domain_name != null ? "${var.subdomain}.${var.domain_name}" : aws_alb.app_alb.dns_name}" },
+        { "name" : "ALLOWED_HOSTS", "value" : "${var.domain_name != null ? "0.0.0.0,${var.subdomain}.${var.domain_name}" : aws_alb.app_alb.dns_name}" },
+        { "name" : "SENTRY_DSN", "value" : "${var.sentry_dsn}" },
         { "name" : "USE_HTTPS", "value" : "${var.certificate_arn != null ? "True" : "False"}" },
-        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${aws_ses_email_identity.main.email}" },
+        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${var.ses_email_address}" },
         { "name" : "AWS_STORAGE_BUCKET_NAME", "value" : "${aws_s3_bucket.main.bucket}" },
         { "name" : "MEMCACHED_URL", "value" : "${aws_elasticache_cluster.main.cluster_address}:${aws_elasticache_cluster.main.port}" },
         { "name" : "BROKER_URL", "value" : "amqps://ExampleUser:${random_password.broker_password.result}@${substr(aws_mq_broker.main.instances.0.endpoints.0, 8, -1)}" },
@@ -540,8 +547,9 @@ resource "aws_ecs_task_definition" "celery" {
         { "name" : "DATABASE_PORT", "value" : "${tostring(aws_db_instance.main.port)}" },
         { "name" : "SECRET_KEY", "value" : "${random_password.app_secret_key.result}" },
         { "name" : "ALLOWED_HOSTS", "value" : "${var.domain_name != null ? "${var.subdomain}.${var.domain_name}" : aws_alb.app_alb.dns_name}" },
+        { "name" : "SENTRY_DSN", "value" : "${var.sentry_dsn}" },
         { "name" : "USE_HTTPS", "value" : "${var.certificate_arn != null ? "True" : "False"}" },
-        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${aws_ses_email_identity.main.email}" },
+        { "name" : "DEFAULT_FROM_EMAIL", "value" : "${var.ses_email_address}" },
         { "name" : "AWS_STORAGE_BUCKET_NAME", "value" : "${aws_s3_bucket.main.bucket}" },
         { "name" : "MEMCACHED_URL", "value" : "${aws_elasticache_cluster.main.cluster_address}:${aws_elasticache_cluster.main.port}" },
         { "name" : "BROKER_URL", "value" : "amqps://ExampleUser:${random_password.broker_password.result}@${substr(aws_mq_broker.main.instances.0.endpoints.0, 8, -1)}" },

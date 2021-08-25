@@ -1,7 +1,6 @@
 from django import template
-from django.forms.boundfield import BoundField
 from django.urls import resolve
-from django.utils.safestring import mark_safe
+from django.urls.exceptions import Resolver404
 
 register = template.Library()
 
@@ -33,7 +32,11 @@ def is_link_active(context, *view_names) -> bool:
     """
 
     if hasattr(context, "request"):
-        match = resolve(context.request.path_info)
+        try:
+            match = resolve(context.request.path_info)
+        except Resolver404:
+            return False
+
         for view_name in view_names:
             try:
                 if match.view_name == view_name:

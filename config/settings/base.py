@@ -155,18 +155,6 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [str(BASE_DIR / "static")]
 
-# WHITENOISE
-# ------------------------------------------------------------------------------
-
-
-def whitenoise_add_headers(headers, path, url):
-    if path.endswith(".js"):
-        headers["Service-Worker-Allowed"] = "/"
-
-
-# https://whitenoise.evans.io/en/stable/django.html#WHITENOISE_ADD_HEADERS_FUNCTION
-WHITENOISE_ADD_HEADERS_FUNCTION = whitenoise_add_headers
-
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/files/

@@ -1,3 +1,25 @@
+# WEBPACK
+# ------------------------------------------------------------------------------
+FROM node:16-alpine AS webpack
+
+# Create app directory
+WORKDIR /code
+
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+
+# Bundle app source
+COPY ./assets /code/assets
+COPY ./webpack.config.js .
+
+# Build assets and watch for changes
+CMD [ "npm", "run", "dev" ]
+
+# Build the production JS and CSS
+FROM webpack AS webpack-builder
+RUN npm run build
+
 # BASE (PYTHON)
 # ------------------------------------------------------------------------------
 
@@ -40,6 +62,7 @@ RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY . .
+COPY --from=webpack-builder /code/static/dist/ /code/static/dist/
 RUN DATABASE_NAME="" \
     DATABASE_PORT="" \
     DATABASE_USER="" \

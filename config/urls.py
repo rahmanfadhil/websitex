@@ -1,9 +1,18 @@
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.staticfiles import finders
+from django.http.response import FileResponse
 from django.urls import include, path
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+
+
+# Serve the service worker code in root
+def service_worker(request):
+    path = finders.find("dist/sw.js")
+    return FileResponse(open(path, "rb"), content_type="application/javascript")
+
 
 urlpatterns = [
     path("cms/", include(wagtailadmin_urls)),
@@ -14,6 +23,7 @@ urlpatterns = [
     path("", include("apps.core.urls", namespace="core")),
     path("", include("apps.pages.urls", namespace="pages")),
     path("", include("apps.users.urls", namespace="users")),
+    path("service-worker.js", service_worker, name="service_worker"),
 ]
 
 if settings.DEBUG:

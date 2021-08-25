@@ -1,9 +1,12 @@
 *
 !apps/
 !config/
-!static/
 !templates/
 !manage.py
+
+# Static files
+!static/
+static/dist/**/*
 
 # Python requirements
 !requirements/
@@ -11,3 +14,8 @@
 # Pytest configuration
 !conftest.py
 !pytest.ini
+
+# Front-end assets
+!assets/
+!package*.json
+!webpack.config.js
