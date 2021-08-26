@@ -7,20 +7,21 @@ import "../css/main.css";
 // Toast messages
 
 const toast = document.querySelector(".toast");
-
-// Hide toast message if the close button is clicked
-toast.querySelectorAll("button").forEach((element) => {
-  element.addEventListener("click", () => {
-    element.parentElement.remove();
+if (toast) {
+  // Hide toast message if the close button is clicked
+  toast.querySelectorAll("button").forEach((element) => {
+    element.addEventListener("click", () => {
+      element.parentElement.remove();
+    });
   });
-});
 
-// Hide all toast messages after 5 seconds
-setTimeout(() => {
-  for (const element of toast.children) {
-    element.classList.add("hidden");
-  }
-}, 5000);
+  // Hide all toast messages after 5 seconds
+  setTimeout(() => {
+    for (const element of toast.children) {
+      element.classList.add("hidden");
+    }
+  }, 5000);
+}
 
 // Mobile responsive navigation menu
 
