@@ -44,7 +44,7 @@
   {% if messages %}
     <div class="toast">
       {% for message in messages %}
-        <div role="alert">{{ message }} <button aria-hidden="true" class="icon"></button></div>
+        <div role="alert" class="{{ message.tags }}">{{ message }} <button aria-hidden="true" class="icon"></button></div>
       {% endfor %}
     </div>
   {% endif %}
@@ -67,7 +67,7 @@
           {% if user.is_authenticated %}
             {% is_link_active 'users:user_update' as is_users_active %}
             <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">My account</a>
-            <button data-open-dialog="#logout-dialog">Log out</button>
+            <button data-toggle-modal="#logout-modal">Log out</button>
           {% else %}
             {% is_link_active 'account_login' as is_account_login_active %}
             <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Log in</a>
@@ -78,16 +78,14 @@
       </nav>
     </header>
 
-    <div class="dialog" role="dialog" aria-hidden="true" aria-labelledby="logout_dialog_title" id="logout-dialog">
-      <div class="dialog__window" role="document">
-        <h2 id="logout_dialog_title" class="display-3">Log out</h2>
-        <p>Are you sure you want to log out?</p>
-        <form action="{% url 'account_logout' %}" method="post">
-          {% csrf_token %}
-          <button>Log out</button>
-        </form>
-      </div>
-    </div>
+    <modal-dialog id="logout-modal">
+      <h2 class="display-3">Log out</h2>
+      <p>Are you sure you want to log out?</p>
+      <form action="{% url 'account_logout' %}" method="post">
+        {% csrf_token %}
+        <button>Log out</button>
+      </form>
+    </modal-dialog>
   {% endblock header %}
 
   {% block wide_content %}{% endblock wide_content %}

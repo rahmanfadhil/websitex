@@ -4,6 +4,8 @@
   --black: #1e293b;
   --white: #ffffff;
   --blue: #2563eb;
+  --green: #16a34a;
+  --yellow: #eab308;
   --red: #dc2626;
   --button: #1e293b;
 
@@ -305,6 +307,8 @@ header.navbar nav #menu a:not(.button) {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: start;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
   }
 
   header.navbar nav #menu.open {
@@ -341,7 +345,7 @@ header.navbar nav #menu a:not(.button) {
 
 /* Buttons */
 
-button:not([data-toggle-password], .icon, .notyf__dismiss-btn),
+button:not([data-toggle-password], .icon, .modal__close, .notyf__dismiss-btn),
 a.button {
   padding: 0.75rem 1rem;
   background-color: var(--button);
@@ -503,7 +507,7 @@ section.pagination nav a:last-child {
 
 /* Dialog */
 
-.dialog {
+.modal {
   display: none;
   position: fixed;
   top: 0;
@@ -514,11 +518,11 @@ section.pagination nav a:last-child {
   z-index: 101;
 }
 
-.dialog.open {
+.modal.open {
   display: block;
 }
 
-.dialog__window {
+.modal__content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -527,9 +531,27 @@ section.pagination nav a:last-child {
   border-radius: var(--border-radius);
   border: 2px solid var(--black);
   box-shadow: var(--box-shadow);
-  max-width: 450px;
+  width: 400px;
   padding: 1.5rem;
   z-index: 102;
+}
+
+@media (max-width: 400px) {
+  .modal__content {
+    width: 90%;
+  }
+}
+
+.modal__content button.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /* Toast */
@@ -582,4 +604,20 @@ section.pagination nav a:last-child {
   background-color: rgb(0 0 0 / 16%);
   border-radius: var(--border-radius);
   margin-left: 0.75rem;
+}
+
+.toast div.success {
+  background-color: var(--green);
+}
+
+.toast div.error {
+  background-color: var(--red);
+}
+
+.toast div.warning {
+  background-color: var(--yellow);
+}
+
+.toast div.info {
+  background-color: var(--blue);
 }

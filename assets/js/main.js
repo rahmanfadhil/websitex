@@ -1,4 +1,4 @@
-import "./dialog";
+import "./modal";
 
 import "@fontsource/commissioner/variable.css";
 import "tailwindcss/dist/base.css";
@@ -9,17 +9,13 @@ import "../css/main.css";
 const toast = document.querySelector(".toast");
 if (toast) {
   // Hide toast message if the close button is clicked
-  toast.querySelectorAll("button").forEach((element) => {
-    element.addEventListener("click", () => {
-      element.parentElement.remove();
-    });
+  toast.querySelectorAll("button").forEach((el) => {
+    el.addEventListener("click", () => el.parentElement.remove());
   });
 
   // Hide all toast messages after 5 seconds
   setTimeout(() => {
-    for (const element of toast.children) {
-      element.classList.add("hidden");
-    }
+    Array.from(toast.children).forEach((el) => el.classList.add("hidden"));
   }, 5000);
 }
 

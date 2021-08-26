@@ -1,5 +1,6 @@
-from apps.core.mixins import PageTitleMixin
 from django.views.generic import TemplateView
+
+from apps.core.mixins import PageTitleMixin
 
 
 class HomePageView(TemplateView):
