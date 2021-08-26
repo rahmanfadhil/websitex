@@ -23,8 +23,6 @@
   "homepage": "https://github.com/rahmanfadhil/websitex#readme",
   "dependencies": {
     "@fontsource/commissioner": "^4.5.0",
-    "dialog-polyfill": "^0.5.6",
-    "notyf": "^3.10.0",
     "tailwindcss": "^2.2.7",
     "workbox-cacheable-response": "^6.2.4",
     "workbox-expiration": "^6.2.4",

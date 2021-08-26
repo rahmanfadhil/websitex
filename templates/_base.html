@@ -42,9 +42,11 @@
 <body>
   <!-- Display messages for screen reader -->
   {% if messages %}
-    {% for message in messages %}
-      <p class="visually-hidden" role="alert">{{ message }}</p>
-    {% endfor %}
+    <div class="toast">
+      {% for message in messages %}
+        <div role="alert">{{ message }} <button aria-hidden="true" class="icon"></button></div>
+      {% endfor %}
+    </div>
   {% endif %}
 
   <!-- Top navigation -->
@@ -76,15 +78,16 @@
       </nav>
     </header>
 
-    <dialog id="logout-dialog">
-      <button data-close-dialog class="icon" aria-label="Close"></button>
-      <h1 class="display-3">Log out</h1>
-      <p>Are you sure you want to log out?</p>
-      <form action="{% url 'account_logout' %}" method="post">
-        {% csrf_token %}
-        <button>Log out</button>
-      </form>
-    </dialog>
+    <div class="dialog" role="dialog" aria-hidden="true" aria-labelledby="logout_dialog_title" id="logout-dialog">
+      <div class="dialog__window" role="document">
+        <h2 id="logout_dialog_title" class="display-3">Log out</h2>
+        <p>Are you sure you want to log out?</p>
+        <form action="{% url 'account_logout' %}" method="post">
+          {% csrf_token %}
+          <button>Log out</button>
+        </form>
+      </div>
+    </div>
   {% endblock header %}
 
   {% block wide_content %}{% endblock wide_content %}

@@ -1,50 +1,26 @@
-import dialogPolyfill from "dialog-polyfill";
-import "dialog-polyfill/dist/dialog-polyfill.css";
-import { Notyf } from "notyf";
-import getPageData from "./utils/pageData.js";
+import "./dialog";
 
 import "@fontsource/commissioner/variable.css";
 import "tailwindcss/dist/base.css";
-import "notyf/notyf.min.css";
 import "../css/main.css";
 
-// Currently, we are using the dialog polyfill to show the dialogs if the
-// browser does not support the dialog API.
-if (navigator.userAgent.indexOf("Chrome") == -1) {
-  for (const dialog of document.querySelectorAll("dialog")) {
-    dialogPolyfill.registerDialog(dialog);
-  }
-}
+// Toast messages
 
-for (const dialog of document.querySelectorAll("dialog")) {
-  dialog
-    .querySelector("[data-close-dialog]")
-    .addEventListener("click", () => dialog.close());
-}
+const toast = document.querySelector(".toast");
 
-for (const button of document.querySelectorAll("[data-open-dialog]")) {
-  button.addEventListener("click", () => {
-    document.querySelector(button.getAttribute("data-open-dialog")).showModal();
+// Hide toast message if the close button is clicked
+toast.querySelectorAll("button").forEach((element) => {
+  element.addEventListener("click", () => {
+    element.parentElement.remove();
   });
-}
+});
 
-// Load messages
-
-const { messages } = getPageData();
-if (messages.length) {
-  const notyf = new Notyf({
-    duration: 5000,
-    dismissible: true,
-    position: { y: "top", x: "right" },
-    types: [
-      { type: "warning", background: "#FFFF00" },
-      { type: "info", background: "#0000FF" },
-    ],
-  });
-  for (const message of messages) {
-    notyf.open(message);
+// Hide all toast messages after 5 seconds
+setTimeout(() => {
+  for (const element of toast.children) {
+    element.classList.add("hidden");
   }
-}
+}, 5000);
 
 // Mobile responsive navigation menu
 
