@@ -1,6 +1,8 @@
 {% load core %}
 
-<h1 class="display-2">My account</h1>
+<section class="heading">
+  <h1 class="display-2">My account</h1>
+</section>
 <nav class="tabs">
   {% is_link_active 'users:user_update' as is_profile_active %}
   <a class="{% if is_profile_active %}active{% endif %}" {% if is_profile_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">Profile</a>

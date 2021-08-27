@@ -5,22 +5,28 @@
 
 {% block content %}
   {% include 'users/components/settings_header.html' %}
-  <h2 class="display-4">Basic information</h2>
+  <section class="heading">
+    <h2 class="display-4">Basic information</h2>
+  </section>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'snippets/form.html' %}
-    <button>Save changes</button>
+    <button class="button">Save changes</button>
   </form>
   <hr>
-  <h2 class="display-4">Delete account</h2>
-  <p>Deleting your account will remove all your information from our database.</p>
-  <button data-toggle-modal="#delete-account-modal">Delete account</button>
+  <section class="heading">
+    <h2 class="display-4">Delete account</h2>
+    <p>Deleting your account will remove all your information from our database.</p>
+  </section>
+  <button class="button" data-toggle-modal="#delete-account-modal">Delete account</button>
   <modal-dialog id="delete-account-modal">
-    <h1 class="display-3">Delete account?</h1>
-    <p>Once you delete your account, there is no going back. Please be certain.</p>
+    <section class="heading">
+      <h1 class="display-3">Delete account?</h1>
+      <p>Once you delete your account, there is no going back. Please be certain.</p>
+    </section>
     <form action="{% url 'users:user_delete' %}" method="post">
       {% csrf_token %}
-      <button>Delete my account</button>
+      <button class="button">Delete my account</button>
     </form>
   </modal-dialog>
 {% endblock content %}

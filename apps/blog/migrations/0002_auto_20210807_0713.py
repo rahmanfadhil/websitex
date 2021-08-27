@@ -23,6 +23,7 @@ def create_homepage(apps, schema_editor):
     # Create a new homepage
     homepage = BlogIndexPage.objects.create(
         title="Blog",
+        intro="Super awesome blog powered by Wagtail CMS",
         draft_title="Blog",
         slug="blog",
         content_type=homepage_content_type,

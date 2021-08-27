@@ -9,6 +9,7 @@
     <h1>Sign up</h1>
     {% csrf_token %}
     {% include 'snippets/form.html' %}
-    <button>Sign up</button>
+    <button class="button">Sign up</button>
+    <p>Already have an account? <a href="{% url 'account_login' %}">Login</a></p>
   </form>
 {% endblock content %}

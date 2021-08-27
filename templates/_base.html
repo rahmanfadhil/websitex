@@ -55,7 +55,7 @@
       <nav role="navigation" aria-label="Main menu" class="open">
         <a class="title" href="{% url 'pages:home' %}">WebsiteX</a>
         <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
-        <button id="toggle" aria-expanded="false" aria-label="Menu" class="icon"></button>
+        <button id="toggle" aria-expanded="false" aria-label="Menu"></button>
         <div id="menu">
           {% is_link_active 'pages:home' as is_pages_active %}
           <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
@@ -67,7 +67,7 @@
           {% if user.is_authenticated %}
             {% is_link_active 'users:user_update' as is_users_active %}
             <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">My account</a>
-            <button data-toggle-modal="#logout-modal">Log out</button>
+            <button class="button" data-toggle-modal="#logout-modal">Log out</button>
           {% else %}
             {% is_link_active 'account_login' as is_account_login_active %}
             <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Log in</a>
@@ -79,11 +79,13 @@
     </header>
 
     <modal-dialog id="logout-modal">
-      <h2 class="display-3">Log out</h2>
-      <p>Are you sure you want to log out?</p>
+      <section class="heading">
+        <h2 class="display-3">Log out</h2>
+        <p>Are you sure you want to log out?</p>
+      </section>
       <form action="{% url 'account_logout' %}" method="post">
         {% csrf_token %}
-        <button>Log out</button>
+        <button class="button">Log out</button>
       </form>
     </modal-dialog>
   {% endblock header %}

@@ -3,11 +3,24 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-  <h1>{{ page.title }}</h1>
-  <p>{{ page.intro|richtext }}</p>
-  <ul>
+  <section class="hero">
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.intro }}</p>
+  </section>
+  <div class="blog">
     {% for post in page.get_children %}
-      <li><a href="{% pageurl post %}">{{ post.title }}</a></li>
+      <article class="blog__item">
+        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
+        <p>{{ post.specific.intro }}</p>
+      </article>
+      <article class="blog__item">
+        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
+        <p>{{ post.specific.intro }}</p>
+      </article>
+      <article class="blog__item">
+        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
+        <p>{{ post.specific.intro }}</p>
+      </article>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock content %}

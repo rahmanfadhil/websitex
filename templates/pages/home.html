@@ -4,14 +4,10 @@
 {% load core %}
 
 {% block content %}
-  <section class="home-intro">
-    <div>
-      <h1>WebsiteX</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, dolorem aliquam.</p>
-      <a class="button" href="{% url 'account_signup' %}">Get Started</a>
-    </div>
-    <div>
-      <img src="{% static 'images/home.jpg' %}" alt="WebsiteX" width="640" height="427">
-    </div>
-  </section>
+  <div class="hero">
+    <h1>WebsiteX</h1>
+    <p>A complete Django boilerplate for production web applications</p>
+    <a href="{% url 'account_signup' %}" class="button large">Get started</a>
+    <img src="{% static 'images/home.jpg' %}" alt="Screenshot" width="1500" height="1117">
+  </div>
 {% endblock content %}

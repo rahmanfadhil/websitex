@@ -35,12 +35,12 @@
                     {% csrf_token %}
                     <input type="hidden" name="email" value="{{ emailaddress.email }}">
                     {% if emailaddress.verified and not emailaddress.primary %}
-                      <button class="small" name="action_primary">{% trans 'Make primary' %}</button>
+                      <button class="button small" name="action_primary">{% trans 'Make primary' %}</button>
                     {% endif %}
                     {% if not emailaddress.verified %}
-                      <button class="small" name="action_send">{% trans 'Re-send verification' %}</button>
+                      <button class="button small" name="action_send">{% trans 'Re-send verification' %}</button>
                     {% endif %}
-                    <button class="small" name="action_remove">{% trans 'Remove' %}</button>
+                    <button class="button small" name="action_remove">{% trans 'Remove' %}</button>
                   </form>
                 </td>
               </tr>
@@ -58,10 +58,12 @@
   {% if can_add_email %}
     <hr>
     <form method="post" action="{% url 'account_email' %}">
-      <h2 class="display-4">{% trans "Add email address" %}</h2>
+      <section class="heading">
+        <h2 class="display-4">{% trans "Add email address" %}</h2>
+      </section>
       {% csrf_token %}
       {% include 'snippets/form.html' %}
-      <button name="action_add">Add email</button>
+      <button class="button" name="action_add">Add email</button>
     </form>
   {% endif %}
 {% endblock %}
