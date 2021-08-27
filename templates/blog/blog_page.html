@@ -6,11 +6,10 @@
   <section class="hero">
     <h1>{{ page.title }}</h1>
     <p>{{ page.intro }}</p>
+    <time datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date }}</time>
   </section>
 
-  <p>&mdash; {{ page.date }}</p>
-
-  {{ page.body|richtext }}
-
-  <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+  <section class="blog-content">
+    {{ page.body|richtext }}
+  </section>
 {% endblock %}

@@ -12,14 +12,7 @@
       <article class="blog__item">
         <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
         <p>{{ post.specific.intro }}</p>
-      </article>
-      <article class="blog__item">
-        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
-        <p>{{ post.specific.intro }}</p>
-      </article>
-      <article class="blog__item">
-        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
-        <p>{{ post.specific.intro }}</p>
+        <time datetime="{{ page.date|date:"Y-m-d" }}">{{ post.specific.date }}</time>
       </article>
     {% endfor %}
   </div>

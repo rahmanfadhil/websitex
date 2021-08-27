@@ -660,6 +660,13 @@ section.pagination nav a:last-child {
   font-size: 1.25em;
 }
 
+.hero time {
+  margin-top: 0.5rem;
+  display: inline-block;
+  font-size: 1.25em;
+  font-weight: 300;
+}
+
 .hero .button {
   margin-top: 2rem;
 }
@@ -710,7 +717,7 @@ section.pagination nav a:last-child {
 }
 
 .blog__item p {
-  margin-top: 1rem;
+  margin: 1rem 0;
   color: var(--secondary);
 }
 
@@ -729,4 +736,33 @@ section.heading h6 {
 .heading p {
   color: var(--secondary);
   margin-top: 1rem;
+}
+
+/* Blog content */
+
+.blog-content {
+  font-size: 1.25em;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.blog-content img {
+  margin: 2em auto;
+  border: 1px solid var(--border);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}
+
+.blog-content p {
+  margin-bottom: 1em;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
