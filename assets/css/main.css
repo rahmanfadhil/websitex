@@ -292,6 +292,7 @@ header.navbar nav #menu button {
 
 header.navbar nav #menu a:not(.button) {
   color: var(--black);
+  padding: 0.75rem 0;
 }
 
 @media (max-width: 768px) {
@@ -309,21 +310,25 @@ header.navbar nav #menu a:not(.button) {
     justify-content: start;
     border-top: 1px solid var(--border);
     margin-top: 1rem;
+    padding-top: 0.75rem;
   }
 
   header.navbar nav #menu.open {
     display: flex;
   }
 
+  header.navbar nav #menu a:not(.button) {
+    width: 50%;
+  }
+
   header.navbar nav #menu a,
   header.navbar nav #menu button {
-    width: 50%;
-    margin-top: 1.5rem;
     margin-left: 0;
   }
 
   header.navbar nav #menu a.button,
   header.navbar nav #menu button {
+    margin-top: 0.75rem;
     width: 100%;
   }
 
