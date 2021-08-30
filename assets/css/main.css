@@ -93,12 +93,15 @@ form section {
 }
 
 form section > label {
-  margin-bottom: 0.5rem;
   display: inline-block;
 }
 
-form section.invalid :is(input, select):not(:focus),
-form section input:invalid:not(:placeholder-shown, :focus) {
+/* Add spacing to field errors and radio select */
+form section ul {
+  margin-top: 0.5rem;
+}
+
+form section.invalid :is(input, select):not(:focus, :checked) {
   border: 1px solid var(--red) !important;
 }
 
@@ -118,26 +121,44 @@ form section input[type="checkbox"] {
   border: 1px solid var(--border);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
   appearance: none;
   color-adjust: exact;
+}
+
+form section input[type="checkbox"] {
   border-radius: var(--border-radius);
 }
 
-form section input[type="radio"]:checked,
-form section input[type="checkbox"]:checked {
-  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+form section input[type="radio"] {
+  border-radius: 50%;
+}
+
+form section input[type="checkbox"]:checked,
+form section input[type="radio"]:checked {
   background-color: var(--blue);
   border-color: var(--blue);
 }
 
+form section input[type="checkbox"]:checked {
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+form section input[type="radio"]:checked {
+  background-size: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-circle-fill' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8'/%3E%3C/svg%3E");
+}
+
 form section input[type="text"],
 form section input[type="email"],
+form section input[type="number"],
 form section input[type="password"],
 form section input[type="file"],
 form section input[type="date"],
+form section input[type="datetime-local"],
 form section .current-file,
 form section select {
+  margin-top: 0.5rem;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border);
   border-radius: var(--border-radius);
@@ -184,12 +205,30 @@ form section input[type="file"]::file-selector-button {
 
 /* Style the current display and the clear checkbox on Django's clearable file input */
 form section .current-file {
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
+  position: relative;
+}
+
+form section .current-file .initial-text {
+  background-color: var(--background);
+  padding: 0.75rem 1rem;
+  margin-top: -0.75rem;
+  margin-bottom: -0.75rem;
+  border-right: 1px solid var(--border);
+  margin-left: -1rem;
+}
+
+form section .current-file a {
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+form section .current-file .clear-input {
+  white-space: nowrap;
 }
 
 /* Add a chevron down icon to the right side of the input */
@@ -204,10 +243,6 @@ form section select {
 /* Style the default django forms errors */
 .errorlist {
   color: var(--red);
-}
-
-form section .errorlist {
-  margin-top: 0.25rem;
 }
 
 /* Style the non-field errors in django forms */

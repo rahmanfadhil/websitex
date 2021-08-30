@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <section class="heading">
+    <h1>Form</h1>
+  </section>
+  <form method="post" action="" novalidate>
+    {% csrf_token %}
+    {% include 'snippets/form.html' %}
+    <button class="button">Submit</button>
+  </form>
+{% endblock content %}
