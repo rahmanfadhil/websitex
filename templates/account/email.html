@@ -63,7 +63,7 @@
       </section>
       {% csrf_token %}
       {% include 'snippets/form.html' %}
-      <button class="button" name="action_add">Add email</button>
+      <button class="button" name="action_add">{% trans "Add email" %}</button>
     </form>
   {% endif %}
 {% endblock %}

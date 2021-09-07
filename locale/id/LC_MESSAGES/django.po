@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-30 06:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: apps/users/admin.py:17
+msgid "Personal info"
+msgstr "Data pribadi"
+
+#: apps/users/admin.py:19
+msgid "Permissions"
+msgstr "Izin-izin"
+
+#: apps/users/admin.py:30
+msgid "Important dates"
+msgstr "Tanggal-tangal penting"
+
+#: apps/users/models.py:11
+msgid ""
+"Enter a valid username. This value may contain only letters, numbers, "
+"underscores, and hyphens."
+msgstr ""
+"Masukkan nama pengguna yang valid. Hanya huruf, angka, garis bawah, and "
+"tanda hubung."
+
+#: apps/users/models.py:17
+msgid "username"
+msgstr "name pengguna"
+
+#: apps/users/models.py:21
+msgid ""
+"Required. 150 characters or fewer. Letters, digits, underscores, and hyphens "
+"only."
+msgstr ""
+"Wajib. 150 karakter atau kurang. Hanya huruf, angka, garis bawah, dan tanda "
+"hubung."
+
+#: apps/users/models.py:24
+msgid "A user with that username already exists."
+msgstr "Pengguna dengan nama tersebut sudah terdaftar."
+
+#: apps/users/models.py:26
+msgid "email address"
+msgstr "alamat email"
+
+#: apps/users/models.py:27
+msgid "full name"
+msgstr "nama lengkap"
+
+#: apps/users/models.py:31
+msgid "profile picture"
+msgstr "foto profil"
+
+#: config/settings/base.py:153
+msgid "English"
+msgstr ""
+
+#: config/settings/base.py:154
+msgid "Bahasa Indonesia"
+msgstr ""
+
+#: templates/_base.html:58
+msgid "Skip to main content"
+msgstr "Lewati ke konten utama"
+
+#: templates/_base.html:62
+msgid "Home"
+msgstr "Beranda"
+
+#: templates/_base.html:64
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/_base.html:66
+msgid "About"
+msgstr "Tentang"
+
+#: templates/_base.html:70 templates/users/components/settings_header.html:5
+msgid "My account"
+msgstr "Akun saya"
+
+#: templates/_base.html:71 templates/_base.html:84 templates/_base.html:89
+msgid "Log out"
+msgstr "Keluar"
+
+#: templates/_base.html:74
+msgid "Log in"
+msgstr "Masuk"
+
+#: templates/_base.html:76
+msgid "Sign up"
+msgstr "Daftar"
+
+#: templates/_base.html:85
+msgid "Are you sure you want to log out?"
+msgstr "Anda yakin ingin keluar?"
+
+#: templates/account/email.html:26
+msgid "Primary"
+msgstr "Utama"
+
+#: templates/account/email.html:28
+msgid "Verified"
+msgstr "Terverifikasi"
+
+#: templates/account/email.html:30
+msgid "Unverified"
+msgstr "Belum terverifikasi"
+
+#: templates/account/email.html:38
+msgid "Make primary"
+msgstr "Jadikan utama"
+
+#: templates/account/email.html:41
+msgid "Re-send verification"
+msgstr "Kirim ulang verifikasi"
+
+#: templates/account/email.html:43
+msgid "Remove"
+msgstr "Hapus"
+
+#: templates/account/email.html:53
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+"Anda saat ini tidak memiliki alamat e-mail yang disetel. Anda harus "
+"menambahkan alamat e-mail agar dapat menerima pemberitahuan, reset kata "
+"sandi, dll."
+
+#: templates/account/email.html:62
+msgid "Add email address"
+msgstr "Tambah alamat email"
+
+#: templates/account/email.html:66
+msgid "Add email"
+msgstr "Tambah email"
+
+#: templates/account/email/email_confirmation_message.html:8
+#, python-format
+msgid ""
+"\n"
+"    <h1>Hello from %(site_name)s!</h1>\n"
+"    <p>You're receiving this e-mail because user <strong>%(user_display)s</"
+"strong> has given your e-mail address to register an account on <strong>"
+"%(site_domain)s</strong>.</p>\n"
+"  "
+msgstr ""
+"\n"
+"    <h1>Halo dari %(site_name)s!</h1>\n"
+"    <p>Anda menerima e-mail ini karena pengguna <strong>%(user_display)s</"
+"strong> telah memberikan alamat e-mail Anda untuk mendaftarkan akun di "
+"<strong>%(site_domain)s</strong>.</p>\n"
+"  "
+
+#: templates/account/email/password_reset_key_message.html:6
+#, python-format
+msgid ""
+"\n"
+"    <h1>Hello from %(site_name)s!</h1>\n"
+"    <p>We've received a request to reset your password. If you didn't make "
+"this request, you can safely ignore this email. Otherwise, click the button "
+"below to reset your password.</p>\n"
+"  "
+msgstr ""
+"\n"
+"    <h1>Halo dari %(site_name)s!</h1>\n"
+"    <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda. Jika "
+"Anda tidak melakukan permintaan ini, Anda dapat mengabaikan e-mail ini. Jika "
+"tidak, klik tombol di bawah untuk mengatur ulang kata sandi Anda.</p>\n"
+"  "
+
+#: templates/account/password_change.html:10
+#: templates/account/password_change.html:15
+msgid "Change password"
+msgstr "Ubah kata sandi"
+
+#: templates/snippets/form.html:19
+msgid "Show password"
+msgstr "Tampilkan kata sandi"
+
+#: templates/users/components/settings_header.html:9
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/users/components/settings_header.html:11
+msgid "Emails"
+msgstr "Email"
+
+#: templates/users/components/settings_header.html:13
+msgid "Security"
+msgstr "Keamanan"
+
+#: templates/users/user_update.html:10
+msgid "Basic information"
+msgstr "Informasi dasar"
+
+#: templates/users/user_update.html:15
+msgid "Save changes"
+msgstr "Simpan perubahan"
+
+#: templates/users/user_update.html:19 templates/users/user_update.html:22
+#: templates/users/user_update.html:25 templates/users/user_update.html:30
+msgid "Delete account"
+msgstr "Hapus akun"
+
+#: templates/users/user_update.html:20
+msgid ""
+"Deleting your account will remove all your information from our database."
+msgstr ""
+"Menghapus akun Anda akan menghapus semua informasi Anda dari database kami."
+
+#: templates/users/user_update.html:26
+msgid ""
+"Once you delete your account, there is no going back. Please be certain."
+msgstr ""
+"Setelah Anda menghapus akun Anda, tidak ada jalan untuk kembali. Pastikan "
+"Anda yakin."

@@ -40,15 +40,15 @@ class ModalDialog extends HTMLElement {
     this.previousActiveElement = document.activeElement;
 
     // Add event listeners to close the modal
-    this.modal.addEventListener("click", this.hide);
+    this.addEventListener("click", this.hide);
     this.content.addEventListener("click", this.stopPropagation);
     document.addEventListener("keydown", this.closeDialogOnEscape);
 
     // Make the modal visible with css
-    this.modal.classList.add("open");
+    this.classList.add("open");
 
     // Set accessibility attributes
-    this.modal.setAttribute("aria-hidden", "false");
+    this.setAttribute("aria-hidden", "false");
     this.content.setAttribute("tabindex", "0");
 
     // Focus on the modal
@@ -63,14 +63,14 @@ class ModalDialog extends HTMLElement {
    */
   hide = () => {
     // Make the modal invisible with css
-    this.modal.classList.remove("open");
+    this.classList.remove("open");
 
     // Set accessibility attributes
-    this.modal.setAttribute("aria-hidden", "true");
+    this.setAttribute("aria-hidden", "true");
     this.content.setAttribute("tabindex", "-1");
 
     // Remove the event listeners to close the modal
-    this.modal.removeEventListener("click", this.hide);
+    this.removeEventListener("click", this.hide);
     this.content.removeEventListener("click", this.stopPropagation);
     document.removeEventListener("keydown", this.closeDialogOnEscape);
 
@@ -109,14 +109,13 @@ class ModalDialog extends HTMLElement {
   };
 
   connectedCallback() {
-    // Create the modal element
-    this.modal = document.createElement("div");
-    this.modal.classList.add("modal");
-    this.modal.setAttribute("aria-hidden", "true");
-    this.modal.setAttribute("tabindex", "-1");
+    // Modify  the modal custom element
+    this.classList.add("modal");
+    this.setAttribute("aria-hidden", "true");
+    this.setAttribute("tabindex", "-1");
 
     // If the visible property is already defined, open the modal immediately.
-    if (this.visible) this.modal.classList.add("open");
+    if (this.visible) this.classList.add("open");
 
     // Create the modal content element. This is the element that will be
     // focused when the modal is opened. We set the ARIA role to "document" so
@@ -125,12 +124,11 @@ class ModalDialog extends HTMLElement {
     this.content = document.createElement("div");
     this.content.classList.add("modal__content");
     this.content.setAttribute("role", "document");
-    this.modal.appendChild(this.content);
 
-    // Move the children of the <modal-dialog> element into the modal content.
+    // Move the children of the <x-modal> element into the modal content.
     this.content.append(...this.children);
 
-    // If there is a heading element inside the modal-dialog, set it as the
+    // If there is a heading element inside the x-modal, set it as the
     // modal label.
     const title = this.content.querySelector("h1, h2, h3, h4, h5, h6");
     if (title) {
@@ -144,7 +142,7 @@ class ModalDialog extends HTMLElement {
           "-modal-label-" +
           (Math.random() + 1).toString(36).substring(7);
       }
-      this.modal.setAttribute("aria-labelledby", title.id);
+      this.setAttribute("aria-labelledby", title.id);
     }
 
     const closeButton = document.createElement("button");
@@ -153,12 +151,11 @@ class ModalDialog extends HTMLElement {
     closeButton.addEventListener("click", this.hide);
     this.content.appendChild(closeButton);
 
-    // Insert the modal element into the DOM
-    this.appendChild(this.modal);
+    this.appendChild(this.content);
   }
 }
 
-customElements.define("modal-dialog", ModalDialog);
+customElements.define("x-modal", ModalDialog);
 
 for (const button of document.querySelectorAll("[data-toggle-modal]")) {
   const modal = document.querySelector(

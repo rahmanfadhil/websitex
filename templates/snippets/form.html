@@ -1,5 +1,7 @@
 {{ form.non_field_errors }}
 
+{% load i18n %}
+
 {% for hidden in form.hidden_fields %}
   {{ hidden }}
 {% endfor %}
@@ -14,7 +16,7 @@
       {{ field }}
     {% endif %}
     {% if field.field.widget.input_type == 'password' %}
-      <button type="button" data-toggle-password="{{ field.id_for_label }}">Show password</button>
+      <button type="button" data-toggle-password="{{ field.id_for_label }}">{% trans "Show password" %}</button>
     {% endif %}
     {{ field.errors }}
   </section>

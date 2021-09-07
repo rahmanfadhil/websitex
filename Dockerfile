@@ -1,6 +1,6 @@
-# WEBPACK
+# FRONT-END ASSETS
 # ------------------------------------------------------------------------------
-FROM node:16-alpine AS webpack
+FROM node:16-alpine AS assets
 
 # Create app directory
 WORKDIR /code
@@ -11,13 +11,13 @@ RUN npm install
 
 # Bundle app source
 COPY ./assets /code/assets
-COPY ./webpack.config.js .
+COPY ./rollup.config.js .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]
 
 # Build the production JS and CSS
-FROM webpack AS webpack-builder
+FROM assets AS assets-builder
 RUN npm run build
 
 # BASE (PYTHON)
@@ -62,7 +62,7 @@ RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY . .
-COPY --from=webpack-builder /code/static/dist/ /code/static/dist/
+COPY --from=assets-builder /code/static/dist/ /code/static/dist/
 RUN DATABASE_NAME="" \
     DATABASE_PORT="" \
     DATABASE_USER="" \

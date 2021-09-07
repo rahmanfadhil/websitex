@@ -76,7 +76,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: webpack
+      target: assets
     volumes:
       - ./assets:/code/assets
       - ./static/dist:/code/static/dist

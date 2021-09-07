@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 {% load core %}
 {% load wagtailcore_tags %}
 
@@ -17,6 +18,7 @@
   <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
 
   <link rel="stylesheet" href="{% static 'dist/main.css' %}">
+  <script defer src="{% url 'javascript-catalog' %}"></script>
   <script type="module" src="{% static 'dist/main.js' %}"></script>
 
   {% block head %}
@@ -54,40 +56,40 @@
     <header class="navbar">
       <nav role="navigation" aria-label="Main menu" class="open">
         <a class="title" href="{% url 'pages:home' %}">WebsiteX</a>
-        <a class="visually-hidden-focusable" href="#main-content">Skip to main content</a>
+        <a class="visually-hidden-focusable" href="#main-content">{% trans "Skip to main content" %}</a>
         <button id="toggle" aria-expanded="false" aria-label="Menu"></button>
         <div id="menu">
           {% is_link_active 'pages:home' as is_pages_active %}
-          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">Home</a>
+          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">{% trans "Home" %}</a>
           {% is_link_active 'wagtail_serve' as is_blog_active %}
-          <a {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">Blog</a>
+          <a {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">{% trans "Blog" %}</a>
           {% is_link_active 'pages:about' as is_pages_active %}
-          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">About</a>
+          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">{% trans "About" %}</a>
           <div class="flex-grow"></div>
           {% if user.is_authenticated %}
             {% is_link_active 'users:user_update' as is_users_active %}
-            <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">My account</a>
-            <button class="button" data-toggle-modal="#logout-modal">Log out</button>
+            <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">{% trans "My account" %}</a>
+            <button class="button" data-toggle-modal="#logout-modal">{% trans "Log out" %}</button>
           {% else %}
             {% is_link_active 'account_login' as is_account_login_active %}
-            <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">Log in</a>
+            <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">{% trans "Log in" %}</a>
             {% is_link_active 'account_signup' as is_account_signup_active %}
-            <a {% if is_account_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}" class="button">Sign up</a>
+            <a {% if is_account_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}" class="button">{% trans "Sign up" %}</a>
           {% endif %}
         </div>
       </nav>
     </header>
 
-    <modal-dialog id="logout-modal">
+    <x-modal id="logout-modal">
       <section class="heading">
-        <h2 class="display-3">Log out</h2>
-        <p>Are you sure you want to log out?</p>
+        <h2 class="display-3">{% trans "Log out" %}</h2>
+        <p>{% trans "Are you sure you want to log out?" %}</p>
       </section>
       <form action="{% url 'account_logout' %}" method="post">
         {% csrf_token %}
-        <button class="button">Log out</button>
+        <button class="button">{% trans "Log out" %}</button>
       </form>
-    </modal-dialog>
+    </x-modal>
   {% endblock header %}
 
   {% block wide_content %}{% endblock wide_content %}

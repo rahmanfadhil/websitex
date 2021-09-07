@@ -2,6 +2,7 @@
 !apps/
 !config/
 !templates/
+!locale/
 !manage.py
 
 # Static files
@@ -18,4 +19,4 @@ static/dist/**/*
 # Front-end assets
 !assets/
 !package*.json
-!webpack.config.js
+!rollup.config.js

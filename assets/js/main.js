@@ -1,61 +1,7 @@
 import "./modal";
-
-import "@fontsource/commissioner/variable.css";
-import "tailwindcss/dist/base.css";
-import "../css/main.css";
-
-// Toast messages
-
-const toast = document.querySelector(".toast");
-if (toast) {
-  // Hide toast message if the close button is clicked
-  toast.querySelectorAll("button").forEach((el) => {
-    el.addEventListener("click", () => el.parentElement.remove());
-  });
-
-  // Hide all toast messages after 5 seconds
-  setTimeout(() => {
-    Array.from(toast.children).forEach((el) => el.classList.add("hidden"));
-  }, 5000);
-}
-
-// Mobile responsive navigation menu
-
-const toggle = document.querySelector("#toggle");
-const menu = document.querySelector("#menu");
-
-toggle.addEventListener("click", function () {
-  if (menu.classList.contains("open")) {
-    this.setAttribute("aria-expanded", "false");
-    menu.classList.remove("open");
-  } else {
-    menu.classList.add("open");
-    this.setAttribute("aria-expanded", "true");
-  }
-});
-
-// Toggle password visibility
-// https://web.dev/sign-in-form-best-practices/#password-display
-
-for (const button of document.querySelectorAll("[data-toggle-password]")) {
-  const inputId = button.getAttribute("data-toggle-password");
-  const passwordInput = document.getElementById(inputId);
-
-  button.addEventListener("click", function () {
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      button.textContent = "Hide password";
-      button.setAttribute("aria-label", "Hide password.");
-    } else {
-      passwordInput.type = "password";
-      button.textContent = "Show password";
-      button.setAttribute(
-        "aria-label",
-        "Show password as plain text. Warning: this will display your password on the screen."
-      );
-    }
-  });
-}
+import "./navbar";
+import "./toggle-password";
+import "./toast";
 
 // PWA
 // https://developers.google.com/web/fundamentals/primers/service-workers

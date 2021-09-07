@@ -27,7 +27,12 @@ class User(AbstractUser):
     full_name = models.CharField(_("full name"), max_length=150, null=True, blank=True)
     first_name = None
     last_name = None
-    avatar = models.ImageField(upload_to="user_avatar/", null=True, blank=True)
+    avatar = models.ImageField(
+        _("profile picture"),
+        upload_to="user_avatar/",
+        null=True,
+        blank=True,
+    )
 
     def get_full_name(self) -> str:
         return self.full_name

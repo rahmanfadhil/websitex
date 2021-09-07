@@ -1,3 +1,6 @@
+@import "tailwindcss/dist/base.css";
+@import "@fontsource/commissioner/variable.css";
+
 /* Variables */
 
 :root {
@@ -548,7 +551,7 @@ section.pagination nav a:last-child {
 
 /* Dialog */
 
-.modal {
+x-modal {
   display: none;
   position: fixed;
   top: 0;
@@ -559,11 +562,11 @@ section.pagination nav a:last-child {
   z-index: 101;
 }
 
-.modal.open {
+x-modal.open {
   display: block;
 }
 
-.modal__content {
+x-modal .modal__content {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -578,12 +581,12 @@ section.pagination nav a:last-child {
 }
 
 @media (max-width: 400px) {
-  .modal__content {
+  x-modal .modal__content {
     width: 90%;
   }
 }
 
-.modal__content button.modal__close {
+x-modal .modal__content button.modal__close {
   position: absolute;
   top: 1rem;
   right: 1rem;

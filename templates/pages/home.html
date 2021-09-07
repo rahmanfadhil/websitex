@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 
+{% load i18n %}
 {% load static %}
 {% load core %}
 
@@ -10,4 +11,20 @@
     <a href="{% url 'account_signup' %}" class="button large">Get started</a>
     <img src="{% static 'images/home.jpg' %}" alt="Screenshot" width="1500" height="1117">
   </div>
+
+  <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    {% comment %} <input name="next" type="hidden" value="{% url 'pages:home' %}"> {% endcomment %}
+    <select name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Go">
+  </form>
 {% endblock content %}
