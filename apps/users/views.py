@@ -1,19 +1,45 @@
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import UpdateView, View
 from django.views.generic.base import RedirectView
+from django.views.generic.edit import FormView
+from sesame.utils import get_query_string
 
-from apps.core.utils import compress_image
-from apps.users.forms import UserUpdateForm
+from apps.core.utils import compress_image, send_html_email
+from apps.users.forms import EmailLoginForm, UserUpdateForm
 from apps.users.models import User
 
 
-class WellKnownChangePasswordView(RedirectView):
-    permanent = False
-    pattern_name = "account_change_password"
+@require_POST
+def logout_view(request):
+    logout(request)
+    return redirect("pages:home")
+
+
+class EmailLoginView(FormView):
+    form_class = EmailLoginForm
+    template_name = "users/login.html"
+    success_url = reverse_lazy("pages:home")
+
+    def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        user, _ = User.objects.get_or_create(email=email)
+        url = self.request.build_absolute_uri(self.success_url + get_query_string(user))
+        send_html_email(
+            request=self.request,
+            subject="Login",
+            email=user.email,
+            template_name="emails/login.html",
+            context={"url": url, "user": user},
+        )
+        return redirect(self.success_url)
 
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

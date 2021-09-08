@@ -23,3 +23,7 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ("email", "username", "full_name", "avatar")
         widgets = {"avatar": CustomClearableFileInput}
+
+
+class EmailLoginForm(forms.Form):
+    email = forms.EmailField()

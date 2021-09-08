@@ -1,0 +1,10 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <form class="auth-form" method="POST">
+    <h1>Login</h1>
+    {% csrf_token %}
+    {% include 'snippets/form.html' %}
+    <button class="button">Login</button>
+  </form>
+{% endblock content %}

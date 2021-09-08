@@ -32,8 +32,6 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "whitenoise.runserver_nostatic",
-    "allauth",
-    "allauth.account",
     "django_celery_results",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -69,6 +67,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "sesame.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
@@ -169,31 +168,19 @@ STATICFILES_DIRS = [str(BASE_DIR / "static")]
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
-# CUSTOM USER MODEL CONFIGS
+SITE_ID = 1
+
+# AUTHENTICATION
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "users.User"
-
-# DJANGO-ALLAUTH CONFIGS
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "pages:home"
-# https://django-allauth.readthedocs.io/en/latest/views.html#logout-account-logout
-ACCOUNT_LOGOUT_REDIRECT_URL = "pages:home"
-# https://django-allauth.readthedocs.io/en/latest/installation.html?highlight=backends
+# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    "sesame.backends.ModelBackend",
 )
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
 
 # CELERY
 # ------------------------------------------------------------------------------
@@ -204,14 +191,17 @@ CELERY_RESULT_BACKEND = "django-db"
 
 # EMAIL
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/3.1/ref/settings/#default-from-email
+# https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 
 # WAGTAIL
 # ------------------------------------------------------------------------------
-
 WAGTAIL_SITE_NAME = "WebsiteX Blog"
 
 # CORE UTILITIES
 # ------------------------------------------------------------------------------
 DEFAULT_PAGE_TITLE = "WebsiteX"
+
+# WAGTAIL
+# ------------------------------------------------------------------------------
+SESAME_MAX_AGE = 60 * 10  # 10 minutes

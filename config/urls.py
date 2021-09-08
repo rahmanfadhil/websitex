@@ -3,10 +3,10 @@ from django.contrib import admin
 from django.contrib.staticfiles import finders
 from django.http.response import FileResponse
 from django.urls import include, path
+from django.views.i18n import JavaScriptCatalog
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
-from django.views.i18n import JavaScriptCatalog
 
 
 # Serve the service worker code in root
@@ -22,7 +22,6 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("blog/", include(wagtail_urls)),
     path("admin/", admin.site.urls),
-    path("accounts/", include("allauth.urls")),
     path("", include("apps.core.urls", namespace="core")),
     path("", include("apps.pages.urls", namespace="pages")),
     path("", include("apps.users.urls", namespace="users")),

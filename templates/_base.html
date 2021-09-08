@@ -71,10 +71,8 @@
             <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">{% trans "My account" %}</a>
             <button class="button" data-toggle-modal="#logout-modal">{% trans "Log out" %}</button>
           {% else %}
-            {% is_link_active 'account_login' as is_account_login_active %}
-            <a {% if is_account_login_active %}aria-current="page"{% endif %} href="{% url 'account_login' %}">{% trans "Log in" %}</a>
-            {% is_link_active 'account_signup' as is_account_signup_active %}
-            <a {% if is_account_signup_active %}aria-current="page"{% endif %} href="{% url 'account_signup' %}" class="button">{% trans "Sign up" %}</a>
+            {% is_link_active 'login' as is_login_active %}
+            <a {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'users:login' %}" class="button">{% trans "Log in" %}</a>
           {% endif %}
         </div>
       </nav>
@@ -85,7 +83,7 @@
         <h2 class="display-3">{% trans "Log out" %}</h2>
         <p>{% trans "Are you sure you want to log out?" %}</p>
       </section>
-      <form action="{% url 'account_logout' %}" method="post">
+      <form action="{% url 'users:logout' %}" method="post">
         {% csrf_token %}
         <button class="button">{% trans "Log out" %}</button>
       </form>

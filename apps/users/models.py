@@ -22,6 +22,7 @@ class User(AbstractUser):
         ),
         validators=[username_validator],
         error_messages={"unique": _("A user with that username already exists.")},
+        null=True,
     )
     email = models.EmailField(_("email address"), unique=True)
     full_name = models.CharField(_("full name"), max_length=150, null=True, blank=True)
