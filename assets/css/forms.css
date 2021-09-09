@@ -1,0 +1,158 @@
+form section {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+form section > label {
+  font-weight: 500;
+}
+
+.input,
+form section > input:not([type="checkbox"], [type="radio"]),
+form section .current-file,
+form section > select {
+  background-color: var(--white);
+  line-height: inherit;
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border);
+  color: var(--text);
+  font-weight: inherit;
+  appearance: none;
+}
+
+::placeholder {
+  color: var(--secondary);
+}
+
+.input:focus,
+form section > input:focus,
+form section > select:focus {
+  border-color: var(--text);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+form section > select {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+}
+
+form section > input[type="file"] {
+  cursor: pointer;
+}
+
+form section > input[type="file"]::file-selector-button {
+  padding: 0.75rem 1rem;
+  margin: -0.75rem 1rem -0.75rem -1rem;
+  border: none;
+  background-color: var(--background);
+  border-right: 2px solid var(--border);
+  cursor: pointer;
+  color: inherit;
+}
+
+form section > button[data-toggle-password] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  line-height: inherit;
+}
+
+form section input[type="checkbox"],
+form section input[type="radio"] {
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  margin-right: 0.5rem;
+  border: 2px solid var(--border);
+  appearance: none;
+  background-color: var(--white);
+}
+
+form section input[type="checkbox"]:checked,
+form section input[type="radio"]:checked {
+  background-color: var(--text);
+  border-color: var(--text);
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1em;
+}
+
+form section input[type="checkbox"]:focus,
+form section input[type="radio"]:focus {
+  border-color: var(--text);
+}
+
+form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+form ul li {
+  margin-top: 0.5rem;
+}
+
+/* Style the current display and the clear checkbox on Django's clearable file input */
+form section .current-file {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+form section .current-file .initial-text {
+  padding: 0.75rem 1rem;
+  margin-top: -0.75rem;
+  margin-bottom: -0.75rem;
+  border-right: 2px solid var(--border);
+  margin-left: -1rem;
+  background-color: var(--background);
+}
+
+form section .current-file a {
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+form section .current-file .clear-input {
+  white-space: nowrap;
+}
+
+.auth-form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.button {
+  background-color: var(--text);
+  color: var(--white);
+  cursor: pointer;
+  line-height: inherit;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--text);
+  text-decoration: none;
+  font-weight: inherit;
+  text-align: center;
+}
+
+.button svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}

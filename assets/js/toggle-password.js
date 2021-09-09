@@ -2,8 +2,7 @@
 // https://web.dev/sign-in-form-best-practices/#password-display
 
 for (const button of document.querySelectorAll("[data-toggle-password]")) {
-  const inputId = button.getAttribute("data-toggle-password");
-  const passwordInput = document.getElementById(inputId);
+  const passwordInput = document.getElementById(button.dataset.togglePassword);
 
   button.addEventListener("click", function () {
     if (passwordInput.type === "password") {

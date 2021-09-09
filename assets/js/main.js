@@ -2,6 +2,7 @@ import "./modal";
 import "./navbar";
 import "./toggle-password";
 import "./toast";
+import "./alert";
 
 // PWA
 // https://developers.google.com/web/fundamentals/primers/service-workers

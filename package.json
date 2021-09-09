@@ -23,7 +23,10 @@
   "homepage": "https://github.com/rahmanfadhil/websitex#readme",
   "dependencies": {
     "@fontsource/commissioner": "^4.5.0",
+    "@fontsource/lexend": "^4.5.1",
+    "focus-trap": "^6.6.1",
     "js-cookie": "^3.0.0",
+    "modern-normalize": "^1.1.0",
     "tailwindcss": "^2.2.7",
     "workbox-cacheable-response": "^6.2.4",
     "workbox-expiration": "^6.2.4",
@@ -35,6 +38,7 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^3.0.0",
     "autoprefixer": "^10.3.4",
+    "globby": "^12.0.2",
     "postcss": "^8.3.6",
     "postcss-import": "^14.0.2",
     "postcss-url": "^10.1.3",

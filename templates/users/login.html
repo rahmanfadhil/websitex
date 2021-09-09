@@ -2,7 +2,10 @@
 
 {% block content %}
   <form class="auth-form" method="POST">
-    <h1>Login</h1>
+    <div class="heading">
+      <h1 class="heading-2">Login</h1>
+      <p>Enter your email address and we'll send you a magic link to login to your account.</p>
+    </div>
     {% csrf_token %}
     {% include 'snippets/form.html' %}
     <button class="button">Login</button>

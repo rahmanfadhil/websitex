@@ -11,7 +11,7 @@ RUN npm install
 
 # Bundle app source
 COPY ./assets /code/assets
-COPY ./rollup.config.js .
+COPY ./rollup.config.mjs .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]

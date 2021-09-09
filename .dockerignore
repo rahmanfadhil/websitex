@@ -19,4 +19,4 @@ static/dist/**/*
 # Front-end assets
 !assets/
 !package*.json
-!rollup.config.js
+!rollup.config.mjs

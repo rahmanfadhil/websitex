@@ -1,0 +1,29 @@
+.hero {
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25em;
+  color: var(--secondary);
+}
+
+.hero form {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 450px;
+  margin-top: 2rem;
+}
+
+.hero form input {
+  margin-top: 0;
+}
+
+.hero form button {
+  flex-shrink: 0;
+}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-30 06:22+0000\n"
+"POT-Creation-Date: 2021-09-09 07:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,168 +54,112 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr "Pengguna dengan nama tersebut sudah terdaftar."
 
-#: apps/users/models.py:26
+#: apps/users/models.py:27
 msgid "email address"
 msgstr "alamat email"
 
-#: apps/users/models.py:27
+#: apps/users/models.py:28
 msgid "full name"
 msgstr "nama lengkap"
 
-#: apps/users/models.py:31
+#: apps/users/models.py:32
 msgid "profile picture"
 msgstr "foto profil"
 
-#: config/settings/base.py:153
+#: config/settings/base.py:152
 msgid "English"
-msgstr ""
+msgstr "Bahasa Inggris"
 
-#: config/settings/base.py:154
+#: config/settings/base.py:153
 msgid "Bahasa Indonesia"
-msgstr ""
+msgstr "Bahasa Indonesia"
 
-#: templates/_base.html:58
+#: templates/_base.html:49
 msgid "Skip to main content"
 msgstr "Lewati ke konten utama"
 
-#: templates/_base.html:62
+#: templates/_base.html:53
 msgid "Home"
 msgstr "Beranda"
 
-#: templates/_base.html:64
+#: templates/_base.html:54
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/_base.html:66
+#: templates/_base.html:55
 msgid "About"
 msgstr "Tentang"
 
-#: templates/_base.html:70 templates/users/components/settings_header.html:5
+#: templates/_base.html:58 templates/users/components/settings_header.html:5
+#: templates/users/user_update.html:9
 msgid "My account"
 msgstr "Akun saya"
 
-#: templates/_base.html:71 templates/_base.html:84 templates/_base.html:89
+#: templates/_base.html:60
+msgid "Settings"
+msgstr ""
+
+#: templates/_base.html:61 templates/_base.html:93 templates/_base.html:98
 msgid "Log out"
 msgstr "Keluar"
 
-#: templates/_base.html:74
-msgid "Log in"
-msgstr "Masuk"
-
-#: templates/_base.html:76
+#: templates/_base.html:80
 msgid "Sign up"
 msgstr "Daftar"
 
-#: templates/_base.html:85
+#: templates/_base.html:94
 msgid "Are you sure you want to log out?"
 msgstr "Anda yakin ingin keluar?"
 
-#: templates/account/email.html:26
-msgid "Primary"
-msgstr "Utama"
-
-#: templates/account/email.html:28
-msgid "Verified"
-msgstr "Terverifikasi"
-
-#: templates/account/email.html:30
-msgid "Unverified"
-msgstr "Belum terverifikasi"
-
-#: templates/account/email.html:38
-msgid "Make primary"
-msgstr "Jadikan utama"
-
-#: templates/account/email.html:41
-msgid "Re-send verification"
-msgstr "Kirim ulang verifikasi"
-
-#: templates/account/email.html:43
-msgid "Remove"
-msgstr "Hapus"
-
-#: templates/account/email.html:53
-msgid ""
-"You currently do not have any e-mail address set up. You should really add "
-"an e-mail address so you can receive notifications, reset your password, etc."
-msgstr ""
-"Anda saat ini tidak memiliki alamat e-mail yang disetel. Anda harus "
-"menambahkan alamat e-mail agar dapat menerima pemberitahuan, reset kata "
-"sandi, dll."
-
-#: templates/account/email.html:62
-msgid "Add email address"
-msgstr "Tambah alamat email"
-
-#: templates/account/email.html:66
-msgid "Add email"
-msgstr "Tambah email"
-
-#: templates/account/email/email_confirmation_message.html:8
+#: templates/emails/login.html:6
 #, python-format
 msgid ""
 "\n"
-"    <h1>Hello from %(site_name)s!</h1>\n"
-"    <p>You're receiving this e-mail because user <strong>%(user_display)s</"
-"strong> has given your e-mail address to register an account on <strong>"
-"%(site_domain)s</strong>.</p>\n"
+"    <p>Hello,</p>\n"
+"    <p>We received a request to log in to <strong>%(site_name)s</strong> "
+"using this email address. If you want to log in with your account, click "
+"this link:</p>\n"
 "  "
 msgstr ""
 "\n"
-"    <h1>Halo dari %(site_name)s!</h1>\n"
-"    <p>Anda menerima e-mail ini karena pengguna <strong>%(user_display)s</"
-"strong> telah memberikan alamat e-mail Anda untuk mendaftarkan akun di "
-"<strong>%(site_domain)s</strong>.</p>\n"
+"    <p>Halo,</p>\n"
+"    <p>Kami menerima permintaan untuk masuk ke <strong>%(site_name)s</"
+"strong> dengan alamat email ini. Jika anda ingin masuk dengan akun anda, "
+"klik tautan ini:</p>\n"
 "  "
 
-#: templates/account/email/password_reset_key_message.html:6
-#, python-format
-msgid ""
-"\n"
-"    <h1>Hello from %(site_name)s!</h1>\n"
-"    <p>We've received a request to reset your password. If you didn't make "
-"this request, you can safely ignore this email. Otherwise, click the button "
-"below to reset your password.</p>\n"
-"  "
-msgstr ""
-"\n"
-"    <h1>Halo dari %(site_name)s!</h1>\n"
-"    <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda. Jika "
-"Anda tidak melakukan permintaan ini, Anda dapat mengabaikan e-mail ini. Jika "
-"tidak, klik tombol di bawah untuk mengatur ulang kata sandi Anda.</p>\n"
-"  "
+#: templates/emails/login.html:11
+msgid "If you did not request this link, you can safely ignore this email."
+msgstr "Jika anda tidak meminta tautan ini, anda dapat mengabaikan email ini."
 
-#: templates/account/password_change.html:10
-#: templates/account/password_change.html:15
-msgid "Change password"
-msgstr "Ubah kata sandi"
+#: templates/pages/home.html:10
+msgid "A complete Django boilerplate for production web applications."
+msgstr "Kerangka Django yang lengkap untuk aplikasi web produksi."
+
+#: templates/pages/home.html:15
+#, fuzzy
+#| msgid "email address"
+msgid "Your email address"
+msgstr "alamat email"
+
+#: templates/pages/home.html:16
+msgid "Get started"
+msgstr "Mulai"
 
 #: templates/snippets/form.html:19
 msgid "Show password"
 msgstr "Tampilkan kata sandi"
 
-#: templates/users/components/settings_header.html:9
-msgid "Profile"
-msgstr "Profil"
-
-#: templates/users/components/settings_header.html:11
-msgid "Emails"
-msgstr "Email"
-
-#: templates/users/components/settings_header.html:13
-msgid "Security"
-msgstr "Keamanan"
-
 #: templates/users/user_update.html:10
-msgid "Basic information"
-msgstr "Informasi dasar"
+msgid "Update your profile information"
+msgstr "Perbarui informasi profil anda"
 
 #: templates/users/user_update.html:15
 msgid "Save changes"
 msgstr "Simpan perubahan"
 
 #: templates/users/user_update.html:19 templates/users/user_update.html:22
-#: templates/users/user_update.html:25 templates/users/user_update.html:30
+#: templates/users/user_update.html:27 templates/users/user_update.html:32
 msgid "Delete account"
 msgstr "Hapus akun"
 
@@ -225,9 +169,91 @@ msgid ""
 msgstr ""
 "Menghapus akun Anda akan menghapus semua informasi Anda dari database kami."
 
-#: templates/users/user_update.html:26
+#: templates/users/user_update.html:28
 msgid ""
 "Once you delete your account, there is no going back. Please be certain."
 msgstr ""
 "Setelah Anda menghapus akun Anda, tidak ada jalan untuk kembali. Pastikan "
 "Anda yakin."
+
+#~ msgid "Log in"
+#~ msgstr "Masuk"
+
+#~ msgid "Primary"
+#~ msgstr "Utama"
+
+#~ msgid "Verified"
+#~ msgstr "Terverifikasi"
+
+#~ msgid "Unverified"
+#~ msgstr "Belum terverifikasi"
+
+#~ msgid "Make primary"
+#~ msgstr "Jadikan utama"
+
+#~ msgid "Re-send verification"
+#~ msgstr "Kirim ulang verifikasi"
+
+#~ msgid "Remove"
+#~ msgstr "Hapus"
+
+#~ msgid ""
+#~ "You currently do not have any e-mail address set up. You should really "
+#~ "add an e-mail address so you can receive notifications, reset your "
+#~ "password, etc."
+#~ msgstr ""
+#~ "Anda saat ini tidak memiliki alamat e-mail yang disetel. Anda harus "
+#~ "menambahkan alamat e-mail agar dapat menerima pemberitahuan, reset kata "
+#~ "sandi, dll."
+
+#~ msgid "Add email address"
+#~ msgstr "Tambah alamat email"
+
+#~ msgid "Add email"
+#~ msgstr "Tambah email"
+
+#~ msgid ""
+#~ "\n"
+#~ "    <h1>Hello from %(site_name)s!</h1>\n"
+#~ "    <p>You're receiving this e-mail because user <strong>"
+#~ "%(user_display)s</strong> has given your e-mail address to register an "
+#~ "account on <strong>%(site_domain)s</strong>.</p>\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "    <h1>Halo dari %(site_name)s!</h1>\n"
+#~ "    <p>Anda menerima e-mail ini karena pengguna <strong>%(user_display)s</"
+#~ "strong> telah memberikan alamat e-mail Anda untuk mendaftarkan akun di "
+#~ "<strong>%(site_domain)s</strong>.</p>\n"
+#~ "  "
+
+#~ msgid ""
+#~ "\n"
+#~ "    <h1>Hello from %(site_name)s!</h1>\n"
+#~ "    <p>We've received a request to reset your password. If you didn't "
+#~ "make this request, you can safely ignore this email. Otherwise, click the "
+#~ "button below to reset your password.</p>\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "    <h1>Halo dari %(site_name)s!</h1>\n"
+#~ "    <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda. "
+#~ "Jika Anda tidak melakukan permintaan ini, Anda dapat mengabaikan e-mail "
+#~ "ini. Jika tidak, klik tombol di bawah untuk mengatur ulang kata sandi "
+#~ "Anda.</p>\n"
+#~ "  "
+
+#~ msgid "Change password"
+#~ msgstr "Ubah kata sandi"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Emails"
+#~ msgstr "Email"
+
+#~ msgid "Security"
+#~ msgstr "Keamanan"
+
+#~ msgid "Basic information"
+#~ msgstr "Informasi dasar"

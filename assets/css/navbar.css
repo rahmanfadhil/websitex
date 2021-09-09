@@ -1,0 +1,179 @@
+/* Main navbar container */
+
+nav.navbar {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 2rem 1rem;
+  max-width: var(--container-width);
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+/* Navbar title */
+
+nav.navbar a.title {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Navbar mobile menu toggle button */
+
+nav.navbar #toggle {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 4.25rem;
+  width: 4.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-menu'%3E%3Cline x1='3' y1='12' x2='21' y2='12'%3E%3C/line%3E%3Cline x1='3' y1='6' x2='21' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='18' x2='21' y2='18'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Navbar menu */
+
+nav.navbar #menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav.navbar #menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+nav.navbar #menu ul li {
+  color: inherit;
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: 1rem;
+}
+
+nav.navbar #menu ul li a,
+nav.navbar #menu ul li button {
+  color: var(--text);
+  line-height: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: inherit;
+
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+
+nav.navbar #menu ul li a::before,
+nav.navbar #menu ul li button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+nav.navbar #menu ul li:hover > a,
+nav.navbar #menu ul li:focus-within > a,
+nav.navbar #menu ul li:hover > button,
+nav.navbar #menu ul li:focus-within > button {
+  color: var(--blue);
+}
+
+@media (max-width: 768px) {
+  nav.navbar {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border);
+    background-color: var(--white);
+  }
+
+  nav.navbar #toggle {
+    display: inline-block;
+  }
+
+  nav.navbar #menu {
+    display: none;
+  }
+
+  nav.navbar #menu.open {
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 2px solid var(--border);
+    padding-top: 0.75rem;
+  }
+
+  nav.navbar #menu ul {
+    flex-wrap: wrap;
+  }
+
+  nav.navbar #menu ul li {
+    width: 100%;
+    padding: 0.75rem 0;
+  }
+}
+
+/* Dropdowns */
+
+nav.navbar #menu ul li.dropdown {
+  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  background-position: right 0.5rem center;
+  padding-right: 2.25rem;
+}
+
+nav.navbar #menu ul li.dropdown:hover ul,
+nav.navbar #menu ul li.dropdown:focus-within ul {
+  display: block;
+}
+
+nav.navbar #menu ul li.dropdown ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 175px;
+  transform: translateX(-50%);
+  background-color: var(--white);
+  border: 2px solid var(--border);
+  z-index: 100;
+  padding: 0.5rem 0;
+}
+
+nav.navbar #menu ul li.dropdown ul li {
+  padding: 0.75rem 1rem;
+}
+
+@media (max-width: 768px) {
+  nav.navbar #menu ul li.dropdown {
+    padding-right: 0;
+  }
+
+  nav.navbar #menu ul li.dropdown ul {
+    position: initial;
+    margin-top: 1rem;
+    transform: none;
+  }
+
+  nav.navbar #menu ul li.dropdown {
+    background-position: right top 0.75rem;
+  }
+}

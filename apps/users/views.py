@@ -8,7 +8,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic import UpdateView, View
-from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView
 from sesame.utils import get_query_string
 
@@ -20,13 +19,15 @@ from apps.users.models import User
 @require_POST
 def logout_view(request):
     logout(request)
+    messages.success(request, "You have been logged out.")
     return redirect("pages:home")
 
 
-class EmailLoginView(FormView):
+class EmailLoginView(SuccessMessageMixin, FormView):
     form_class = EmailLoginForm
     template_name = "users/login.html"
     success_url = reverse_lazy("pages:home")
+    success_message = "Sent login link to your email!"
 
     def form_valid(self, form):
         email = form.cleaned_data["email"]
@@ -39,7 +40,7 @@ class EmailLoginView(FormView):
             template_name="emails/login.html",
             context={"url": url, "user": user},
         )
-        return redirect(self.success_url)
+        return super().form_valid(form)
 
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

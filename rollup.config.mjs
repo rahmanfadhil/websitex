@@ -2,6 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import replace from "@rollup/plugin-replace";
 import autoprefixer from "autoprefixer";
 import fs from "fs/promises";
+import { globby } from "globby";
 import path from "path";
 import postcss from "postcss";
 import postcssImport from "postcss-import";
@@ -9,6 +10,7 @@ import postcssUrl from "postcss-url";
 
 function css({ from, to }) {
   const buildDir = path.dirname(to);
+  const glob = path.join(path.dirname(from), "**/*.css");
 
   const processor = postcss([autoprefixer, postcssImport]).use(
     postcssUrl({
@@ -23,7 +25,9 @@ function css({ from, to }) {
   return {
     name: "css",
     async buildStart() {
-      this.addWatchFile(from);
+      for (const file of await globby(glob)) {
+        this.addWatchFile(file);
+      }
       await fs.mkdir(buildDir, { recursive: true });
       const data = await fs.readFile(from);
       const result = await processor.process(data, {

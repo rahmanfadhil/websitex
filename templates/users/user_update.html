@@ -5,9 +5,9 @@
 {% block title %}Edit profile - {{ DEFAULT_PAGE_TITLE }}{% endblock %}
 
 {% block content %}
-  {% include 'users/components/settings_header.html' %}
   <section class="heading">
-    <h2 class="display-4">{% trans "Basic information" %}</h2>
+    <h2 class="heading-3">{% trans "My account" %}</h2>
+    <p>{% trans "Update your profile information" %}</p>
   </section>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -16,18 +16,21 @@
   </form>
   <hr>
   <section class="heading">
-    <h2 class="display-4">{% trans "Delete account" %}</h2>
+    <h2 class="heading-3">{% trans "Delete account" %}</h2>
     <p>{% trans "Deleting your account will remove all your information from our database." %}</p>
   </section>
   <button class="button" data-toggle-modal="#delete-account-modal">{% trans "Delete account" %}</button>
-  <x-modal id="delete-account-modal">
-    <section class="heading">
-      <h1 class="display-3">{% trans "Delete account" %}</h1>
-      <p>{% trans "Once you delete your account, there is no going back. Please be certain." %}</p>
-    </section>
-    <form action="{% url 'users:user_delete' %}" method="post">
-      {% csrf_token %}
-      <button class="button">{% trans "Delete account" %}</button>
-    </form>
-  </x-modal>
+  <div class="modal" id="delete-account-modal" aria-hidden="true" tabindex="-1">
+    <div class="modal__content">
+      <button class="modal__close" aria-label="close" data-toggle-modal="#delete-account-modal"></button>
+      <div class="heading">
+        <h2>{% trans "Delete account" %}</h2>
+        <p>{% trans "Once you delete your account, there is no going back. Please be certain." %}</p>
+      </div>
+      <form action="{% url 'users:logout' %}" method="post">
+        {% csrf_token %}
+        <button class="button">{% trans "Delete account" %}</button>
+      </form>
+    </div>
+  </div>
 {% endblock content %}

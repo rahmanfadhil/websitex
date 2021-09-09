@@ -42,58 +42,75 @@
 </head>
 
 <body>
-  <!-- Display messages for screen reader -->
-  {% if messages %}
-    <div class="toast">
-      {% for message in messages %}
-        <div role="alert" class="{{ message.tags }}">{{ message }} <button aria-hidden="true" class="icon"></button></div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   <!-- Top navigation -->
   {% block header %}
-    <header class="navbar">
-      <nav role="navigation" aria-label="Main menu" class="open">
-        <a class="title" href="{% url 'pages:home' %}">WebsiteX</a>
-        <a class="visually-hidden-focusable" href="#main-content">{% trans "Skip to main content" %}</a>
-        <button id="toggle" aria-expanded="false" aria-label="Menu"></button>
-        <div id="menu">
-          {% is_link_active 'pages:home' as is_pages_active %}
-          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:home' %}">{% trans "Home" %}</a>
-          {% is_link_active 'wagtail_serve' as is_blog_active %}
-          <a {% if is_blog_active %}aria-current="page"{% endif %} href="{% slugurl 'blog' %}">{% trans "Blog" %}</a>
-          {% is_link_active 'pages:about' as is_pages_active %}
-          <a {% if is_pages_active %}aria-current="page"{% endif %} href="{% url 'pages:about' %}">{% trans "About" %}</a>
-          <div class="flex-grow"></div>
+    <nav class="navbar" role="navigation">
+			<a href="{% url 'pages:home' %}" class="title">WebsiteX</a>
+      <a class="visually-hidden-focusable" href="#main-content">{% trans "Skip to main content" %}</a>
+      <button id="toggle" aria-expanded="false" aria-label="menu"></button>
+      <div id="menu">
+				<ul>
+					<li><a href="{% url 'pages:home' %}">{% trans "Home" %}</a></li>
+					<li><a href="{% slugurl 'blog' %}">{% trans "Blog" %}</a></li>
+					<li><a href="{% url 'pages:about' %}">{% trans "About" %}</a></li>
           {% if user.is_authenticated %}
-            {% is_link_active 'users:user_update' as is_users_active %}
-            <a {% if is_users_active %}aria-current="page"{% endif %} href="{% url 'users:user_update' %}">{% trans "My account" %}</a>
-            <button class="button" data-toggle-modal="#logout-modal">{% trans "Log out" %}</button>
-          {% else %}
-            {% is_link_active 'login' as is_login_active %}
-            <a {% if is_login_active %}aria-current="page"{% endif %} href="{% url 'users:login' %}" class="button">{% trans "Log in" %}</a>
+            <li class="dropdown">
+              <a href="#">{% trans "My account" %}</a>
+              <ul>
+                <li><a href="{% url 'users:user_update' %}">{% trans "Settings" %}</a></li>
+                <li><button data-toggle-modal="#logout-modal">{% trans "Log out" %}</button></li>
+              </ul>
+            </li>
           {% endif %}
+					<li class="dropdown">
+            {% get_current_language as LANGUAGE_CODE %}
+            <a href="#">{{ LANGUAGE_CODE|upper }}</a>
+            <ul>
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                <li>
+                  <button type="submit" form="language_form" name="language" value="{{ language.code }}">{{ language.name_local }}</button>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+				</ul>
+        {% if user.is_anonymous %}
+          <a href="{% url 'users:login' %}" class="button">{% trans "Sign up" %}</a>
+        {% endif %}
+      </div>
+		</nav>
+
+    <form action="{% url 'set_language' %}" method="post" id="language_form">
+      {% csrf_token %}
+    </form>
+
+    <div class="modal" id="logout-modal" aria-hidden="true" tabindex="-1">
+      <div class="modal__content">
+        <button class="modal__close" aria-label="close" data-toggle-modal="#logout-modal"></button>
+        <div class="heading">
+          <h2>{% trans "Log out" %}</h2>
+          <p>{% trans "Are you sure you want to log out?" %}</p>
         </div>
-      </nav>
-    </header>
-
-    <x-modal id="logout-modal">
-      <section class="heading">
-        <h2 class="display-3">{% trans "Log out" %}</h2>
-        <p>{% trans "Are you sure you want to log out?" %}</p>
-      </section>
-      <form action="{% url 'users:logout' %}" method="post">
-        {% csrf_token %}
-        <button class="button">{% trans "Log out" %}</button>
-      </form>
-    </x-modal>
+        <form action="{% url 'users:logout' %}" method="post">
+          {% csrf_token %}
+          <button class="button">{% trans "Log out" %}</button>
+        </form>
+      </div>
+    </div>
   {% endblock header %}
-
-  {% block wide_content %}{% endblock wide_content %}
 
   <!-- Main content -->
   <main id="main-content" class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert__{{ message.tags }}" role="alert">
+          {{ message }}
+          <button class="alert__close" aria-hidden="true"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
     {% block content %}{% endblock content %}
   </main>
 

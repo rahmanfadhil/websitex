@@ -1,811 +1,117 @@
-@import "tailwindcss/dist/base.css";
-@import "@fontsource/commissioner/variable.css";
+@import "modern-normalize/modern-normalize.css";
+@import "@fontsource/lexend/variable.css";
 
-/* Variables */
+@import "./navbar.css";
+@import "./forms.css";
+@import "./alert.css";
+@import "./utils.css";
+@import "./modal.css";
+@import "./hero.css";
 
 :root {
-  --black: #1e293b;
-  --white: #ffffff;
+  --white: #fff;
+  --text: #1f2937;
+  --border: #ccc;
   --blue: #2563eb;
-  --green: #16a34a;
-  --yellow: #eab308;
-  --red: #dc2626;
-  --button: #1e293b;
+  --background: #f9fafb;
+  --secondary: #6b7280;
+  --red: #ef4444;
 
-  --background: #f8fafc;
-  --border: #cbd5e1;
-  --secondary: #64748b;
-
-  --border-radius: 3px;
-  --box-shadow: 0 2px 3px rgb(0 0 0 / 16%);
-  --box-shadow-lg: 0 1rem 3rem rgb(0 0 0 / 16%);
-  --font-weight-normal: 400;
-  --font-weight-heading: 500;
-  --font-weight-bold: 600;
+  --container-width: 1024px;
 }
-
-/* Global styles */
 
 body {
-  font-family: "CommissionerVariable", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
-  color: var(--black);
   background-color: var(--background);
-  font-weight: var(--font-weight-normal);
+  font-family: "LexendVariable", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  line-height: 1.5;
 }
 
-/* Typography */
-
-h1,
-.display-1 {
-  font-size: 2.5em;
-}
-h2,
-.display-2 {
-  font-size: 2em;
-}
-h3,
-.display-3 {
-  font-size: 1.75em;
-}
-h4,
-.display-4 {
-  font-size: 1.5em;
-}
-h5,
-.display-5 {
-  font-size: 1.25em;
-}
-h6,
-.display-6 {
-  font-size: 1em;
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 h1,
+.heading-1,
 h2,
+.heading-2,
 h3,
+.heading-3,
 h4,
+.heading-4,
 h5,
+.heading-5,
 h6,
-.display-1,
-.display-2,
-.display-3,
-.display-4,
-.display-5,
-.display-6 {
-  display: block;
-  color: inherit;
-  font-weight: var(--font-weight-heading);
+.heading-6 {
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
-a {
-  color: var(--blue);
+h1,
+.heading-1 {
+  font-size: 2.5rem;
 }
 
-hr {
-  border-color: var(--border);
-  margin: 3rem 0;
+h2,
+.heading-2 {
+  font-size: 2rem;
 }
 
-/* Forms */
-
-form section {
-  margin-bottom: 1.5rem;
-  position: relative;
+h3,
+.heading-3 {
+  font-size: 1.75rem;
 }
 
-form section > label {
-  display: inline-block;
-}
-
-/* Add spacing to field errors and radio select */
-form section ul {
-  margin-top: 0.5rem;
-}
-
-form section.invalid :is(input, select):not(:focus, :checked) {
-  border: 1px solid var(--red) !important;
-}
-
-/* Add a little extra space between a checkbox input and the label */
-form section input[type="checkbox"],
-form section input[type="radio"] {
-  margin-right: 0.5rem;
-}
-
-form section input[type="radio"],
-form section input[type="checkbox"] {
-  width: 1em;
-  height: 1em;
-  margin-top: 0.25em;
-  vertical-align: top;
-  background-color: var(--white);
-  border: 1px solid var(--border);
-  background-repeat: no-repeat;
-  background-position: center;
-  appearance: none;
-  color-adjust: exact;
-}
-
-form section input[type="checkbox"] {
-  border-radius: var(--border-radius);
-}
-
-form section input[type="radio"] {
-  border-radius: 50%;
-}
-
-form section input[type="checkbox"]:checked,
-form section input[type="radio"]:checked {
-  background-color: var(--blue);
-  border-color: var(--blue);
-}
-
-form section input[type="checkbox"]:checked {
-  background-size: contain;
-  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-}
-
-form section input[type="radio"]:checked {
-  background-size: 6px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' class='bi bi-circle-fill' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8'/%3E%3C/svg%3E");
-}
-
-form section input[type="text"],
-form section input[type="email"],
-form section input[type="number"],
-form section input[type="password"],
-form section input[type="file"],
-form section input[type="date"],
-form section input[type="datetime-local"],
-form section .current-file,
-form section select {
-  margin-top: 0.5rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: var(--border-radius);
-  width: 100%;
-  overflow: hidden;
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-}
-
-form section input:focus {
-  border-color: var(--blue);
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-form section input[type="date"] {
-  appearance: none;
-}
-
-/* Add upload icon to the right side of the input */
-form section input[type="file"] {
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-upload' viewBox='0 0 16 16'%3E%3Cpath d='M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z'/%3E%3Cpath d='M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 16px 12px;
-}
-
-/* Style the browser's default "Choose File" button */
-form section input[type="file"]::file-selector-button {
-  cursor: pointer;
-  padding: 0.75rem 1rem;
-  margin-top: -0.75rem;
-  margin-bottom: -0.75rem;
-  margin-left: -1rem;
-  margin-right: 1rem;
-  line-height: inherit;
-  background-color: var(--background);
-  border-top: none;
-  border-bottom: none;
-  border-left: none;
-  border-right: 1px solid var(--border);
-}
-
-/* Style the current display and the clear checkbox on Django's clearable file input */
-form section .current-file {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-}
-
-form section .current-file .initial-text {
-  background-color: var(--background);
-  padding: 0.75rem 1rem;
-  margin-top: -0.75rem;
-  margin-bottom: -0.75rem;
-  border-right: 1px solid var(--border);
-  margin-left: -1rem;
-}
-
-form section .current-file a {
-  flex-grow: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-form section .current-file .clear-input {
-  white-space: nowrap;
-}
-
-/* Add a chevron down icon to the right side of the input */
-form section select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 16px 12px;
-  appearance: none;
-}
-
-/* Style the default django forms errors */
-.errorlist {
-  color: var(--red);
-}
-
-/* Style the non-field errors in django forms */
-.errorlist.nonfield {
-  margin-bottom: 1.5rem;
-}
-
-/* Utilities */
-
-.container {
-  max-width: 1024px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.flex-grow {
-  flex-grow: 1;
-}
-
-/* https://getbootstrap.com/docs/5.1/helpers/visually-hidden/ */
-.visually-hidden,
-.visually-hidden-focusable:not(:focus):not(:focus-within) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-
-/* Header */
-
-header.navbar {
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-  border-bottom: 1px solid var(--border);
-}
-
-header.navbar nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 1rem;
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  header.navbar nav {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
-  }
-}
-
-header.navbar nav a.title {
+h4,
+.heading-4 {
   font-size: 1.5rem;
-  font-weight: var(--font-weight-heading);
-  margin-right: 1.5rem;
-  color: var(--black);
 }
 
-header.navbar nav button#toggle {
-  display: none;
-}
-
-header.navbar nav #menu {
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-header.navbar nav #menu a,
-header.navbar nav #menu button {
-  margin-left: 1.5rem;
-}
-
-header.navbar nav #menu a:not(.button) {
-  color: var(--black);
-  padding: 0.75rem 0;
-}
-
-@media (max-width: 768px) {
-  header.navbar {
-    position: relative;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  header.navbar nav #menu {
-    display: none;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: start;
-    border-top: 1px solid var(--border);
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-  }
-
-  header.navbar nav #menu.open {
-    display: flex;
-  }
-
-  header.navbar nav #menu a:not(.button) {
-    width: 50%;
-  }
-
-  header.navbar nav #menu a,
-  header.navbar nav #menu button {
-    margin-left: 0;
-  }
-
-  header.navbar nav #menu a.button,
-  header.navbar nav #menu button {
-    margin-top: 0.75rem;
-    width: 100%;
-  }
-
-  header.navbar nav button#toggle {
-    display: inline-block;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-list' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E%0A");
-    background-repeat: no-repeat;
-    background-size: 1.5rem;
-    background-position: center;
-
-    /* The height of the navbar title */
-    width: 2.25rem;
-    height: 2.25rem;
-  }
-}
-
-/* Buttons */
-
-button.button,
-a.button {
-  padding: 0.75rem 1rem;
-  background-color: var(--button);
-  box-shadow: var(--box-shadow);
-  color: var(--white);
-  border-radius: var(--border-radius);
-  display: inline-block;
-  text-align: center;
-  border: none;
-}
-
-.button.large {
-  padding: 1rem 2rem;
+h5,
+.heading-5 {
   font-size: 1.25rem;
 }
 
-button.small,
-a.small.button {
-  padding: 0.5rem 0.75rem !important;
-  font-size: 14px;
+h6,
+.heading-6 {
+  font-size: 1rem;
 }
 
-button[data-toggle-password] {
-  position: absolute;
-  top: 0;
-  right: 0;
+.heading h1,
+.heading h2,
+.heading h3,
+.heading h4,
+.heading h5,
+.heading h6 {
+  margin-bottom: 0.75rem;
 }
-
-/* Authentication form */
-
-.auth-form {
-  max-width: 450px;
-  margin: 3rem auto;
-}
-
-.auth-form h1 {
-  margin-bottom: 2rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.auth-form > .button {
-  margin-bottom: 2rem;
-  width: 100%;
-}
-
-.auth-form p {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Tab navigation */
-
-nav.tabs {
-  display: flex;
-  margin-bottom: 3rem;
-  border-bottom: 1px solid var(--border);
-}
-
-nav.tabs a {
-  color: inherit;
-  padding: 0.75rem 1rem;
-}
-
-nav.tabs a.active {
-  color: var(--button);
-  font-weight: var(--font-weight-bold);
-  border-bottom: 2px solid var(--button);
-}
-
-/* Content */
-
-main#main-content {
-  margin: 3rem auto;
-}
-
-/* Table */
-
-.table {
-  overflow-x: auto;
-  background-color: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  white-space: nowrap;
-}
-
-table {
-  width: 100%;
-}
-
-th {
-  text-align: start;
-}
-
-th,
-td {
-  padding: 0.75rem 1rem;
-}
-
-thead {
-  border-bottom: 1px solid var(--black);
-}
-
-tbody tr:not(:last-child) {
-  border-bottom: 1px solid var(--border);
-}
-
-/* Pagination */
-
-section.pagination {
-  display: flex;
-  justify-content: center;
-}
-
-section.pagination nav {
-  background-color: var(--white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-}
-
-section.pagination nav a {
-  padding: 0.75rem 1rem;
-  color: inherit;
-  vertical-align: middle;
-  border: 1px solid var(--border);
-  margin-left: -1px;
-}
-
-@media (max-width: 768px) {
-  section.pagination nav a {
-    padding: 0.5rem 0.75rem;
-    font-size: 14px;
-  }
-}
-
-section.pagination nav a:hover {
-  background-color: var(--background);
-}
-
-section.pagination nav a[aria-current] {
-  z-index: 3;
-  color: var(--white);
-  background-color: var(--button);
-  border-color: var(--button);
-}
-
-section.pagination nav a:first-child {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-section.pagination nav a:last-child {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-}
-
-/* Dialog */
-
-x-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgb(0 0 0 / 16%);
-  z-index: 101;
-}
-
-x-modal.open {
-  display: block;
-}
-
-x-modal .modal__content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: var(--border-radius);
-  border: 2px solid var(--black);
-  box-shadow: var(--box-shadow);
-  width: 400px;
-  padding: 1.5rem;
-  z-index: 102;
-}
-
-@media (max-width: 400px) {
-  x-modal .modal__content {
-    width: 90%;
-  }
-}
-
-x-modal .modal__content button.modal__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 1.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-/* Toast */
-
-.toast {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 200;
-  padding: 0 1rem;
-  width: 450px;
-}
-
-@media screen and (max-width: 450px) {
-  .toast {
-    width: 100%;
-  }
-}
-
-.toast div {
-  animation: fadein 0.5s;
-  transition: opacity 0.5s;
-
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  background-color: var(--blue);
-  color: var(--white);
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  box-shadow: var(--box-shadow);
-}
-
-.toast div.hidden {
-  opacity: 0;
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.toast div button {
-  background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 1rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: rgb(0 0 0 / 16%);
-  border-radius: var(--border-radius);
-  margin-left: 0.75rem;
-  flex-shrink: 0;
-}
-
-.toast div.success {
-  background-color: var(--green);
-}
-
-.toast div.error {
-  background-color: var(--red);
-}
-
-.toast div.warning {
-  background-color: var(--yellow);
-}
-
-.toast div.info {
-  background-color: var(--blue);
-}
-
-/* Hero */
-
-.hero {
-  padding-top: 1rem;
-  padding-bottom: 4rem;
-  text-align: center;
-  max-width: 768px;
-  margin: 0 auto;
-}
-
-@media screen and (max-width: 768px) {
-  .hero {
-    padding-top: 0;
-    padding-bottom: 3rem;
-  }
-}
-
-.hero h1 {
-  font-size: 3em;
-  font-weight: 300;
-  margin-bottom: 1rem;
-}
-
-.hero p {
-  color: var(--secondary);
-  font-size: 1.25em;
-}
-
-.hero time {
-  margin-top: 0.5rem;
-  display: inline-block;
-  font-size: 1.25em;
-  font-weight: 300;
-}
-
-.hero .button {
-  margin-top: 2rem;
-}
-
-.hero img {
-  width: 100%;
-  margin-top: 4rem;
-  box-shadow: var(--box-shadow-lg);
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--border-radius);
-}
-
-/* Blog */
-
-.blog {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr 1fr;
-}
-
-@media screen and (max-width: 768px) {
-  .blog {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-}
-
-.blog__item {
-  position: relative;
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: var(--border-radius);
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-}
-
-.blog__item a::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  content: "";
-  box-sizing: border-box;
-}
-
-.blog__item p {
-  margin: 1rem 0;
-  color: var(--secondary);
-}
-
-.heading {
-  margin-bottom: 2.5rem;
-}
-
-/* section.heading h1,
-section.heading h2,
-section.heading h3,
-section.heading h4,
-section.heading h5,
-section.heading h6 {
-} */
 
 .heading p {
   color: var(--secondary);
-  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-/* Blog content */
-
-.blog-content {
-  font-size: 1.25em;
-  max-width: 768px;
-  margin: 0 auto;
+hr {
+  border: 0;
+  border-top: 2px solid var(--border);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-.blog-content img {
-  margin: 2em auto;
-  border: 1px solid var(--border);
-  box-shadow: var(--box-shadow);
-  border-radius: var(--border-radius);
+#main-content {
+  padding-bottom: 3rem;
 }
 
-.blog-content p {
-  margin-bottom: 1em;
+form section.invalid input,
+form section.invalid textarea,
+form section.invalid select {
+  border-color: var(--red);
 }
 
-.blog-content h1,
-.blog-content h2,
-.blog-content h3,
-.blog-content h4,
-.blog-content h5,
-.blog-content h6 {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+.errorlist {
+  color: var(--red);
 }

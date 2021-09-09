@@ -6,25 +6,14 @@
 
 {% block content %}
   <div class="hero">
-    <h1>WebsiteX</h1>
-    <p>A complete Django boilerplate for production web applications</p>
-    <a href="{% url 'users:login' %}" class="button large">Get started</a>
-    <img src="{% static 'images/home.jpg' %}" alt="Screenshot" width="1500" height="1117">
+    <div class="heading">
+      <h1>{% trans "A complete Django boilerplate for production web applications." %}</h1>
+      <p>A complete Django boilerplate for production web applications</p>
+    </div>
+    <form action="{% url 'users:login' %}" method="post">
+      {% csrf_token %}
+      <input type="email" class="input" placeholder="{% trans "Your email address" %}" name="email" required>
+      <button class="button">{% trans "Get started" %}</button>
+    </form>
   </div>
-
-  <form action="{% url 'set_language' %}" method="post">
-    {% csrf_token %}
-    {% comment %} <input name="next" type="hidden" value="{% url 'pages:home' %}"> {% endcomment %}
-    <select name="language">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                {{ language.name_local }} ({{ language.code }})
-            </option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="Go">
-  </form>
 {% endblock content %}
