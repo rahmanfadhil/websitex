@@ -1,6 +1,12 @@
-{{ form.non_field_errors }}
+{% load crispy_forms_tags %}
+
+{% csrf_token %}
+{{ form|crispy }}
+
+{% comment %} {{ form.non_field_errors }}
 
 {% load i18n %}
+{% load core %}
 
 {% for hidden in form.hidden_fields %}
   {{ hidden }}
@@ -9,15 +15,15 @@
 {% for field in form.visible_fields %}
   <section class="{% if field.errors %}invalid{% endif %}">
     {% if field.field.widget.input_type == 'checkbox' %}
-      {{ field }}
+      {{ field|bootstrap }}
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {% else %}
       <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-      {{ field }}
+      {{ field|bootstrap }}
     {% endif %}
     {% if field.field.widget.input_type == 'password' %}
       <button type="button" data-toggle-password="{{ field.id_for_label }}">{% trans "Show password" %}</button>
     {% endif %}
     {{ field.errors }}
   </section>
-{% endfor %}
+{% endfor %} {% endcomment %}

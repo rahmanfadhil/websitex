@@ -1,11 +1,7 @@
 // https://developers.google.com/web/tools/workbox/guides/get-started#routing_and_caching_strategies
 
 import { registerRoute } from "workbox-routing";
-import {
-  NetworkFirst,
-  StaleWhileRevalidate,
-  CacheFirst,
-} from "workbox-strategies";
+import { NetworkFirst, CacheFirst } from "workbox-strategies";
 
 // Used for filtering matches based on status code, header, or both
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
@@ -29,26 +25,34 @@ registerRoute(
   })
 );
 
-// Cache CSS, JS, and Web Worker requests with a Stale While Revalidate strategy
-registerRoute(
-  // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
-  ({ request }) =>
-    request.destination === "font" ||
-    request.destination === "style" ||
-    request.destination === "script" ||
-    request.destination === "worker",
-  // Use a Stale While Revalidate caching strategy
-  new StaleWhileRevalidate({
-    // Put all cached files in a cache named 'assets'
-    cacheName: "assets",
-    plugins: [
-      // Ensure that only requests that result in a 200 status are cached
-      new CacheableResponsePlugin({
-        statuses: [200],
-      }),
-    ],
-  })
-);
+// Cache CSS, JS, Fonts, and Web Worker requests forever in production, because
+// the file names are hashed
+if (process.env.NODE_ENV === "production") {
+  registerRoute(
+    // Check to see if the request's destination is style for stylesheets, font
+    // files, script for JavaScript, or worker for web worker
+    ({ request }) =>
+      request.destination === "font" ||
+      request.destination === "style" ||
+      request.destination === "script" ||
+      request.destination === "worker",
+    // Use a Stale While Revalidate caching strategy
+    new CacheFirst({
+      // Put all cached files in a cache named 'assets'
+      cacheName: "assets",
+      plugins: [
+        // Ensure that only requests that result in a 200 status are cached
+        new CacheableResponsePlugin({
+          statuses: [200],
+        }),
+        // Cache them forever because the file names are hashed
+        new ExpirationPlugin({
+          maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+        }),
+      ],
+    })
+  );
+}
 
 // Cache images with a Cache First strategy
 registerRoute(

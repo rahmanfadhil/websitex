@@ -1,6 +1,7 @@
 from django import template
 from django.urls import resolve
 from django.urls.exceptions import Resolver404
+from django.forms.boundfield import BoundField
 
 register = template.Library()
 
@@ -44,3 +45,17 @@ def is_link_active(context, *view_names) -> bool:
             except:
                 pass
     return False
+
+
+@register.filter
+def bootstrap(field: BoundField):
+    """
+    Render form field with bootstrap classes.
+    """
+    switcher = {
+        "checkbox": "form-check-input",
+        "radio": "form-check-input",
+        "select": "form-select",
+    }
+    css_classes = switcher.get(field.widget_type, "form-control")
+    return field.as_widget(attrs={"class": css_classes})

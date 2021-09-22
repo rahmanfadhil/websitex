@@ -5,15 +5,20 @@
 {% load core %}
 
 {% block content %}
-  <div class="hero">
-    <div class="heading">
-      <h1>{% trans "A complete Django boilerplate for production web applications." %}</h1>
-      <p>A complete Django boilerplate for production web applications</p>
+  <div class="row justify-content-center my-lg-7">
+    <div class="col-lg-9">
+      <h1 class="text-center">{% trans "A complete Django boilerplate for production web applications" %}</h1>
+      <form class="row g-3 mt-4 mb-7 justify-content-center flex-grow-1" action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+        <div class="col-12 col-sm-auto">
+          <label for="inputPassword2" class="visually-hidden">Password</label>
+          <input type="email" name="email" class="form-control" id="inputPassword2" placeholder="{% trans "Email address" %}">
+        </div>
+        <div class="col-12 col-sm-auto">
+          <button type="submit" class="btn btn-primary w-100">{% trans "Get started" %}</button>
+        </div>
+      </form>
+      <img src="{% static 'images/home.jpg' %}" class="img-fluid border shadow rounded-3" alt="screenshot">
     </div>
-    <form action="{% url 'users:login' %}" method="post">
-      {% csrf_token %}
-      <input type="email" class="input" placeholder="{% trans "Your email address" %}" name="email" required>
-      <button class="button">{% trans "Get started" %}</button>
-    </form>
   </div>
 {% endblock content %}

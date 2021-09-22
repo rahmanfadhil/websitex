@@ -2,11 +2,9 @@ from io import BytesIO
 from typing import Any, BinaryIO, Dict, List, Tuple, Union
 
 from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import Site
 from django.core.files import File
 from django.core.mail import send_mail
-from django.core.mail.message import EmailMessage
-from django.http.request import HttpRequest
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.text import slugify
@@ -60,7 +58,6 @@ def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
 
 
 def send_html_email(
-    request: HttpRequest,
     subject: str,
     email: Union[str, List[str]],
     template_name: str,
@@ -69,7 +66,7 @@ def send_html_email(
     """
     Renders an HTML template and sends it as email.
     """
-    context["current_site"] = get_current_site(request)
+    context["current_site"] = Site.objects.get_current()
     html_message = transform(render_to_string(template_name, context))
     message = strip_tags(html_message)
     return send_mail(

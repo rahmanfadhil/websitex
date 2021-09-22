@@ -11,7 +11,7 @@ RUN npm install
 
 # Bundle app source
 COPY ./assets /code/assets
-COPY ./rollup.config.mjs .
+COPY ./webpack.config.js .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]
@@ -23,7 +23,7 @@ RUN npm run build
 # BASE (PYTHON)
 # ------------------------------------------------------------------------------
 
-FROM python:3.9-slim-buster AS base
+FROM python:3.9.7-slim-bullseye AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1

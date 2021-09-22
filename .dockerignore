@@ -9,6 +9,9 @@
 !static/
 static/dist/**/*
 
+# Media files (only in development)
+media/
+
 # Python requirements
 !requirements/
 
@@ -19,4 +22,4 @@ static/dist/**/*
 # Front-end assets
 !assets/
 !package*.json
-!rollup.config.mjs
+!webpack.config.js

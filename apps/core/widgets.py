@@ -9,6 +9,10 @@ class CustomDateInput(forms.DateInput):
     input_type = "date"
 
 
+class TrixInput(forms.TextInput):
+    template_name = "widgets/trixinput.html"
+
+
 class CustomDateTimeInput(forms.DateTimeInput):
     """
     Not supported in Firefox yet. So, we added a placeholder to let the users

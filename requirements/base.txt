@@ -11,3 +11,5 @@ django-sesame[ua]==2.4 # https://github.com/aaugustin/django-sesame
 Django==3.2.6 # https://www.djangoproject.com/
 wagtail==2.14 # https://wagtail.io/
 django-celery-results==2.2.0 # https://github.com/celery/django-celery-results
+django-crispy-forms==1.12.0 # https://github.com/django-crispy-forms/django-crispy-forms
+crispy-bootstrap5==0.5 # https://github.com/django-crispy-forms/crispy-bootstrap5

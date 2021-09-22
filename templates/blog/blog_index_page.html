@@ -3,17 +3,21 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-  <section class="hero">
+  <div class="pb-5 mb-5 border-bottom">
     <h1>{{ page.title }}</h1>
-    <p>{{ page.intro }}</p>
-  </section>
-  <div class="blog">
+    <p class="text-muted mb-0">{{ page.intro }}</p>
+  </div>
+  <div class="row">
     {% for post in page.get_children %}
-      <article class="blog__item">
-        <a class="display-4" href="{% pageurl post %}">{{ post.title }}</a>
-        <p>{{ post.specific.intro }}</p>
-        <time datetime="{{ page.date|date:"Y-m-d" }}">{{ post.specific.date }}</time>
-      </article>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <a class="h4 stretched-link text-dark text-decoration-none" href="{% pageurl post %}">{{ post.title }}</a>
+            <p class="mt-3 text-muted">{{ post.specific.intro }}</p>
+            <time datetime="{{ page.date|date:"Y-m-d" }}">{{ post.specific.date }}</time>
+          </div>
+        </div>
+      </div>
     {% endfor %}
   </div>
 {% endblock content %}

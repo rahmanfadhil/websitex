@@ -18,13 +18,11 @@ def page_data(request: HttpRequest):
     messages framework, get the current view name, etc.
     """
     messages = map(lambda x: {"message": str(x), "type": x.tags}, get_messages(request))
-    try:
-        view_name = resolve(request.path_info).view_name
-    except Resolver404:
-        view_name = None
     return {
         "page_data": {
             "messages": list(messages),
-            "view_name": view_name,
+            "view_name": request.resolver_match.view_name,
+            "args": request.resolver_match.args,
+            "kwargs": request.resolver_match.kwargs,
         }
     }

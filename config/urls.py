@@ -11,7 +11,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 # Serve the service worker code in root
 def service_worker(request):
-    path = finders.find("dist/sw.js")
+    path = finders.find("dist/service-worker.js")
     return FileResponse(open(path, "rb"), content_type="application/javascript")
 
 
