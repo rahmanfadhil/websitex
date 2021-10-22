@@ -22,4 +22,5 @@ media/
 # Front-end assets
 !assets/
 !package*.json
+!tsconfig.json
 !webpack.config.js

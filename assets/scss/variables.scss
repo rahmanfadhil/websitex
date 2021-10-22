@@ -1,0 +1,106 @@
+// Colors
+
+$blue: #2563eb !default;
+$indigo: #4338ca !default;
+$purple: #7e22ce !default;
+$pink: #db2777 !default;
+$red: #dc2626 !default;
+$orange: #f97316 !default;
+$yellow: #eab308 !default;
+$green: #047857 !default;
+$teal: #0d9488 !default;
+$cyan: #0e7490 !default;
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$primary: $indigo !default;
+$secondary: $gray-600 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
+
+$body-bg: $gray-100;
+$body-color: $gray-800;
+
+// Fonts
+
+$font-family-sans-serif: "CommissionerVariable", system-ui, -apple-system,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans",
+  sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji";
+
+// Container
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1140px,
+);
+
+// Spacing
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4.5,
+  7: $spacer * 6,
+  8: $spacer * 7.5,
+  9: $spacer * 9,
+);
+
+// Border radius
+
+$border-radius: 0.175rem;
+$border-radius-sm: 0.125rem;
+$border-radius-lg: 0.225rem;
+$border-radius-pill: 50rem;
+
+// Form inputs and buttons
+
+$input-bg: $white;
+$input-btn-padding-y: 0.5rem;
+$input-btn-padding-y-sm: 0.375rem;
+$input-btn-padding-y-lg: 0.75rem;
+
+// Cards
+
+$card-spacer-y: $spacer * 1.5;
+$card-spacer-x: $spacer * 1.5;
+$card-cap-padding-y: $card-spacer-x * 0.75;
+
+// Navs
+
+$nav-link-font-weight: 500;
+$nav-link-padding-y: 1rem;
+$nav-link-color: $gray-600;
+
+// Tab navs
+
+$nav-tabs-border-radius: 0;
+$nav-tabs-link-active-color: $primary;
+
+// Navbars
+
+$navbar-light-active-color: $primary;
+$navbar-light-brand-color: $gray-800;
+$navbar-nav-link-padding-x: 1rem;

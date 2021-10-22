@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import * as Cookies from "js-cookie";
 
 /**
  * Like Django `reverse` function but in JavaScript.
@@ -7,19 +7,24 @@ import Cookies from "js-cookie";
  * @example const url = await reverse("users:user_detail", [1])
  * @example const url = await reverse("users:user_detail", null, { pk: 1 })
  *
- * @param {string} name the view name
- * @param {string[]} args url positional arguments
- * @param {Object} kwargs url keyword arguments
+ * @see https://docs.djangoproject.com/en/dev/ref/urlresolvers/#django.urls.reverse
  *
- * @returns {Promise.<string>} Promise object represents the absolute url
+ * @param name The name of the URL.
+ * @param args The arguments to pass to the URL.
+ * @param kwargs The keyword arguments to pass to the URL.
+ * @returns The URL.
  */
-export default async function reverse(name, args, kwargs) {
+export default async function reverse(
+  name: string,
+  args?: string[],
+  kwargs?: { [key: string]: string | number }
+): Promise<string> {
   const response = await fetch("/js-reverse/", {
     method: "POST",
     mode: "same-origin",
     body: JSON.stringify({ name, args, kwargs }),
     headers: {
-      "X-CSRFToken": Cookies.get("csrftoken"),
+      "X-CSRFToken": Cookies.get("csrftoken") || "",
     },
   });
   if (!response.ok) throw new Error("URL pattern invalid!");

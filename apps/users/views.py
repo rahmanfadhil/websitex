@@ -32,9 +32,9 @@ class EmailLoginView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         email = form.cleaned_data["email"]
         user, _ = User.objects.get_or_create(email=email)
-        url = self.request.build_absolute_uri(self.success_url + get_query_string(user))
+        next_url = self.request.GET.get("next", self.success_url)
+        url = self.request.build_absolute_uri(next_url + get_query_string(user))
         send_html_email(
-            request=self.request,
             subject="Login",
             email=user.email,
             template_name="emails/login.html",

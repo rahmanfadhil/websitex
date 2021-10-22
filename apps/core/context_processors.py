@@ -21,8 +21,8 @@ def page_data(request: HttpRequest):
     return {
         "page_data": {
             "messages": list(messages),
-            "view_name": request.resolver_match.view_name,
-            "args": request.resolver_match.args,
-            "kwargs": request.resolver_match.kwargs,
+            "view_name": getattr(request.resolver_match, "view_name", ""),
+            "args": getattr(request.resolver_match, "args", []),
+            "kwargs": getattr(request.resolver_match, "kwargs", {}),
         }
     }

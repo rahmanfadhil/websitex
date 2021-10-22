@@ -4,12 +4,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="row justify-content-center">
+  <div class="row justify-content-center my-5 my-lg-7">
     <div class="col-xl-5 col-lg-6 col-md-8">
       <div class="card">
         <div class="card-body">
-          <h3 class="mb-3">Login</h3>
-          <p class="mb-4 text-muted small">Enter your email address and we'll send you an email to log in to your account.</p>
+          <h3 class="mb-3">{% trans "Login" %}</h3>
+          <p class="mb-4 text-muted small">{% trans "Enter your email address and we'll send you an email to log in to your account." %}</p>
           <form action="{% url 'users:login' %}" method="post">
             {% csrf_token %}
             {{ form|crispy }}

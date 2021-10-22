@@ -1,9 +1,11 @@
+from apps.users.api import UserViewSet
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles import finders
 from django.http.response import FileResponse
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
+from rest_framework.routers import DefaultRouter
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -15,7 +17,12 @@ def service_worker(request):
     return FileResponse(open(path, "rb"), content_type="application/javascript")
 
 
+router = DefaultRouter()
+router.register(r"users", UserViewSet)
+
 urlpatterns = [
+    path("api/", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("cms/", include(wagtailadmin_urls)),

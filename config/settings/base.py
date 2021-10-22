@@ -48,6 +48,7 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
+    "rest_framework",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -178,6 +179,8 @@ SITE_ID = 1
 AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "pages:home"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+LOGIN_URL = "users:login"
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
@@ -193,7 +196,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # CELERY
 # ------------------------------------------------------------------------------
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL = os.environ["BROKER_URL"]
+CELERY_BROKER_URL = os.environ["REDIS_URL"]
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = "django-db"
 
@@ -210,6 +213,6 @@ WAGTAIL_SITE_NAME = "WebsiteX Blog"
 # ------------------------------------------------------------------------------
 DEFAULT_PAGE_TITLE = "WebsiteX"
 
-# WAGTAIL
+# DJANGO-SESAME
 # ------------------------------------------------------------------------------
 SESAME_MAX_AGE = 60 * 10  # 10 minutes

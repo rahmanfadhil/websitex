@@ -35,15 +35,11 @@ def is_link_active(context, *view_names) -> bool:
     if hasattr(context, "request"):
         try:
             match = resolve(context.request.path_info)
+            if match.view_name in view_names:
+                return True
         except Resolver404:
             return False
 
-        for view_name in view_names:
-            try:
-                if match.view_name == view_name:
-                    return True
-            except:
-                pass
     return False
 
 

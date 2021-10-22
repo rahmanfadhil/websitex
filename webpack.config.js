@@ -3,8 +3,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => ({
   entry: {
-    main: "./assets/js/main.js",
-    "service-worker": "./assets/js/service-worker.js",
+    main: "./assets/main.ts",
+    "service-worker": "./assets/service-worker.ts",
   },
   output: {
     filename: "[name].js",
@@ -13,6 +13,11 @@ module.exports = (env, argv) => ({
   devtool: argv.mode === "development" ? "source-map" : false,
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
       {
         test: /\.s?[ac]ss$/i,
         use: [
@@ -42,6 +47,9 @@ module.exports = (env, argv) => ({
         type: "asset/resource",
       },
     ],
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".mjs"],
   },
   plugins: [
     new MiniCssExtractPlugin({

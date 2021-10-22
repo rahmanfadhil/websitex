@@ -44,7 +44,7 @@
 <body>
   <!-- Top navigation -->
   {% block header %}
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white py-lg-3 border-bottom" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white border-bottom" aria-label="Main navigation">
       <div class="container-lg">
         <a class="navbar-brand fw-bold" href="{% url 'pages:home' %}">WebsiteX</a>
         <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
@@ -52,16 +52,15 @@
         </button>
 
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'pages:home' %}">{% trans "Home" %}</a>
+              <a class="nav-link {% active_link 'pages:home' %}" aria-current="page" href="{% url 'pages:home' %}">{% trans "Home" %}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% slugurl 'blog' %}">{% trans "Blog" %}</a>
+              <a class="nav-link {% active_link 'wagtail_serve' %}" href="{% slugurl 'blog' %}">{% trans "Blog" %}</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'pages:about' %}">{% trans "About" %}</a>
-            </li>
+          </ul>
+          <ul class="navbar-nav me-lg-3 mb-3 mb-lg-0">
             <li class="nav-item dropdown">
               {% get_current_language as LANGUAGE_CODE %}
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,50 +69,69 @@
                 </svg>
                 {{ LANGUAGE_CODE|upper }}
               </a>
-              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdown01">
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
                 {% for language in languages %}
-                  <li><button class="dropdown-item" type="submit" form="language_form" name="language" value="{{ language.code }}">{{ language.name_local }}</button></li>
+                  <li>
+                    <button class="dropdown-item" type="submit" form="language_form" name="language" value="{{ language.code }}">
+                      {{ language.name_local }}
+                    </button>
+                  </li>
                 {% endfor %}
               </ul>
             </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {% trans "My account" %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{% url 'users:user_update' %}">{% trans "Settings" %}</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">{% trans "Log out" %}</button></li>
+                </ul>
+              </li>
+            {% endif %}
           </ul>
-          {% if user.is_authenticated %}
-            <form method="post" action="{% url 'users:logout' %}" class="d-flex">
-              {% csrf_token %}
-              <button class="btn btn-danger flex-shrink-0">Log out</button>
-            </form>
-          {% else %}
-            <a href="{% url 'users:login' %}" class="btn btn-primary flex-shrink-0">Get started</a>
+          {% if not user.is_authenticated %}
+            <a href="{% url 'users:login' %}" class="btn btn-primary flex-shrink-0">{% trans "Get started" %}</a>
           {% endif %}
         </div>
       </div>
     </nav>
 
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutModalLabel">{% trans "Log out" %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>{% trans "Are you sure you want to log out?" %}</p>
+          </div>
+          <form action="{% url 'users:logout' %}" class="modal-footer">
+            {% csrf_token %}
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">{% trans "Log out" %}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <form action="{% url 'set_language' %}" method="post" id="language_form">
       {% csrf_token %}
     </form>
-
-    <div class="modal" id="logout-modal" aria-hidden="true" tabindex="-1">
-      <div class="modal__content">
-        <button class="modal__close" aria-label="close" data-toggle-modal="#logout-modal"></button>
-        <div class="heading">
-          <h2>{% trans "Log out" %}</h2>
-          <p>{% trans "Are you sure you want to log out?" %}</p>
-        </div>
-        <form action="{% url 'users:logout' %}" method="post">
-          {% csrf_token %}
-          <button class="button">{% trans "Log out" %}</button>
-        </form>
-      </div>
-    </div>
   {% endblock header %}
 
   <!-- Main content -->
-  <main id="main-content" class="container my-5">
+  <main id="main-content" class="container">
     {% block content %}{% endblock content %}
   </main>
+
+  {% block footer %}
+  {% endblock footer %}
 
   {{ page_data|json_script:"page_data" }}
 </body>

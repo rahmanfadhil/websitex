@@ -5,7 +5,7 @@
 {% load core %}
 
 {% block content %}
-  <div class="row justify-content-center my-lg-7">
+  <div class="row justify-content-center my-5 my-lg-7">
     <div class="col-lg-9">
       <h1 class="text-center">{% trans "A complete Django boilerplate for production web applications" %}</h1>
       <form class="row g-3 mt-4 mb-7 justify-content-center flex-grow-1" action="{% url 'users:login' %}" method="post">
@@ -22,3 +22,7 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block footer %}
+  {% include 'components/footer.html' %}
+{% endblock footer %}
