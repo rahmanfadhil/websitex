@@ -5,7 +5,11 @@
 {% load core %}
 
 {% block content %}
-  <div class="row justify-content-center my-5 my-lg-7">
+  <div class="my-7 text-center">
+    <h1 class="display-4 mb-4">Django template for production web apps</h1>
+    <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio eos cupiditate dignissimos amet non! Delectus, possimus beatae illo quaerat minima nemo ducimus cumque repudiandae nostrum velit, dicta ex iusto veritatis.</p>
+  </div>
+  {% comment %} <div class="row justify-content-center my-5 my-lg-7">
     <div class="col-lg-9">
       <h1 class="text-center">{% trans "A complete Django boilerplate for production web applications" %}</h1>
       <form class="row g-3 mt-4 mb-7 justify-content-center flex-grow-1" action="{% url 'users:login' %}" method="post">
@@ -20,7 +24,7 @@
       </form>
       <img src="{% static 'images/home.jpg' %}" class="img-fluid border shadow rounded-3" alt="screenshot">
     </div>
-  </div>
+  </div> {% endcomment %}
 {% endblock content %}
 
 {% block footer %}
