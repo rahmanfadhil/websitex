@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.utils import compress_image
 from apps.users.models import User
 
 
@@ -18,6 +19,12 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    def clean_avatar(self):
+        data = self.cleaned_data["avatar"]
+        if data:
+            return compress_image(data, (256, 256))
+        return data
+
     class Meta:
         model = User
         fields = ("email", "username", "full_name", "avatar")

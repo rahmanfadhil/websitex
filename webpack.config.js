@@ -28,14 +28,8 @@ module.exports = (env, argv) => ({
           },
           {
             loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: [["autoprefixer", {}]],
-              },
-              sourceMap: true,
-            },
+            options: { sourceMap: true },
           },
-          { loader: "sass-loader", options: { sourceMap: true } },
         ],
       },
       {

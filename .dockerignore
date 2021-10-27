@@ -23,4 +23,4 @@ media/
 !assets/
 !package*.json
 !tsconfig.json
-!webpack.config.js
+!*.config.js

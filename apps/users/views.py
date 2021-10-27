@@ -1,71 +1,61 @@
-from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import logout
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.views.decorators.http import require_POST
-from django.views.generic import UpdateView, View
-from django.views.generic.edit import FormView
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse
+from django.shortcuts import redirect, render
+from django.urls.base import reverse
+from django.views.decorators.http import require_http_methods, require_POST
 from sesame.utils import get_query_string
 
-from apps.core.utils import compress_image, send_html_email
 from apps.users.forms import EmailLoginForm, UserUpdateForm
 from apps.users.models import User
 
 
 @require_POST
-def logout_view(request):
-    logout(request)
+@login_required
+def logout(request: HttpRequest) -> HttpResponse:
+    auth_logout(request)
     messages.success(request, "You have been logged out.")
     return redirect("pages:home")
 
 
-class EmailLoginView(SuccessMessageMixin, FormView):
-    form_class = EmailLoginForm
-    template_name = "users/login.html"
-    success_url = reverse_lazy("pages:home")
-    success_message = "Sent login link to your email!"
+@require_http_methods(["GET", "POST"])
+def login(request: HttpRequest) -> HttpResponse:
+    form = EmailLoginForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        user, _ = User.objects.get_or_create(email=form.cleaned_data["email"])
 
-    def form_valid(self, form):
-        email = form.cleaned_data["email"]
-        user, _ = User.objects.get_or_create(email=email)
-        next_url = self.request.GET.get("next", self.success_url)
-        url = self.request.build_absolute_uri(next_url + get_query_string(user))
-        send_html_email(
-            subject="Login",
-            email=user.email,
-            template_name="emails/login.html",
-            context={"url": url, "user": user},
-        )
-        return super().form_valid(form)
+        next_url = request.GET.get("next", reverse("pages:home"))
+        url = request.build_absolute_uri(next_url + get_query_string(user))
+        user.send_login_link(url)
+
+        messages.success(request, "We have sent you an email with a link to login.")
+        return redirect("pages:home")
+    else:
+        return render(request, "users/login.html", {"form": form})
 
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = User
-    form_class = UserUpdateForm
-    success_url = reverse_lazy("users:user_update")
-    success_message = "Successfully updated your profile!"
-    template_name = "users/user_update.html"
-
-    def get_object(self, queryset=None) -> User:
-        return self.request.user
-
-    def form_valid(self, form):
-        # Compress the avatar image if the file has changed.
-        if "avatar" in form.changed_data and form.cleaned_data.get("avatar"):
-            avatar = compress_image(form.cleaned_data["avatar"], (256, 256))
-            form.instance.avatar = avatar
-        return super().form_valid(form)
+@login_required
+@require_http_methods(["GET", "POST"])
+def update_user(request: HttpRequest) -> HttpResponse:
+    form = UserUpdateForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=request.user,
+    )
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Your profile has been updated.")
+        return redirect("users:update_user")
+    else:
+        return render(request, "users/update_user.html", {"form": form})
 
 
-class DeleteUserView(LoginRequiredMixin, View):
-    success_message = "Your account has been successfully deleted!"
-    success_url = reverse_lazy("pages:home")
-
-    def post(self, request):
+@require_POST
+@login_required
+def delete_user(request: HttpRequest) -> HttpResponse:
+    if request.user.is_authenticated:
         request.user.delete()
-        messages.success(request, self.success_message)
-        return redirect(self.success_url)
+        messages.success(request, "Your account has been deleted.")
+    return redirect("pages:home")

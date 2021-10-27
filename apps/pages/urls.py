@@ -1,11 +1,10 @@
 from django.urls import path
 
-from apps.pages.views import DesignSystemPageView, HomePageView
+from apps.pages.views import home
 
 
 app_name = "pages"
 
 urlpatterns = [
-    path("", HomePageView.as_view(), name="home"),
-    path("design-system/", DesignSystemPageView.as_view(), name="design_system"),
+    path("", home, name="home"),
 ]

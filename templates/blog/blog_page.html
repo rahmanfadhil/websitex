@@ -2,17 +2,18 @@
 
 {% load wagtailcore_tags %}
 
-{% block content %}
-  <div class="row justify-content-center my-7">
-    <div class="col-md-9">
-      <div class="pb-5 mb-5 border-bottom text-center">
-        <h1 class="display-4 mb-4">{{ page.title }}</h1>
-        <p class="text-muted lead">{{ page.intro }}</p>
-        <time datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date }}</time>
-      </div>
-      <section class="blog-content">
-        {{ page.body|richtext }}
-      </section>
-    </div>
+{% comment %} {% block header %}
+  <div class="bg-white">
+    {{ block.super }}
   </div>
+{% endblock header %} {% endcomment %}
+
+{% block content %}
+  <div class="py-8 md:py-16 text-center max-w-screen-lg mx-auto px-4 md:px-0">
+    <time class="md:text-lg text-gray-500" datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date|date:"F j, Y" }}</time>
+    <h1 class="text-3xl md:text-4xl leading-tight md:leading-tight text-gray-800 font-bold mt-4">{{ page.title }}</h1>
+  </div>
+  <section class="prose md:prose-lg mx-auto px-4 md:px-0 py-8 md:py-16">
+    {{ page.body|richtext }}
+  </section>
 {% endblock %}

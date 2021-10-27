@@ -1,0 +1,5 @@
+{% for error in form.non_field_errors %}
+  <p class="mb-4 bg-red-50 border-red-300 border rounded p-4 flex flex-col divide-y divide-red-200 text-red-600 text-sm">
+    {{ error}}
+  </p>
+{% endfor %}

@@ -6,44 +6,39 @@ from django.http.response import HttpResponse, JsonResponse
 from django.urls.base import reverse
 from django.urls.exceptions import NoReverseMatch
 from django.views.decorators.http import require_POST
-from django.views.generic.edit import CreateView
 
-from apps.core.models import Media
+from apps.core.forms import MediaForm
 from apps.core.utils import compress_image
 
 
-class MediaCreateView(CreateView):
+@require_POST
+def js_upload_media(request: HttpRequest) -> HttpResponse:
     """
-    Handle media uploads from Trix editor.
+    Upload an image to the server.
     """
+    form = MediaForm(request.POST, request.FILES)
 
-    model = Media
-    fields = ("file",)
+    if form.is_valid():
+        media = form.save(commit=False)
+        media.image = compress_image(media.image)
+        if request.user.is_authenticated:
+            media.user = request.user
 
-    def form_invalid(self, form) -> HttpResponse:
-        # Returns the form errors in a JSON format.
+        # Return the URL of the image.
+        url = request.build_absolute_uri(media.image.url)
+        return JsonResponse({"url": url})
+    else:
         return JsonResponse(
             {"errors": form.errors},
-            status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
+            status=HTTPStatus.BAD_REQUEST,
         )
-
-    def form_valid(self, form) -> HttpResponse:
-        # Compress the image before saving.
-        form.instance.file = compress_image(form.instance.file, (2048, 2048))
-
-        # If the user is logged in, save the user information who uploads the file.
-        if self.request.user.is_authenticated:
-            form.instance.author = self.request.user
-
-        # Save the image to the database.
-        media = form.save()
-
-        # Return the absolute url of the file.
-        return JsonResponse({"url": self.request.build_absolute_uri(media.file.url)})
 
 
 @require_POST
 def js_reverse(request: HttpRequest) -> HttpResponse:
+    """
+    Returns the absolute url of a view.
+    """
     try:
         data = json.loads(request.body)
         url = reverse(data["name"], args=data.get("args"), kwargs=data.get("kwargs"))

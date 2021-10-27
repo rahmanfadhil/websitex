@@ -32,8 +32,6 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "whitenoise.runserver_nostatic",
-    "crispy_forms",
-    "crispy_bootstrap5",
     "django_celery_results",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -48,7 +46,6 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
-    "rest_framework",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -97,7 +94,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.core.context_processors.default_page_title",
                 "apps.core.context_processors.page_data",
             ],
         },
@@ -187,12 +183,6 @@ AUTHENTICATION_BACKENDS = (
     "sesame.backends.ModelBackend",
 )
 
-# DJANGO-CRISPY-FORMS CONFIGS
-# ------------------------------------------------------------------------------
-# https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-
 # CELERY
 # ------------------------------------------------------------------------------
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
@@ -208,10 +198,6 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 # WAGTAIL
 # ------------------------------------------------------------------------------
 WAGTAIL_SITE_NAME = "WebsiteX Blog"
-
-# CORE UTILITIES
-# ------------------------------------------------------------------------------
-DEFAULT_PAGE_TITLE = "WebsiteX"
 
 # DJANGO-SESAME
 # ------------------------------------------------------------------------------

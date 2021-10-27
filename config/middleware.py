@@ -4,6 +4,11 @@ from django.http import HttpResponse
 
 
 class HealthCheckMiddleware:
+    """
+    Perform health checks on /ping/ endpoint. Returns a 503 if the database
+    migrations are not up to date.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 

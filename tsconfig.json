@@ -5,7 +5,8 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "experimentalDecorators": true
   },
   "include": ["assets/**/*"]
 }

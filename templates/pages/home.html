@@ -5,28 +5,13 @@
 {% load core %}
 
 {% block content %}
-  <div class="my-7 text-center">
-    <h1 class="display-4 mb-4">Django template for production web apps</h1>
-    <p class="lead text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio eos cupiditate dignissimos amet non! Delectus, possimus beatae illo quaerat minima nemo ducimus cumque repudiandae nostrum velit, dicta ex iusto veritatis.</p>
-  </div>
-  {% comment %} <div class="row justify-content-center my-5 my-lg-7">
-    <div class="col-lg-9">
-      <h1 class="text-center">{% trans "A complete Django boilerplate for production web applications" %}</h1>
-      <form class="row g-3 mt-4 mb-7 justify-content-center flex-grow-1" action="{% url 'users:login' %}" method="post">
-        {% csrf_token %}
-        <div class="col-12 col-sm-auto">
-          <label for="inputPassword2" class="visually-hidden">Password</label>
-          <input type="email" name="email" class="form-control" id="inputPassword2" placeholder="{% trans "Email address" %}">
-        </div>
-        <div class="col-12 col-sm-auto">
-          <button type="submit" class="btn btn-primary w-100">{% trans "Get started" %}</button>
-        </div>
-      </form>
-      <img src="{% static 'images/home.jpg' %}" class="img-fluid border shadow rounded-3" alt="screenshot">
+  <div class="max-w-screen-lg mx-auto py-16 text-center px-4">
+    <h1 class="text-gray-800 text-3xl lg:text-5xl font-black leading-tight lg:leading-tight mb-8">
+      A Complete Django template for production web applications
+    </h1>
+    <div class="flex gap-6 justify-center">
+      <a href="#" class="btn text-lg px-6 py-3">Get started</a>
+      <a href="https://github.com/rahmanfadhil/websitex" class="btn-white text-lg px-6 py-3">View GitHub</a>
     </div>
-  </div> {% endcomment %}
+  </div>
 {% endblock content %}
-
-{% block footer %}
-  {% include 'components/footer.html' %}
-{% endblock footer %}

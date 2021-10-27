@@ -91,7 +91,7 @@ msgid "About"
 msgstr "Tentang"
 
 #: templates/_base.html:58 templates/users/components/settings_header.html:5
-#: templates/users/user_update.html:9
+#: templates/users/update_user.html:9
 msgid "My account"
 msgstr "Akun saya"
 
@@ -150,26 +150,26 @@ msgstr "Mulai"
 msgid "Show password"
 msgstr "Tampilkan kata sandi"
 
-#: templates/users/user_update.html:10
+#: templates/users/update_user.html:10
 msgid "Update your profile information"
 msgstr "Perbarui informasi profil anda"
 
-#: templates/users/user_update.html:15
+#: templates/users/update_user.html:15
 msgid "Save changes"
 msgstr "Simpan perubahan"
 
-#: templates/users/user_update.html:19 templates/users/user_update.html:22
-#: templates/users/user_update.html:27 templates/users/user_update.html:32
+#: templates/users/update_user.html:19 templates/users/update_user.html:22
+#: templates/users/update_user.html:27 templates/users/update_user.html:32
 msgid "Delete account"
 msgstr "Hapus akun"
 
-#: templates/users/user_update.html:20
+#: templates/users/update_user.html:20
 msgid ""
 "Deleting your account will remove all your information from our database."
 msgstr ""
 "Menghapus akun Anda akan menghapus semua informasi Anda dari database kami."
 
-#: templates/users/user_update.html:28
+#: templates/users/update_user.html:28
 msgid ""
 "Once you delete your account, there is no going back. Please be certain."
 msgstr ""

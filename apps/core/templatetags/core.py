@@ -1,7 +1,7 @@
 from django import template
+from django.forms.boundfield import BoundField
 from django.urls import resolve
 from django.urls.exceptions import Resolver404
-from django.forms.boundfield import BoundField
 
 register = template.Library()
 
@@ -14,16 +14,6 @@ def full_url(context, url) -> str:
     if hasattr(context, "request"):
         return context.request.build_absolute_uri(url)
     return url
-
-
-@register.simple_tag(takes_context=True)
-def active_link(context, *view_names) -> str:
-    """
-    Returns nav link active class if the current page is active.
-    """
-    if is_link_active(context, *view_names):
-        return "active"
-    return ""
 
 
 @register.simple_tag(takes_context=True)
@@ -43,15 +33,9 @@ def is_link_active(context, *view_names) -> bool:
     return False
 
 
-@register.filter
-def bootstrap(field: BoundField):
+@register.simple_tag
+def form_field(field: BoundField, **kwargs) -> str:
     """
-    Render form field with bootstrap classes.
+    Render a form field with additional HTML attributes.
     """
-    switcher = {
-        "checkbox": "form-check-input",
-        "radio": "form-check-input",
-        "select": "form-select",
-    }
-    css_classes = switcher.get(field.widget_type, "form-control")
-    return field.as_widget(attrs={"class": css_classes})
+    return field.as_widget(attrs=kwargs)

@@ -26,7 +26,7 @@ if (document.querySelector("trix-editor")) {
 
         // Initialize
         const xhr = new XMLHttpRequest();
-        const url = await reverse("core:media_create");
+        const url = await reverse("core:js_upload_media");
         xhr.open("POST", url, true);
 
         // Send the CSRF token to prevent the 403 forbidden error.

@@ -1,18 +1,46 @@
-import "bootstrap";
 import { Notyf } from "notyf";
+import Alpine from "alpinejs";
+import trap from "@alpinejs/trap";
+import Sortable from "sortablejs";
 import getPageData from "./utils/getPageData";
 import "./utils/modalForms";
 import "./utils/trix";
 
-import "./scss/main.scss";
+import "@fontsource/nunito-sans/200.css";
+import "@fontsource/nunito-sans/300.css";
+import "@fontsource/nunito-sans/400.css";
+import "@fontsource/nunito-sans/600.css";
+import "@fontsource/nunito-sans/700.css";
+import "@fontsource/nunito-sans/800.css";
+import "@fontsource/nunito-sans/900.css";
 
-// Enable mobile navigation menu
-// https://getbootstrap.com/docs/5.1/examples/offcanvas-navbar/
+import "./main.css";
+import "notyf/notyf.min.css";
 
-const navbarSideCollapse = document.querySelector("#navbarSideCollapse");
-navbarSideCollapse?.addEventListener("click", function () {
-  document.querySelector(".offcanvas-collapse")?.classList.toggle("open");
-});
+const stages = document.getElementById("stages");
+if (stages) {
+  new Sortable(stages, {
+    animation: 150,
+    filter: ".js-immovable",
+    preventOnFilter: true,
+    onMove: (event) => !event.related.classList.contains("js-immovable"),
+  });
+
+  for (const stage of stages.children) {
+    new Sortable(stage.querySelector(".js-stage-content"), {
+      group: "shared",
+      animation: 150,
+      filter: ".js-immovable",
+      preventOnFilter: true,
+    });
+  }
+}
+
+// Initialize Alpine.js
+// https://alpinejs.dev/essentials/installation
+
+Alpine.plugin(trap);
+Alpine.start();
 
 // Display notifications from the Django messages framework using Notyf.
 // https://github.com/caroso1222/notyf
@@ -20,7 +48,7 @@ navbarSideCollapse?.addEventListener("click", function () {
 const notyf = new Notyf({
   duration: 5000,
   dismissible: true,
-  position: { y: "top", x: "right" },
+  position: { y: "top", x: "center" },
   types: [
     { type: "warning", className: "bg-warning" },
     { type: "info", className: "bg-info" },

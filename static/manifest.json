@@ -20,17 +20,5 @@
   "display": "standalone",
   "scope": "/",
   "theme_color": "#1e293b",
-  "description": "A framework for launching new Django projects quickly.",
-  "screenshots": [
-    {
-      "src": "/static/images/screenshot1.jpg",
-      "type": "image/jpg",
-      "sizes": "540x720"
-    },
-    {
-      "src": "/static/images/screenshot2.jpg",
-      "type": "image/jpg",
-      "sizes": "540x720"
-    }
-  ]
+  "description": "A framework for launching new Django projects quickly."
 }

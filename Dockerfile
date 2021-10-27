@@ -12,7 +12,7 @@ RUN npm install
 # Bundle app source
 COPY ./assets /code/assets
 COPY ./tsconfig.json .
-COPY ./webpack.config.js .
+COPY ./*.config.js .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]

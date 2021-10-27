@@ -3,6 +3,8 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.utils import send_html_email
+
 
 class User(AbstractUser):
     username_validator = UnicodeUsernameValidator(
@@ -37,6 +39,14 @@ class User(AbstractUser):
 
     def get_full_name(self) -> str:
         return self.full_name
+
+    def send_login_link(self, next_url: str):
+        send_html_email(
+            subject="Login",
+            email=self.email,
+            template_name="emails/login.html",
+            context={"url": next_url, "user": self},
+        )
 
     def __str__(self):
         return self.email

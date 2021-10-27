@@ -1,21 +1,5 @@
-from django.views.generic import FormView, TemplateView
-
-from apps.core.mixins import PageTitleMixin
-from apps.pages.forms import DesignSystemForm
-from django.urls import reverse_lazy
+from django.shortcuts import render
 
 
-class HomePageView(TemplateView):
-    template_name = "pages/home.html"
-
-
-class DesignSystemPageView(PageTitleMixin, FormView):
-    page_title = "Design System"
-    template_name = "pages/design_system.html"
-    form_class = DesignSystemForm
-    success_url = reverse_lazy("pages:home")
-
-    def get_template_names(self):
-        if self.request.GET.get("modal"):
-            return ["snippets/form.html"]
-        return super().get_template_names()
+def home(request):
+    return render(request, "pages/home.html")
