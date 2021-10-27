@@ -84,7 +84,6 @@ def paged_object_list_context(
     queryset: QuerySet,
     page: int,
     per_page: int,
-    max_per_page: int,
 ) -> Dict[str, Any]:
     """
     Returns a dictionary with pagination context for template rendering.
@@ -101,6 +100,5 @@ def paged_object_list_context(
         "paginator": paginator,
         "page_obj": page_obj,
         "is_paginated": page_obj.has_other_pages(),
-        "max_per_page": max_per_page,
     }
     return context
