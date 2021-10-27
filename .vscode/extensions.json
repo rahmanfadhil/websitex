@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "batisteo.vscode-django",
+    "editorconfig.editorconfig",
+    "ms-python.python",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
