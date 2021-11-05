@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load core %}
+
+{% block title %}{% trans "Sign up" %} - WebsiteX{% endblock title %}
+
+{% block content %}
+  <div class="max-w-md mx-auto my-8 md:my-16 px-4 sm:px-0">
+    <div class="p-8 border bg-white shadow-md rounded-md">
+      <h1 class="text-2xl font-bold text-gray-800">{% trans "Sign up" %}</h1>
+      <p class="mt-4 mb-8 text-gray-500">{% trans "Enter your email address and we will send you a link to log in to your account." %}</p>
+      <form action="" method="post">
+        {% include 'snippets/form.html' %}
+        <button class="btn">{% trans "Sign up" %}</button>
+      </form>
+    </div>
+    <p class="mt-8 text-gray-500 text-center">
+      {% trans "Already have an account?" %} <a href="{% url 'users:login' %}" class="text-blue-600">{% trans "Log in" %}</a>
+    </p>
+  </div>
+{% endblock content %}

@@ -1,13 +1,44 @@
-psycopg2==2.9.1 # https://github.com/psycopg/psycopg2
-Pillow==8.4.0 # https://github.com/python-pillow/Pillow
-whitenoise[brotli]==5.3.0 # https://github.com/evansd/whitenoise
-celery[redis]==5.1.2 # http://celeryproject.org/
-premailer==3.10.0 # https://github.com/peterbe/premailer
+# The web framework for perfectionists with deadlines
+# https://www.djangoproject.com/
+Django==3.2.8
 
-# Django
-# ------------------------------------------------------------------------------
-Django==3.2.8 # https://www.djangoproject.com/
-wagtail==2.14.2 # https://wagtail.io/
-django-celery-results==2.2.0 # https://github.com/celery/django-celery-results
-django-sesame[ua]==2.4 # https://github.com/aaugustin/django-sesame
-django-redis==5.0.0 # https://github.com/jazzband/django-redis
+# Content management system for the blog feature
+# https://wagtail.io/
+wagtail==2.14.2
+
+# "Magic link" authentication like Slack
+# https://github.com/aaugustin/django-sesame
+django-sesame[ua]==2.4
+
+# Redis cache and session backend for Django
+# https://github.com/jazzband/django-redis
+# TODO: soon will be replaced with the built-in redis support in Django 4.0
+django-redis==5.0.0
+
+# PostgreSQL database adapter for Django
+# https://github.com/psycopg/psycopg2
+psycopg2==2.9.1
+
+# To work with images in Django
+# https://github.com/python-pillow/Pillow
+Pillow==8.4.0
+
+# Serve static files in production
+# https://github.com/evansd/whitenoise
+whitenoise[brotli]==5.3.0
+
+# Run background tasks
+# http://celeryproject.org/
+celery[redis]==5.1.2
+
+# Store Celery task results using the Django ORM
+# https://github.com/celery/django-celery-results
+django-celery-results==2.2.0
+
+# Inline CSS styles for emails
+# https://github.com/peterbe/premailer
+premailer==3.10.0
+
+# Use Heroku's DATABASE_URL environment variable
+# https://github.com/jacobian/dj-database-url
+dj-database-url==0.5.0

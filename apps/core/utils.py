@@ -1,44 +1,45 @@
+import os
+import random
+import string
 from io import BytesIO
-from typing import Any, BinaryIO, Dict, List, Tuple, Union
+from typing import Any, BinaryIO, Dict, List, Tuple
+from django.shortcuts import resolve_url
 
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.files import File
-from django.core.mail import send_mail
-from django.core.paginator import EmptyPage, InvalidPage, Paginator
+from django.core.mail.message import EmailMultiAlternatives
+from django.core.paginator import Paginator
 from django.db.models import QuerySet
+from django.http.response import HttpResponse
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.utils.text import slugify
 from PIL import Image
 from premailer import transform
 
 
-def unique_slugify(klass: type, title: str, instance=None):
+def unique_slugify(instance, title: str) -> str:
     """
     Returns a unique slug if origin slug is exist.
 
-    eg: `foo-bar` => `foo-bar-1`
+    The model must have a `slug` field.
+
+    eg: `foo-bar` => `foo-bar-345073`
 
     Args:
-        klass: The model class to perform query.
+        instance: The model instance to generate unique slug
         title: The value which will be slugified uniquely.
-        instance: Exclude a specific model instance if any.
     """
-    origin_slug = slugify(title)
-    unique_slug = origin_slug
-    numb = 1
+    slug = slugify(title)
 
-    if instance is not None:
-        while klass.objects.filter(slug=unique_slug).exclude(pk=instance.pk).exists():
-            unique_slug = "%s-%d" % (origin_slug, numb)
-            numb += 1
-    else:
-        while klass.objects.filter(slug=unique_slug).exists():
-            unique_slug = "%s-%d" % (origin_slug, numb)
-            numb += 1
+    qs = instance.__class__.objects.filter(slug=slug)
+    if instance.pk is not None:
+        qs = qs.exclude(pk=instance.pk)
 
-    return unique_slug
+    if qs.exists():
+        postfix = "".join(random.choices(string.ascii_letters + string.digits, k=6))
+        return unique_slugify(instance, f"{slug}-{postfix}")
+
+    return slug
 
 
 def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
@@ -61,23 +62,32 @@ def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
 
 def send_html_email(
     subject: str,
-    email: Union[str, List[str]],
+    to: List[str],
     template_name: str,
     context: Dict[str, Any],
 ) -> int:
     """
-    Renders an HTML template and sends it as email.
+    Sends an HTML and plain text email from a Django template.
+
+    Args:
+        subject: The subject of the email.
+        to: The list of recipients.
+        template_name: The name of the template to render, assumes the plain text
+            version is a template with the same name with `.txt` extension.
+        context: The context to render the template with.
     """
     context["current_site"] = Site.objects.get_current()
-    html_message = transform(render_to_string(template_name, context))
-    message = strip_tags(html_message)
-    return send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [email] if isinstance(email, str) else email,
-        html_message=html_message,
-    )
+
+    # html
+    html_content = transform(render_to_string(template_name, context))
+
+    # plain text
+    text_content_path = os.path.splitext(template_name)[0] + ".txt"
+    text_content = render_to_string(text_content_path, context).strip()
+
+    msg = EmailMultiAlternatives(subject, text_content, to=to)
+    msg.attach_alternative(html_content, "text/html")
+    return msg.send()
 
 
 def paged_object_list_context(
@@ -92,7 +102,6 @@ def paged_object_list_context(
         queryset: The list of objects to paginate.
         page: The current page number.
         per_page: The number of objects per page.
-        max_per_page: The maximum number of objects per page.
     """
     paginator = Paginator(queryset, per_page)
     page_obj = paginator.get_page(page)
@@ -102,3 +111,21 @@ def paged_object_list_context(
         "is_paginated": page_obj.has_other_pages(),
     }
     return context
+
+
+def client_redirect(to: str, *args, **kwargs) -> HttpResponse:
+    """
+    Returns an HttpResponse that triggers HTMX client-side redirect to the
+    appropriate URL for the arguments passed.
+
+    The arguments could be:
+
+        * A model: the model's `get_absolute_url()` function will be called.
+
+        * A view name, possibly with arguments: `urls.reverse()` will be used
+          to reverse-resolve the name.
+
+        * A URL, which will be used as-is for the redirect location.
+    """
+    url = resolve_url(to, *args, **kwargs)
+    return HttpResponse(status=200, headers={"HX-Redirect": url})

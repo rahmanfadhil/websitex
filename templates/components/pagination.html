@@ -1,27 +1,37 @@
-<section class="pagination">
-  <nav aria-label="Pagination" class="pagination">
-    {% if page_obj.has_previous %}
-      <a href="?page=1" aria-label="First">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-      <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-        <span aria-hidden="true">&lsaquo;</span>
-      </a>
-    {% endif %}
-    {% for num in page_obj.paginator.page_range %}
-      {% if page_obj.number == num %}
-        <a aria-current="page" href="?page={{ num }}">{{ num }}</a>
-      {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-        <a href="?page={{ num }}">{{ num }}</a>
+{% if page_obj and page_obj.has_other_pages %}
+  <section class="my-8 flex">
+    <nav aria-label="Pagination" class="flex justify-center divide-x mx-auto rounded shadow border overflow-hidden">
+      {% if page_obj.has_previous %}
+        <a class="bg-white hover:bg-gray-100 text-gray-600 px-3 py-2 flex items-center" href="?page=1" aria-label="First">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+          </svg>
+        </a>
+        <a class="bg-white hover:bg-gray-100 text-gray-600 px-3 py-2 flex items-center" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
       {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-        <span aria-hidden="true">&rsaquo;</span>
-      </a>
-      <a href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    {% endif %}
-  </nav>
-</section>
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2" aria-current="page" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+          <a class="bg-white hover:bg-gray-100 text-gray-600 px-4 py-2" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a class="bg-white hover:bg-gray-100 text-gray-600 px-3 py-2 flex items-center" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a class="bg-white hover:bg-gray-100 text-gray-600 px-3 py-2 flex items-center" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+          </svg>
+        </a>
+      {% endif %}
+    </nav>
+  </section>
+{% endif %}

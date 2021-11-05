@@ -10,9 +10,7 @@ COPY package*.json ./
 RUN npm install
 
 # Bundle app source
-COPY ./assets /code/assets
-COPY ./tsconfig.json .
-COPY ./*.config.js .
+COPY . .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]
@@ -64,13 +62,8 @@ ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY . .
 COPY --from=assets-builder /code/static/dist/ /code/static/dist/
-RUN DATABASE_NAME="" \
-    DATABASE_PORT="" \
-    DATABASE_USER="" \
-    DATABASE_PASSWORD="" \
-    DATABASE_HOST="" \
-    MEMCACHED_URL="" \
-    BROKER_URL="" \
+RUN DATABASE_URL="" \
+    REDIS_URL="" \
     AWS_STORAGE_BUCKET_NAME="" \
     python manage.py collectstatic --no-input
-CMD [ "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:80" ]
+CMD python manage.py migrate && daphne -b 0.0.0.0 -p $PORT config.asgi:application

@@ -1,0 +1,44 @@
+trix-editor {
+  @apply rounded bg-white shadow py-3 px-4 border border-gray-300 prose max-w-none;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="password"],
+form input[type="number"],
+form input[type="date"],
+form input[type="datetime-local"],
+form input[type="month"],
+form input[type="search"],
+form input[type="tel"],
+form input[type="time"],
+form input[type="week"] {
+  @apply rounded shadow py-3 px-4 border-gray-300 w-full block;
+}
+
+form input[type="checkbox"],
+form input[type="radio"] {
+  @apply rounded border-gray-300 shadow-sm;
+}
+
+form input[type="file"] {
+  @apply px-4 py-3 bg-white cursor-pointer shadow border border-gray-300 rounded w-full;
+}
+
+::-webkit-file-upload-button {
+  @apply mr-4;
+}
+
+.filepond--credits {
+  @apply hidden;
+}
+
+.filepond--root {
+  font-family: inherit;
+  @apply border border-gray-300 rounded shadow overflow-hidden bg-white;
+}
+
+.filepond--panel-root {
+  @apply bg-white;
+}

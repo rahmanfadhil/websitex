@@ -8,7 +8,7 @@
 
 {% for field in form.visible_fields %}
   <section class="mb-8">
-    <label for="{{ field.id_for_label }}" class="mb-2 text-sm font-medium block">{{ field.label }}</label>
+    <label for="{{ field.id_for_label }}" class="mb-2 font-medium block text-gray-800">{{ field.label }}</label>
     {{ field }}
     {% include 'components/forms/field_errors.html' with field=field %}
   </section>

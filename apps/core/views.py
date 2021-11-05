@@ -20,12 +20,13 @@ def js_upload_media(request: HttpRequest) -> HttpResponse:
 
     if form.is_valid():
         media = form.save(commit=False)
-        media.image = compress_image(media.image)
+        media.file = compress_image(media.file, (1024, 1024))
         if request.user.is_authenticated:
             media.user = request.user
+        media.save()
 
         # Return the URL of the image.
-        url = request.build_absolute_uri(media.image.url)
+        url = request.build_absolute_uri(media.file.url)
         return JsonResponse({"url": url})
     else:
         return JsonResponse(

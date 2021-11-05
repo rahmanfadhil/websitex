@@ -1,28 +1,12 @@
-from apps.users.api import UserViewSet
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.staticfiles import finders
-from django.http.response import FileResponse
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
-from rest_framework.routers import DefaultRouter
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
-
-# Serve the service worker code in root
-def service_worker(request):
-    path = finders.find("dist/service-worker.js")
-    return FileResponse(open(path, "rb"), content_type="application/javascript")
-
-
-router = DefaultRouter()
-router.register(r"users", UserViewSet)
-
 urlpatterns = [
-    path("api/", include(router.urls)),
-    path("api-auth/", include("rest_framework.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("cms/", include(wagtailadmin_urls)),
@@ -32,7 +16,6 @@ urlpatterns = [
     path("", include("apps.core.urls", namespace="core")),
     path("", include("apps.pages.urls", namespace="pages")),
     path("", include("apps.users.urls", namespace="users")),
-    path("service-worker.js", service_worker, name="service_worker"),
 ]
 
 if settings.DEBUG:
@@ -40,7 +23,11 @@ if settings.DEBUG:
     from django.conf.urls.static import static
     from django.views.defaults import page_not_found
 
+    # Serve user-uploaded content
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # Enable Django Debug Toolbar and show 404 page
     urlpatterns += [
         path("__debug__/", include(debug_toolbar.urls)),
         path("404/", page_not_found, {"exception": Exception()}),
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ]

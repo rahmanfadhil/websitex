@@ -6,10 +6,10 @@
 
 {% block content %}
   <div class="max-w-screen-md mx-auto py-8 px-5">
-    <h1 class="text-2xl font-bold text-gray-900 mb-2">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">
       {% trans "My account" %}
     </h1>
-    <p class="text-gray-600 text-sm mb-8">
+    <p class="text-gray-500 mb-8">
       {% trans "Update your profile information" %}
     </p>
     <form action="" method="post" enctype="multipart/form-data">
@@ -17,15 +17,15 @@
       <button class="btn">{% trans "Save changes" %}</button>
     </form>
 
-    <h1 class="mt-10 border-t border-gray-300 pt-10 text-2xl font-bold text-gray-900 mb-2">
+    <h1 class="mt-10 border-t border-gray-300 pt-10 text-2xl font-bold text-gray-800 mb-2">
       {% trans "Delete account" %}
     </h1>
-    <p class="text-gray-600 text-sm mb-8">
+    <p class="text-gray-500 mb-8">
       {% trans "Deleting your account will remove all your information from our database." %}
     </p>
 
     <div x-data="{ open: false }" @keydown.escape="open = false">
-      <button class="btn" @click="open = true">
+      <button class="btn-red" @click="open = true">
         {% trans "Delete account" %}
       </button>
 
@@ -33,13 +33,13 @@
         <div class="fixed inset-0 bg-black opacity-30" @click="open = false"></div>
         <form action="{% url 'users:delete_user' %}" method="post" class="relative bg-white rounded overflow-hidden shadow-lg p-8 max-w-md w-full">
           {% csrf_token %}
-          <h1 class="text-2xl font-bold text-gray-900 mb-2">
+          <h1 class="text-2xl font-bold text-gray-900 mb-4">
             {% trans "Delete account" %}
           </h1>
-          <p class="text-gray-600 text-sm mb-8">
+          <p class="text-gray-500 mb-8">
             {% trans "Once you delete your account, there is no going back. Please be certain." %}
           </p>
-          <button class="btn">{% trans "Delete account" %}</button>
+          <button class="btn-red">{% trans "Delete account" %}</button>
         </form>
       </div>
     </div>

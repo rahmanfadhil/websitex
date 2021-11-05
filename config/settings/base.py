@@ -1,5 +1,8 @@
 import os
 from pathlib import Path
+
+import dj_database_url
+from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +49,7 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
+    "rest_framework",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -94,7 +98,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.core.context_processors.page_data",
             ],
         },
     },
@@ -108,15 +111,12 @@ FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# https://github.com/jacobian/dj-database-url#usage
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DATABASE_NAME"],
-        "USER": os.environ["DATABASE_USER"],
-        "PASSWORD": os.environ["DATABASE_PASSWORD"],
-        "HOST": os.environ["DATABASE_HOST"],
-        "PORT": os.environ["DATABASE_PORT"],
-    }
+    "default": dj_database_url.config(
+        default="postgres://postgres:postgres@postgres:5432/postgres",
+        conn_max_age=600,
+    )
 }
 
 # PASSWORDS
@@ -183,12 +183,37 @@ AUTHENTICATION_BACKENDS = (
     "sesame.backends.ModelBackend",
 )
 
+# MESSAGES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/contrib/messages/#message-tags
+MESSAGE_TAGS = {
+    messages.DEBUG: "bg-purple-600",
+    messages.INFO: "bg-blue-600",
+    messages.SUCCESS: "bg-green-600",
+    messages.WARNING: "bg-yellow-500",
+    messages.ERROR: "bg-red-600",
+}
+
 # CELERY
 # ------------------------------------------------------------------------------
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-broker_url
 CELERY_BROKER_URL = os.environ["REDIS_URL"]
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = "django-db"
+
+# CHANNELS
+# ------------------------------------------------------------------------------
+# https://channels.readthedocs.io/en/stable/installation.html
+ASGI_APPLICATION = "config.asgi.application"
+# https://channels.readthedocs.io/en/stable/topics/channel_layers.html#redis-channel-layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.pubsub.RedisPubSubChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ["REDIS_URL"]],
+        },
+    },
+}
 
 # EMAIL
 # ------------------------------------------------------------------------------

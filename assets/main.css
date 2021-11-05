@@ -1,41 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Fonts */
+@import "@fontsource/lexend/variable.css";
 
-.asteriskField {
-  display: none;
-}
+/* Plugins */
+@import "trix/dist/trix.css";
+@import "notyf/notyf.min.css";
+@import "filepond/dist/filepond.css";
 
-/* https://alpinejs.dev/directives/cloak */
+/* TailwindCSS base */
+@import "tailwindcss/base";
+
+/*
+Hide interactive elements until Alpine.js is loaded
+https://alpinejs.dev/directives/cloak
+*/
 [x-cloak] {
   display: none !important;
 }
 
-@layer components {
-  .btn {
-    @apply px-4 py-2 font-medium rounded shadow bg-gray-800 hover:bg-gray-900 text-white focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none active:bg-gray-700 whitespace-nowrap text-center inline-flex items-center gap-4 justify-center;
-  }
+/* TailwindCSS components */
+@import "tailwindcss/components";
+@import "./css/buttons.css";
 
-  .btn-lg {
-    @apply px-4 py-3 font-medium rounded shadow bg-gray-800 hover:bg-gray-900 text-white focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none active:bg-gray-700 whitespace-nowrap text-center inline-flex items-center gap-4 justify-center;
-  }
+/* TailwindCSS utilities */
+@import "tailwindcss/utilities";
 
-  .btn-white {
-    @apply px-4 py-2 font-medium rounded shadow bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none active:bg-gray-100 whitespace-nowrap text-center inline-flex items-center gap-4 justify-center;
-  }
-
-  form input[type="text"],
-  form input[type="email"],
-  form input[type="url"],
-  form input[type="password"],
-  form input[type="number"],
-  form input[type="date"],
-  form input[type="datetime-local"],
-  form input[type="month"],
-  form input[type="search"],
-  form input[type="tel"],
-  form input[type="time"],
-  form input[type="week"] {
-    @apply rounded shadow py-2 px-4 border-gray-300 w-full font-medium block;
-  }
-}
+@import "./css/forms.css";

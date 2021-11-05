@@ -79,8 +79,8 @@ class PermalinkableManager(models.Manager):
         ignore_conflicts: bool,
     ) -> List:
         for obj in objs:
-            if not self.slug:
-                obj.slug = unique_slugify(self.__class__, self.get_slug_source())
+            if not obj.slug:
+                obj.slug = unique_slugify(obj, obj.get_slug_source())
         return super().bulk_create(
             objs,
             batch_size=batch_size,
@@ -100,7 +100,7 @@ class Permalinkable(models.Model):
 
     def save(self, *args, **kwargs) -> str:
         if not self.slug:
-            self.slug = unique_slugify(self.__class__, self.get_slug_source())
+            self.slug = unique_slugify(self, self.get_slug_source())
         return super().save(*args, **kwargs)
 
     class Meta:

@@ -1,3 +1,5 @@
+import os
+
 from django import template
 from django.forms.boundfield import BoundField
 from django.urls import resolve
@@ -39,3 +41,11 @@ def form_field(field: BoundField, **kwargs) -> str:
     Render a form field with additional HTML attributes.
     """
     return field.as_widget(attrs=kwargs)
+
+
+@register.filter
+def file_name(file_path: str) -> str:
+    """
+    Get the file name from a file path.
+    """
+    return os.path.basename(file_path)

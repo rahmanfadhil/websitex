@@ -1,0 +1,16 @@
+build:
+  docker:
+    web: Dockerfile
+run:
+  worker:
+    command:
+      - celery -A config worker -l INFO --concurrency=3
+    image: web
+  beat:
+    command:
+      - celery -A config beat -l INFO --concurrency=3
+    image: web
+release:
+  image: web
+  command:
+    - python manage.py migrate --noinput

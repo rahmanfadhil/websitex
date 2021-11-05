@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% if user.full_name %}
+{% blocktrans with name=user.full_name %}Hello {{ name }},{% endblocktrans %}
+{% else %}
+{% trans "Hello," %}
+{% endif %}
+
+{% blocktrans with site_name=current_site.name %}We received a request to log in to {{ site_name }} using this email address. If you want to log in with your account, click this link:{% endblocktrans %}
+
+{{ url }}
+
+{% trans "If you did not request this link, you can safely ignore this email." %}

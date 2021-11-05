@@ -1,0 +1,15 @@
+{% load core %}
+
+{% if widget.is_initial %}
+  <div class="flex items-center bg-white shadow border border-gray-300 rounded mb-3 gap-4 overflow-hidden">
+    <div class="px-4 py-3 bg-gray-100 border-r border-gray-300 text-gray-800 font-medium">Currently</div>
+    <a href="{{ widget.value.url }}" class="flex-1 text-blue-600 hover:text-blue-700 truncate" target="_blank">{{ widget.value.url|file_name }}</a>
+    {% if not widget.required %}
+    <div class="flex items-center gap-2 mr-4">
+      <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}"{% if widget.attrs.disabled %} disabled{% endif %}>
+      <label for="{{ widget.checkbox_id }}" class="font-medium text-gray-800">{{ widget.clear_checkbox_label }}</label>
+    </div>
+    {% endif %}
+  </div>
+{% endif %}
+<input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>

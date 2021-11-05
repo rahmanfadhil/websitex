@@ -1,10 +1,26 @@
 -r base.txt
 
-django-debug-toolbar==3.2.1 # https://github.com/jazzband/django-debug-toolbar
-debugpy==1.5.1 # https://github.com/microsoft/debugpy/
-factory-boy==3.2.0 # https://github.com/FactoryBoy/factory_boy
-pytest-django==4.4.0 # https://pytest-django.readthedocs.io/en/latest/
-pytest-cov==3.0.0 # https://github.com/pytest-dev/pytest-cov
-pytest-mock==3.6.1 # https://github.com/pytest-dev/pytest-mock/
-ipython==7.28.0 # https://ipython.org/
-watchdog[watchmedo]==2.1.6 # https://github.com/gorakhargosh/watchdog
+# To debug the app from the browser
+# https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar==3.2.1
+
+# Debug and set breakpoints in VSCode
+# https://github.com/microsoft/debugpy/
+# TODO: get this to work
+debugpy==1.5.1
+
+# For creating mock data in test environments
+# https://github.com/FactoryBoy/factory_boy
+factory-boy==3.2.0
+
+# For testing django with pytest
+# https://pytest-django.readthedocs.io/en/latest/
+pytest-django==4.4.0
+
+# A better python shell
+# https://ipython.org/
+ipython==7.28.0
+
+# Restart celery workers on file changes
+# https://github.com/gorakhargosh/watchdog
+watchdog[watchmedo]==2.1.6
