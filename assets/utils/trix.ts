@@ -1,24 +1,16 @@
 import * as Cookies from "js-cookie";
 import reverse from "./reverse";
 
-// If the document contains a trix editor, load the trix library and
-// initialize the editor to handle file attachments.
-if (document.querySelector("trix-editor")) {
-  import("trix").then(() => {
-    document.addEventListener("trix-attachment-add", handleAttachment);
+async function showErrorMessage() {
+  const { default: Swal } = await import("sweetalert2");
+  await Swal.fire({
+    title: "Failed to upload attachment!",
+    text: "Please try again next time...",
+    icon: "error",
   });
 }
 
-async function handleAttachment({ attachment }: any) {
-  async function showErrorMessage() {
-    const { default: Swal } = await import("sweetalert2");
-    await Swal.fire({
-      title: "Failed to upload attachment!",
-      text: "Please try again next time...",
-      icon: "error",
-    });
-  }
-
+export async function trixAttachmentAdd({ attachment }: any) {
   if (attachment.file) {
     try {
       // Store the image to a form data.
