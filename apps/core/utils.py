@@ -3,7 +3,6 @@ import random
 import string
 from io import BytesIO
 from typing import Any, BinaryIO, Dict, List, Tuple
-from django.shortcuts import resolve_url
 
 from django.contrib.sites.models import Site
 from django.core.files import File
@@ -11,6 +10,7 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.http.response import HttpResponse
+from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 from PIL import Image
