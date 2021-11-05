@@ -93,7 +93,7 @@ def send_html_email(
 def paged_object_list_context(
     queryset: QuerySet,
     page: int,
-    per_page: int,
+    per_page: int = 20,
 ) -> Dict[str, Any]:
     """
     Returns a dictionary with pagination context for template rendering.
