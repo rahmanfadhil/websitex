@@ -22,7 +22,7 @@
           <tr>
             <td align="center">
               <a href="{{ url }}" class="f-fallback button" target="_blank">
-                {% trans "Log in" %}
+                {% blocktrans with site_name=current_site.name %}Log in to {{ site_name }}{% endblocktrans %}
               </a>
             </td>
           </tr>
