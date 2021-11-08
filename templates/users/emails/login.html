@@ -3,14 +3,12 @@
 {% load i18n %}
 
 {% block content %}
-  {% if user.full_name %}
-    <p>{% blocktrans with name=user.full_name %}Hello {{ name }},{% endblocktrans %}</p>
-  {% else %}
-    <p>{% trans "Hello," %}</p>
-  {% endif %}
+  <p>{% blocktrans %}Hello {{ user.full_name }},{% endblocktrans %}</p>
 
   <p>
-    {% blocktrans with site_name=current_site.name %}We received a request to log in to <strong>{{ site_name }}</strong> using this email address. If you want to log in with your account, click this link:{% endblocktrans %}
+    {% blocktrans trimmed with site_name=current_site.name %}
+      We received a request to log in to <strong>{{ site_name }}</strong> using this email address. If you want to log in with your account, click this link:
+    {% endblocktrans %}
   </p>
 
   <!-- Action button -->
