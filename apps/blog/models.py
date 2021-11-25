@@ -26,3 +26,6 @@ class BlogPage(Page):
         FieldPanel("intro"),
         FieldPanel("body", classname="full"),
     ]
+
+    class Meta:
+        ordering = ["-date"]
