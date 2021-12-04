@@ -49,7 +49,7 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
-    "rest_framework",
+    "channels",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -227,3 +227,17 @@ WAGTAIL_SITE_NAME = "WebsiteX Blog"
 # DJANGO-SESAME
 # ------------------------------------------------------------------------------
 SESAME_MAX_AGE = 60 * 10  # 10 minutes
+
+# CHANNELS
+# ------------------------------------------------------------------------------
+# https://channels.readthedocs.io/en/stable/installation.html
+ASGI_APPLICATION = "config.asgi.application"
+# https://channels.readthedocs.io/en/stable/topics/channel_layers.html#redis-channel-layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.pubsub.RedisPubSubChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ["REDIS_URL"]],
+        },
+    },
+}

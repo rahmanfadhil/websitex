@@ -10,6 +10,12 @@ async function showErrorMessage() {
   });
 }
 
+/**
+ * Handle attachment upload
+ *
+ * @see https://github.com/basecamp/trix#storing-attached-files
+ * @see https://trix-editor.org/js/attachments.js
+ */
 export async function trixAttachmentAdd({ attachment }: any) {
   if (attachment.file) {
     try {

@@ -2,10 +2,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env, argv) => ({
-  entry: {
-    main: "./assets/main.ts",
-    "service-worker": "./assets/service-worker.ts",
-  },
+  entry: "./assets/main.ts",
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "static/dist"),

@@ -30,6 +30,8 @@ form input[type="file"] {
   @apply mr-4;
 }
 
+/* FilePond */
+
 .filepond--credits {
   @apply hidden;
 }

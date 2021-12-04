@@ -2,12 +2,6 @@
 
 {% load wagtailcore_tags %}
 
-{% comment %} {% block header %}
-  <div class="bg-white">
-    {{ block.super }}
-  </div>
-{% endblock header %} {% endcomment %}
-
 {% block content %}
   <div class="py-8 md:py-16 text-center max-w-screen-lg mx-auto px-4 md:px-0">
     <time class="md:text-lg text-gray-500" datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date|date:"F j, Y" }}</time>

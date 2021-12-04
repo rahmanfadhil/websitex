@@ -10,6 +10,9 @@ class BlogIndexPage(Page):
 
     content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
 
+    def get_children(self):
+        return super().get_children().live().order_by("-blogpage__date")
+
 
 class BlogPage(Page):
     date = models.DateField("Post date")

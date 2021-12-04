@@ -30,7 +30,7 @@ def js_upload_media(request: HttpRequest) -> HttpResponse:
         return JsonResponse({"url": url})
     else:
         return JsonResponse(
-            {"errors": form.errors},
+            {"errors": form.errors.as_data()},
             status=HTTPStatus.BAD_REQUEST,
         )
 

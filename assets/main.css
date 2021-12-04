@@ -3,7 +3,6 @@
 
 /* Plugins */
 @import "trix/dist/trix.css";
-@import "notyf/notyf.min.css";
 @import "filepond/dist/filepond.css";
 
 /* TailwindCSS base */
