@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}{% trans "Update profile" %} - WebsiteX{% endblock %}
+{% block title %}{% trans "Account settings" %} - WebsiteX{% endblock %}
 
 {% block content %}
   <div class="max-w-screen-md mx-auto py-8 md:py-16">
@@ -14,6 +14,14 @@
       {% include 'snippets/form.html' %}
       <button class="btn">{% trans "Save changes" %}</button>
     </form>
+
+    <div class="h-8 md:h-16"></div>
+
+    <h1 class="text-2xl font-extrabold text-stone-800 mb-2">
+      {% trans "Change password" %}
+    </h1>
+    <hr class="mt-2 mb-8">
+    <a href="{% url 'password_change' %}" class="btn-secondary">Change my password</a>
 
     <div class="h-8 md:h-16"></div>
 
