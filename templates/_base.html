@@ -9,13 +9,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'brand/favicon.ico' %}">
   <title>{% block title %}WebsiteX{% endblock title %}</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="{% static 'manifest.json' %}">
-  <meta name="theme-color" content="#1e293b">
-  <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'brand/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'brand/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'brand/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'brand/site.webmanifest' %}">
 
   <link rel="stylesheet" href="{% static 'dist/main.css' %}">
   <script defer src="{% url 'javascript-catalog' %}"></script>
@@ -41,7 +42,7 @@
   {% endblock head %}
 </head>
 
-<body class="bg-gray-100">
+<body class="px-3 bg-stone-100">
   {% if messages %}
     <div class="fixed top-0 right-0 w-full max-w-md p-5 flex flex-col gap-5 z-30">
       {% for message in messages %}
@@ -59,49 +60,75 @@
 
   <!-- Top navigation -->
   {% block header %}
-    <nav class="max-w-screen-md xl:max-w-screen-lg mx-auto px-4 relative items-start flex md:items-center py-5 md:py-8 flex-col md:flex-row" x-data="{ open: false }">
-      <a href="{% url 'pages:home' %}" class="text-xl md:text-2xl font-semibold text-gray-700 hover:text-gray-800">
-        WebsiteX
-      </a>
-
-      <button class="md:hidden absolute top-4 right-4 rounded focus:ring p-2 text-gray-800" @click="open = ! open">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd" />
-        </svg>
-      </button>
-
-      <div class="hidden md:flex flex-col md:flex-row justify-end bg-white md:bg-transparent mt-4 md:mt-0 w-full shadow md:shadow-none rounded py-1" :class="{ 'hidden': ! open, 'flex': open }">
-        <a class="px-4 py-3 font-medium flex items-center hover:bg-gray-200 md:rounded text-gray-700 hover:text-gray-900" href="{% url 'pages:home' %}">
-          {% trans "Home" %}
+    <nav class="bg-white fixed top-0 right-0 left-0 border-b px-4" x-data="{ open: false }">
+      <div class="max-w-screen-lg mx-auto flex items-center justify-between py-4 gap-4 flex-wrap">
+        <a href="{% url 'pages:home' %}" class="font-extrabold text-lg text-stone-800 flex items-center gap-3">
+          WebsiteX
         </a>
-        <a class="px-4 py-3 font-medium flex items-center hover:bg-gray-200 md:rounded text-gray-700 hover:text-gray-900" href="{% slugurl 'blog' %}">
-          {% trans "Blog" %}
-        </a>
+        <button class="md:hidden" @click="open = ! open" aria-label="Toggle menu" aria-controls="navigation" :aria-expanded="open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div class="hidden md:flex gap-3 md:gap-5 ml-auto md:items-center w-full md:w-auto flex-col md:flex-row" :class="{ hidden: ! open, flex: open }" id="navigation">
+          <div class="flex flex-col md:flex-row md:mx-0">
+            <a href="{% slugurl 'blog' %}" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-stone-600 md:hover:bg-stone-100 hover:text-black">{% trans "Blog" %}</a>
+            <a href="#" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-stone-600 md:hover:bg-stone-100 hover:text-black">{% trans "Pricing" %}</a>
+            <a href="#" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-stone-600 md:hover:bg-stone-100 hover:text-black">{% trans "About" %}</a>
+            {% if user.is_authenticated %}
+              <div x-data="{ open: false }" @keydown.escape="open = false" class="relative">
+                <button aria-label="{% trans "My account" %}" @click="open = ! open" :aria-expanded="open" aria-controls="my-account-dropdown" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-stone-600 md:hover:bg-stone-100 hover:text-black flex items-center gap-2 w-full">
+                  {% trans "My account" %}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <div id="my-account-dropdown" class="md:absolute w-full md:w-64 bg-white shadow border rounded-md right-0 mt-2 flex-col overflow-hidden py-1" x-show="open" x-transition x-cloak @click.outside="open = false">
+                  <a href="{% url 'users:update_user' %}" class="w-full flex items-center gap-3 text-sm py-2 px-4 text-stone-600 font-medium hover:bg-stone-100 hover:text-black" aria-label="{% trans "Update profile" %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                    </svg>
+                    {% trans "Update profile" %}
+                  </a>
+                  <div x-data="{ open: false }" @keydown.escape="open = false">
+                    <button @click="open = true" class="w-full flex items-center gap-3 text-sm py-2 px-4 text-red-600 font-medium hover:bg-stone-100 hover:text-red-700" aria-label="{% trans "Log out" %}">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+                      </svg>
+                      {% trans "Log out" %}
+                    </button>
 
-        {% if user.is_authenticated %}
-          <div x-data="{ isOpen: false }" class="relative flex-1 md:flex-none">
-            <button @click="isOpen = ! isOpen" class="px-4 py-3 font-medium flex items-center justify-between gap-2 hover:bg-gray-200 md:rounded text-gray-700 hover:text-gray-900 w-full">
-              {% trans "My account" %}
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </button>
-            <form action="{% url 'users:logout' %}" method="post" x-show="isOpen" @click.outside="isOpen = false" x-cloak x-transition class="absolute right-0 top-full bg-white mt-4 shadow rounded border flex flex-col w-full md:w-64">
-              {% csrf_token %}
-              <a href="{% url 'users:update_user' %}" class="p-4 text-gray-800 hover:bg-gray-100">Edit profile</a>
-              <button class="p-4 text-red-600 hover:bg-gray-100 text-left">Log out</button>
-            </form>
+                    <div class="fixed z-10 inset-0 overflow-y-auto" x-cloak x-show="open" x-trap="open" role="dialog" aria-modal="true" tabindex="0" aria-labelledby="logoutModalTitle">
+                      <div class="flex items-center justify-center min-h-screen">
+                        <div class="fixed inset-0 bg-black opacity-30" @click="open = false" x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform opacity-0" x-transition:enter-end="transform opacity-30" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="transform opacity-30" x-transition:leave-end="transform opacity-0"></div>
+                        <div class="relative bg-white rounded max-w-md mx-auto w-full p-8" x-show="open" x-transition>
+                          <h1 id="logoutModalTitle" class="text-xl font-extrabold text-stone-800 mb-4">
+                            {% trans "Log out" %}
+                          </h1>
+                          <p class="text-stone-500 text-sm mb-8">
+                            {% trans "Are you sure you want to log out?" %}
+                          </p>
+                          <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="btn-red">{% trans "Log out" %}</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
           </div>
-        {% else %}
-          <a href="{% url 'users:signup' %}" class="px-4 py-3 font-medium rounded shadow bg-gray-800 hover:bg-gray-900 text-white focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 focus:outline-none active:bg-gray-700 whitespace-nowrap text-center items-center gap-4 justify-center hidden md:flex ml-4">
-            {% trans "Get started" %}
-          </a>
-          <a href="{% url 'users:signup' %}" class="md:hidden px-4 py-3 font-medium flex items-center hover:bg-gray-200 md:rounded text-gray-700 hover:text-gray-900">
-            {% trans "Get started" %}
-          </a>
-        {% endif %}
+          {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}" class="btn-secondary">{% trans "Log in" %}</a>
+            <a href="{% url 'users:signup' %}" class="btn">{% trans "Sign up" %}</a>
+          {% endif %}
+        </div>
       </div>
     </nav>
+
+    <div class="h-20"></div>
   {% endblock header %}
 
   <!-- Main content -->

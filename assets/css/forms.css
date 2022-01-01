@@ -1,5 +1,5 @@
 trix-editor {
-  @apply rounded bg-white shadow py-3 px-4 border border-gray-300 prose max-w-none;
+  @apply rounded-md bg-white shadow text-sm py-2 px-4 border border-stone-300 prose max-w-none;
 }
 
 form input[type="text"],
@@ -14,33 +14,14 @@ form input[type="search"],
 form input[type="tel"],
 form input[type="time"],
 form input[type="week"] {
-  @apply rounded shadow py-3 px-4 border-gray-300 w-full block;
+  @apply rounded-md shadow text-sm py-2 px-4 border-stone-300 w-full block text-stone-700;
 }
 
 form input[type="checkbox"],
 form input[type="radio"] {
-  @apply rounded border-gray-300 shadow-sm;
+  @apply rounded-md border-stone-300 shadow-sm;
 }
 
 form input[type="file"] {
-  @apply px-4 py-3 bg-white cursor-pointer shadow border border-gray-300 rounded w-full;
-}
-
-::-webkit-file-upload-button {
-  @apply mr-4;
-}
-
-/* FilePond */
-
-.filepond--credits {
-  @apply hidden;
-}
-
-.filepond--root {
-  font-family: inherit;
-  @apply border border-gray-300 rounded shadow overflow-hidden bg-white;
-}
-
-.filepond--panel-root {
-  @apply bg-white;
+  @apply w-full text-sm text-stone-700 file:cursor-pointer file:bg-amber-600 file:text-white file:border-none file:rounded-md file:px-4 file:py-2 file:mr-4 file:font-medium;
 }

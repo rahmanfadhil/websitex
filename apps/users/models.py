@@ -1,18 +1,18 @@
 from django.contrib.auth.models import AbstractUser
-from django.core import validators
+from django.core.validators import validate_slug
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    username = models.CharField(
+    username = models.SlugField(
         _("username"),
-        max_length=150,
+        max_length=50,
         unique=True,
         help_text=_(
-            "150 characters or fewer. Letters, numbers, underscores, and hyphens only."
+            "50 characters or fewer. Letters, numbers, underscores, and hyphens only."
         ),
-        validators=[validators.validate_slug],
+        validators=[validate_slug],
         error_messages={
             "unique": _("A user with that username already exists."),
             "invalid": _(
@@ -21,8 +21,9 @@ class User(AbstractUser):
         },
         null=True,
     )
+
     email = models.EmailField(_("email address"), unique=True)
-    full_name = models.CharField(_("full name"), max_length=150, null=True, blank=True)
+    full_name = models.CharField(_("full name"), max_length=150)
     first_name = None
     last_name = None
     avatar = models.ImageField(
@@ -31,6 +32,9 @@ class User(AbstractUser):
         null=True,
         blank=True,
     )
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username", "full_name"]
 
     def get_full_name(self) -> str:
         return self.full_name

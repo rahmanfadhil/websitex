@@ -11,4 +11,5 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Faker("user_name")
     full_name = factory.Faker("name")
     email = factory.Faker("email")
+    password = factory.PostGenerationMethodCall("set_password", "12345")
     avatar = factory.django.ImageField()

@@ -1,7 +1,7 @@
 import "htmx.org";
 import trap from "@alpinejs/trap";
 import Alpine from "alpinejs";
-import { create } from "filepond";
+// import { create } from "filepond";
 
 import "./main.css";
 import { trixAttachmentAdd } from "./utils/trix";
@@ -12,11 +12,11 @@ import { trixAttachmentAdd } from "./utils/trix";
 Alpine.plugin(trap);
 Alpine.start();
 
-// Replace file inputs with FilePond
-// https://pqina.nl/filepond/docs/getting-started/examples/replace-file-input/
-for (const element of document.querySelectorAll('input[type="file"]')) {
-  create(element, { storeAsFile: true } as any);
-}
+// // Replace file inputs with FilePond
+// // https://pqina.nl/filepond/docs/getting-started/examples/replace-file-input/
+// for (const element of document.querySelectorAll('input[type="file"]')) {
+//   create(element, { storeAsFile: true } as any);
+// }
 
 // If the document contains a <trix-editor />, load the Trix library and
 // register an event listener that handles file attachments.

@@ -1,9 +1,8 @@
 /* Fonts */
-@import "@fontsource/lexend/variable.css";
+@import "@fontsource/rubik/variable.css";
 
 /* Plugins */
 @import "trix/dist/trix.css";
-@import "filepond/dist/filepond.css";
 
 /* TailwindCSS base */
 @import "tailwindcss/base";

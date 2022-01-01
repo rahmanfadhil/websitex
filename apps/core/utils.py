@@ -6,7 +6,7 @@ from typing import Any, BinaryIO, Dict, List, Tuple
 
 from django.contrib.sites.models import Site
 from django.core.files import File
-from django.core.mail.message import EmailMultiAlternatives
+from django.core.mail.message import EmailMessage, EmailMultiAlternatives
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.http.response import HttpResponse
@@ -14,7 +14,6 @@ from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 from PIL import Image
-from premailer import transform
 
 
 def unique_slugify(instance, title: str) -> str:
@@ -76,17 +75,15 @@ def send_html_email(
             version is a template with the same name with `.txt` extension.
         context: The context to render the template with.
     """
-    context["current_site"] = Site.objects.get_current()
+    site = Site.objects.get_current()
+    context = {
+        "site_name": site.name,
+        "site_domain": site.domain,
+    }
+    html_content = render_to_string(template_name, context)
 
-    # html
-    html_content = transform(render_to_string(template_name, context))
-
-    # plain text
-    text_content_path = os.path.splitext(template_name)[0] + ".txt"
-    text_content = render_to_string(text_content_path, context).strip()
-
-    msg = EmailMultiAlternatives(subject, text_content, to=to)
-    msg.attach_alternative(html_content, "text/html")
+    msg = EmailMessage(subject, html_content, [to])
+    msg.content_subtype = "html"
     return msg.send()
 
 

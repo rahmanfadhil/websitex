@@ -5,13 +5,13 @@
 {% block title %}{% trans "Page not found" %}{% endblock %}
 
 {% block content %}
-  <div class="max-w-md mx-auto my-8 md:my-16 px-4 sm:px-0">
-    <div class="p-8 border bg-white shadow-md rounded-md">
-      <h1 class="text-2xl font-semibold text-gray-800">{% trans "Page not found" %}</h1>
-      <p class="mt-4 mb-8 text-gray-500">
-        {% trans "Sorry, we can't find what you're looking for..." %}
-      </p>
-      <a href="{% url 'pages:home' %}" class="btn">{% trans "Back to home page" %}</a>
-    </div>
+  <div class="max-w-xs mx-auto my-8 md:my-16">
+    <h1 class="text-2xl font-extrabold text-stone-800">{% trans "Page not found" %}</h1>
+    <hr class="mt-2 mb-8">
+    <p class="text-sm text-stone-500 mb-8">
+      {% trans "Sorry, we canʼt find what youʼre looking for..." %}
+    </p>
+    <a href="{% url 'pages:home' %}" class="btn w-full">{% trans "Back to home page" %}</a>
+    </p>
   </div>
 {% endblock content %}

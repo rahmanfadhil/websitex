@@ -7,8 +7,8 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="supported-color-schemes" content="light dark" />
     <title></title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" data-premailer="ignore">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet" media="screen" data-premailer="ignore">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet" media="screen">
     <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
 
@@ -47,7 +47,7 @@
     body,
     td,
     th {
-      font-family: "Lexend", Helvetica, Arial, sans-serif;
+      font-family: "Rubik", Helvetica, Arial, sans-serif;
     }
 
     h1 {
@@ -434,7 +434,7 @@
   <![endif]-->
   </head>
   <body>
-    {% comment %} <span class="preheader">Thanks for trying out {{ current_site.name }}. We’ve pulled together some information and resources to help you get started.</span> {% endcomment %}
+    {% comment %} <span class="preheader">Thanks for trying out {{ site_name }}. We’ve pulled together some information and resources to help you get started.</span> {% endcomment %}
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
       <tr>
         <td align="center">
@@ -442,7 +442,7 @@
             <tr>
               <td class="email-masthead">
                 <a href="https://example.com" class="f-fallback email-masthead_name">
-                {{ current_site.name }}
+                {{ site_name }}
               </a>
               </td>
             </tr>
@@ -466,7 +466,7 @@
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="f-fallback sub align-center">&copy; 2021 {{ current_site.name }}. All rights reserved.</p>
+                      <p class="f-fallback sub align-center">&copy; 2021 {{ site_name }}. All rights reserved.</p>
                     </td>
                   </tr>
                 </table>

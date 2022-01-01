@@ -1,15 +1,6 @@
 import * as Cookies from "js-cookie";
 import reverse from "./reverse";
 
-async function showErrorMessage() {
-  const { default: Swal } = await import("sweetalert2");
-  await Swal.fire({
-    title: "Failed to upload attachment!",
-    text: "Please try again next time...",
-    icon: "error",
-  });
-}
-
 /**
  * Handle attachment upload
  *
@@ -45,14 +36,14 @@ export async function trixAttachmentAdd({ attachment }: any) {
           attachment.setAttributes({ url, href: url });
         } else {
           // Display an error alert to the user when the upload failed.
-          showErrorMessage();
+          alert("Failed to upload attachment!");
         }
       });
 
       // Perform the request.
       xhr.send(formData);
     } catch (err) {
-      showErrorMessage();
+      alert("Failed to upload attachment!");
     }
   }
 }

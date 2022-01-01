@@ -13,6 +13,10 @@ class CustomClearableFileInput(forms.ClearableFileInput):
     template_name = "widgets/clearable_file_input.html"
 
 
+class CustomFileInput(forms.FileInput):
+    template_name = "widgets/clearable_file_input.html"
+
+
 class CustomDateTimeInput(forms.DateTimeInput):
     """
     Not supported in Firefox yet. So, we added a placeholder to let the users
