@@ -20,6 +20,7 @@ class User(AbstractUser):
             ),
         },
         null=True,
+        blank=True,
     )
 
     email = models.EmailField(_("email address"), unique=True)

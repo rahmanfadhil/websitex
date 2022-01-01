@@ -17,9 +17,12 @@ form input[type="week"] {
   @apply rounded-md shadow text-sm py-2 px-4 border-stone-300 w-full block text-stone-700;
 }
 
-form input[type="checkbox"],
-form input[type="radio"] {
+form input[type="checkbox"] {
   @apply rounded-md border-stone-300 shadow-sm;
+}
+
+form input[type="radio"] {
+  @apply border-stone-300 shadow-sm;
 }
 
 form input[type="file"] {
