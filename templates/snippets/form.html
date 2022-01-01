@@ -7,7 +7,7 @@
 {% endfor %}
 
 {% for field in form.visible_fields %}
-  <section class="mb-6 md:mb-8">
+  <section class="mb-8">
     <label for="{{ field.id_for_label }}" class="mb-2 text-sm font-medium block text-stone-700">{{ field.label }}</label>
     {{ field }}
     {% include 'components/forms/field_errors.html' with field=field %}
