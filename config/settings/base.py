@@ -184,12 +184,13 @@ AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 # MESSAGES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/contrib/messages/#message-tags
+# Preserve the default message tags (e.g. error, info, success) for Wagtail
 MESSAGE_TAGS = {
-    messages.DEBUG: "bg-purple-600",
-    messages.INFO: "bg-blue-600",
-    messages.SUCCESS: "bg-green-600",
-    messages.WARNING: "bg-yellow-500",
-    messages.ERROR: "bg-red-600",
+    messages.DEBUG: "debug bg-purple-600",
+    messages.INFO: "info bg-blue-600",
+    messages.SUCCESS: "success bg-green-600",
+    messages.WARNING: "warning bg-yellow-500",
+    messages.ERROR: "error bg-red-600",
 }
 
 # CELERY
@@ -221,10 +222,6 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 # WAGTAIL
 # ------------------------------------------------------------------------------
 WAGTAIL_SITE_NAME = "WebsiteX Blog"
-
-# DJANGO-SESAME
-# ------------------------------------------------------------------------------
-SESAME_MAX_AGE = 60 * 10  # 10 minutes
 
 # CHANNELS
 # ------------------------------------------------------------------------------
