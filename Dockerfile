@@ -9,8 +9,10 @@ WORKDIR /code
 COPY package*.json ./
 RUN npm install
 
-# Bundle app source
-COPY . .
+# Copy source files
+COPY ./project ./project
+COPY ./assets ./assets
+COPY *.config.js .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]
@@ -22,7 +24,7 @@ RUN npm run build
 # BASE (PYTHON)
 # ------------------------------------------------------------------------------
 
-FROM python:3.9.7-slim-bullseye AS base
+FROM python:3.10.3-slim-bullseye AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
@@ -52,7 +54,7 @@ COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/dev.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.development
 WORKDIR /code
-COPY . .
+COPY ./project .
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
 
 FROM base
@@ -60,8 +62,8 @@ COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
-COPY . .
-COPY --from=assets-builder /code/static/dist/ /code/static/dist/
+COPY ./project .
+COPY --from=assets-builder /code/project/static/dist/ /code/project/static/dist/
 RUN DATABASE_URL="" \
     REDIS_URL="" \
     AWS_STORAGE_BUCKET_NAME="" \

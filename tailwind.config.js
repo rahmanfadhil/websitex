@@ -1,14 +1,10 @@
 module.exports = {
-  content: [
-    "./templates/**/*.html",
-    "./assets/**/*.{js,jsx,ts,tsx,css}",
-    "./apps/**/*.py",
-    "./config/**/*.py",
-  ],
+  content: ["./project/**/*.{html,py}", "./assets/**/*.{js,jsx,ts,tsx,css}"],
   theme: {
     extend: {
       fontFamily: {
         sans: [
+          "InterVariable",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",

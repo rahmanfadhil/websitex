@@ -1,4 +1,4 @@
-import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 /**
  * Like Django `reverse` function but in JavaScript.
@@ -14,11 +14,7 @@ import * as Cookies from "js-cookie";
  * @param kwargs The keyword arguments to pass to the URL.
  * @returns The URL.
  */
-export default async function reverse(
-  name: string,
-  args?: string[],
-  kwargs?: { [key: string]: string | number }
-): Promise<string> {
+export default async function reverse(name, args, kwargs) {
   const response = await fetch("/js-reverse/", {
     method: "POST",
     mode: "same-origin",

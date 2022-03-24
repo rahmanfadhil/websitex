@@ -1,0 +1,16 @@
+/* TailwindCSS */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Custom */
+@import "./buttons.css";
+@import "./forms.css";
+
+/*
+Hide interactive elements until Alpine.js is loaded
+https://alpinejs.dev/directives/cloak
+*/
+[x-cloak] {
+  display: none !important;
+}

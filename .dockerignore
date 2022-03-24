@@ -1,26 +1,2 @@
-*
-!apps/
-!config/
-!templates/
-!locale/
-!manage.py
-
-# Static files
-!static/
-static/dist/**/*
-
-# Media files (only in development)
-media/
-
-# Python requirements
-!requirements/
-
-# Pytest configuration
-!conftest.py
-!pytest.ini
-
-# Front-end assets
-!assets/
-!package*.json
-!tsconfig.json
-!*.config.js
+node_modules/
+venv/

@@ -5,10 +5,6 @@ class CustomDateInput(forms.DateInput):
     input_type = "date"
 
 
-class TrixInput(forms.TextInput):
-    template_name = "widgets/trix_input.html"
-
-
 class CustomClearableFileInput(forms.ClearableFileInput):
     template_name = "widgets/clearable_file_input.html"
 

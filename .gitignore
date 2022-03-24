@@ -27,7 +27,7 @@ node_modules/
 .env
 
 # JavaScript & CSS bundles
-static/dist
+project/static/dist
 
 # Test coverge
 .coverage

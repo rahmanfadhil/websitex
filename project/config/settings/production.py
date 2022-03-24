@@ -6,13 +6,6 @@ from .base import *
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
 
-# DJANGO-ANYMAIL CONFIG
-# ------------------------------------------------------------------------------
-# https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
-INSTALLED_APPS += ["anymail"]
-# https://anymail.readthedocs.io/en/stable/esps/amazon_ses/#installation
-EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
-
 # WHITENOISE
 # ------------------------------------------------------------------------------
 # https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
@@ -54,7 +47,7 @@ AWS_S3_FILE_OVERWRITE = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": os.environ["REDIS_URL"],
     }
 }
@@ -82,11 +75,6 @@ LOGGING = {
         },
     },
 }
-
-# CELERY
-# ------------------------------------------------------------------------------
-# https://docs.celeryproject.org/en/latest/userguide/configuration.html#broker-use-ssl
-CELERY_BROKER_USE_SSL = True
 
 # SENTRY
 # ------------------------------------------------------------------------------

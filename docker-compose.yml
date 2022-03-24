@@ -2,19 +2,18 @@ version: "3.9"
 
 volumes:
   dev_postgres_data: {}
-  dev_postgres_data_backups: {}
   dev_mailhog_data: {}
+  dev_media: {}
 
 services:
   postgres:
-    image: postgres:13.4
+    image: postgres:14.2
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - dev_postgres_data:/var/lib/postgresql/data:Z
-      - dev_postgres_data_backups:/backups:z
     ports:
       - "5432:5432"
   redis:
@@ -37,7 +36,8 @@ services:
       target: development
     command: "watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO --concurrency=2"
     volumes:
-      - .:/code
+      - ./project:/code
+      - dev_media:/media
     depends_on:
       - postgres
       - redis
@@ -54,7 +54,8 @@ services:
     # Uncomment this line of you want to enable VSCode debugging
     # command: "python -m debugpy --listen 0.0.0.0:9999 manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/code
+      - ./project:/code
+      - dev_media:/media
     ports:
       - "8000:8000"
       - "9999:9999"
@@ -72,4 +73,5 @@ services:
       dockerfile: Dockerfile
       target: assets
     volumes:
-      - .:/code
+      - ./project:/code/project
+      - ./assets:/code/assets

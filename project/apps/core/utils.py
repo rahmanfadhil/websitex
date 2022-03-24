@@ -1,9 +1,9 @@
-import os
 import random
 import string
 from io import BytesIO
 from typing import Any, BinaryIO, Dict, List, Tuple
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.files import File
 from django.core.mail.message import EmailMessage, EmailMultiAlternatives
@@ -16,7 +16,7 @@ from django.utils.text import slugify
 from PIL import Image
 
 
-def unique_slugify(instance, title: str) -> str:
+def unique_slugify(instance, title: str, field: str = "slug") -> str:
     """
     Returns a unique slug if origin slug is exist.
 
@@ -30,13 +30,13 @@ def unique_slugify(instance, title: str) -> str:
     """
     slug = slugify(title)
 
-    qs = instance.__class__.objects.filter(slug=slug)
+    qs = instance.__class__.objects.filter(**{field: slug})
     if instance.pk is not None:
         qs = qs.exclude(pk=instance.pk)
 
     if qs.exists():
         postfix = "".join(random.choices(string.ascii_letters + string.digits, k=6))
-        return unique_slugify(instance, f"{slug}-{postfix}")
+        return unique_slugify(instance, f"{slug}-{postfix}", field)
 
     return slug
 
@@ -62,8 +62,10 @@ def compress_image(image: BinaryIO, size: Tuple[int, int] = (512, 512)) -> File:
 def send_html_email(
     subject: str,
     to: List[str],
-    template_name: str,
     context: Dict[str, Any],
+    html_template_name: str,
+    text_template_name: str = None,
+    from_email: str = None,
 ) -> int:
     """
     Sends an HTML and plain text email from a Django template.
@@ -80,10 +82,18 @@ def send_html_email(
         "site_name": site.name,
         "site_domain": site.domain,
     }
-    html_content = render_to_string(template_name, context)
 
-    msg = EmailMessage(subject, html_content, [to])
-    msg.content_subtype = "html"
+    from_email = settings.DEFAULT_FROM_EMAIL
+    html_content = render_to_string(html_template_name, context)
+
+    if text_template_name:
+        text_content = render_to_string(text_template_name, context)
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+    else:
+        msg = EmailMessage(subject, html_content, [to])
+        msg.content_subtype = "html"
+
     return msg.send()
 
 
