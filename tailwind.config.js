@@ -1,10 +1,10 @@
 module.exports = {
-  content: ["./project/**/*.{html,py}", "./assets/**/*.{js,jsx,ts,tsx,css}"],
+  content: ["./backend/**/*.{html,py}", "./assets/**/*.{js,jsx,ts,tsx,css}"],
   theme: {
     extend: {
       fontFamily: {
         sans: [
-          "InterVariable",
+          "NunitoVariable",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",

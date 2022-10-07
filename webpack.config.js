@@ -15,7 +15,7 @@ module.exports = (env, argv) => {
     },
     output: {
       filename: "[name].js",
-      path: path.resolve(__dirname, "project/static/dist"),
+      path: path.resolve(__dirname, "backend/static/dist"),
     },
     devtool: devMode ? "eval" : false,
     module: {

@@ -6,11 +6,11 @@ FROM node:16-alpine AS assets
 WORKDIR /code
 
 # Install app dependencies
-COPY package*.json ./
+COPY package*.json .
 RUN npm install
 
 # Copy source files
-COPY ./project ./project
+COPY ./backend ./backend
 COPY ./assets ./assets
 COPY *.config.js .
 
@@ -54,7 +54,7 @@ COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/dev.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.development
 WORKDIR /code
-COPY ./project .
+COPY ./backend .
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
 
 FROM base
@@ -62,8 +62,8 @@ COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
-COPY ./project .
-COPY --from=assets-builder /code/project/static/dist/ /code/project/static/dist/
+COPY ./backend .
+COPY --from=assets-builder /code/backend/static/dist/ /code/backend/static/dist/
 RUN DATABASE_URL="" \
     REDIS_URL="" \
     AWS_STORAGE_BUCKET_NAME="" \

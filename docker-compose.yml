@@ -36,7 +36,7 @@ services:
       target: development
     command: "watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO --concurrency=2"
     volumes:
-      - ./project:/code
+      - ./backend:/code
       - dev_media:/media
     depends_on:
       - postgres
@@ -54,7 +54,7 @@ services:
     # Uncomment this line of you want to enable VSCode debugging
     # command: "python -m debugpy --listen 0.0.0.0:9999 manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./project:/code
+      - ./backend:/code
       - dev_media:/media
     ports:
       - "8000:8000"
@@ -73,5 +73,8 @@ services:
       dockerfile: Dockerfile
       target: assets
     volumes:
-      - ./project:/code/project
+      - ./backend:/code/backend
       - ./assets:/code/assets
+      - ./webpack.config.js:/code/webpack.config.js
+      - ./tailwind.config.js:/code/tailwind.config.js
+      - ./postcss.config.js:/code/postcss.config.js
