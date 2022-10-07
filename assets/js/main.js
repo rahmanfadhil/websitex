@@ -1,3 +1,6 @@
+// add the beginning of your app entry
+import "vite/modulepreload-polyfill";
+
 import focus from "@alpinejs/focus";
 import Alpine from "alpinejs";
 import { createFocusTrap } from "focus-trap";

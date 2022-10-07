@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load core %}
 {% load wagtailcore_tags %}
+{% load vite %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,9 +19,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{% static 'brand/favicon-16x16.png' %}">
   <link rel="manifest" href="{% static 'brand/site.webmanifest' %}">
 
-  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
   <script defer src="{% url 'javascript-catalog' %}"></script>
-  <script defer type="module" src="{% static 'dist/main.js' %}"></script>
+  {% load_vite 'assets/js/main.js' %}
 
   {% block head %}
     <!-- Primary Meta Tags -->

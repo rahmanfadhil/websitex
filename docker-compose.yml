@@ -72,9 +72,11 @@ services:
       context: .
       dockerfile: Dockerfile
       target: assets
+    ports:
+      - "5173:5173"
     volumes:
       - ./backend:/code/backend
       - ./assets:/code/assets
-      - ./webpack.config.js:/code/webpack.config.js
+      - ./vite.config.ts:/code/vite.config.ts
       - ./tailwind.config.js:/code/tailwind.config.js
       - ./postcss.config.js:/code/postcss.config.js

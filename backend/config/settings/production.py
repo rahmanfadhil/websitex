@@ -6,6 +6,17 @@ from .base import *
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = False
 
+# DATABASES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# https://github.com/jacobian/dj-database-url#usage
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgres://postgres:postgres@postgres:5432/postgres",
+        conn_max_age=600,  # <-- enable connection pooling in production
+    )
+}
+
 # WHITENOISE
 # ------------------------------------------------------------------------------
 # https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support

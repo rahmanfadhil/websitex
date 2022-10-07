@@ -113,7 +113,6 @@ FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 DATABASES = {
     "default": dj_database_url.config(
         default="postgres://postgres:postgres@postgres:5432/postgres",
-        conn_max_age=600,
     )
 }
 
