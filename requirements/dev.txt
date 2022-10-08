@@ -10,6 +10,7 @@ factory-boy==3.2.1
 
 # For testing django with pytest
 # https://pytest-django.readthedocs.io/en/latest/
+pytest==7.1.3
 pytest-django==4.5.2
 
 # A better python shell
@@ -19,7 +20,3 @@ ipython==8.5.0
 # Restart celery workers on file changes
 # https://github.com/gorakhargosh/watchdog
 watchdog[watchmedo]==2.1.9
-
-# To load configuration from .env file
-# https://github.com/theskumar/python-dotenv
-python-dotenv==0.21.0
