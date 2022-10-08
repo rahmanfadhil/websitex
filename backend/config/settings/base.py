@@ -34,6 +34,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "channels",
     "whitenoise.runserver_nostatic",
     "django_celery_results",
     "wagtail.contrib.forms",
@@ -49,7 +50,6 @@ THIRD_PARTY_APPS = [
     "wagtail.core",
     "modelcluster",
     "taggit",
-    "channels",
 ]
 LOCAL_APPS = [
     "apps.core",
@@ -148,11 +148,16 @@ LANGUAGES = [
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(BASE_DIR / "static")]
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# WHITENOISE
+# ------------------------------------------------------------------------------
+# https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # MEDIA
 # ------------------------------------------------------------------------------

@@ -1,17 +1,17 @@
 -r base.txt
 
-# The web server which the app runs on in production
-# https://github.com/django/daphne
-daphne==3.0.2
+# # The web server which the app runs on in production
+# # https://github.com/django/daphne
+# daphne==3.0.2
 
 # Persist user-uploaded content to S3
 # https://github.com/jschneier/django-storages
-django-storages==1.12.3
+django-storages==1.13.1
 
 # The AWS SDK for Python used by django-storages
 # https://github.com/boto/boto3
-boto3==1.21.25
+boto3==1.24.88
 
 # Log and debug errors in production
 # https://github.com/getsentry/sentry-python
-sentry-sdk==1.5.8
+sentry-sdk==1.9.10

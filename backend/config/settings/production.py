@@ -17,11 +17,6 @@ DATABASES = {
     )
 }
 
-# WHITENOISE
-# ------------------------------------------------------------------------------
-# https://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
 # SECURITY
 # ------------------------------------------------------------------------------
 if os.environ.get("USE_HTTPS", "False").lower() == "true":

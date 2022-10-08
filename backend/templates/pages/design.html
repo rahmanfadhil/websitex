@@ -1,4 +1,5 @@
 {% load static %}
+{% load vite %}
 {% load i18n %}
 
 <!DOCTYPE html>
@@ -8,9 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
   <script defer src="{% url 'javascript-catalog' %}"></script>
-  <script defer type="module" src="{% static 'dist/main.js' %}"></script>
+  {% load_vite 'assets/js/main.js' %}
 </head>
 <body>
   <nav class="border-b md:border-b-0">

@@ -34,7 +34,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
-    command: "watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO --concurrency=2"
+    # command: "watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker -l INFO --pool=solo"
+    command: "celery -A config worker -l INFO --pool=solo"
     volumes:
       - ./backend:/code
       - dev_media:/media
@@ -46,6 +47,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
+      - AWS_STORAGE_BUCKET_NAME=
   web:
     build:
       context: .
@@ -67,6 +69,8 @@ services:
       - REDIS_URL=redis://redis:6379
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
+      - AWS_STORAGE_BUCKET_NAME=
+      - PORT=8000
   assets:
     build:
       context: .

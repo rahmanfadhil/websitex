@@ -2,7 +2,7 @@
 
 # To debug the app from the browser
 # https://github.com/jazzband/django-debug-toolbar
-django-debug-toolbar==3.2.4
+django-debug-toolbar==3.7.0
 
 # For creating mock data in test environments
 # https://github.com/FactoryBoy/factory_boy
@@ -14,15 +14,12 @@ pytest-django==4.5.2
 
 # A better python shell
 # https://ipython.org/
-ipython==8.1.1
+ipython==8.5.0
 
 # Restart celery workers on file changes
 # https://github.com/gorakhargosh/watchdog
-watchdog[watchmedo]==2.1.6
+watchdog[watchmedo]==2.1.9
 
 # To load configuration from .env file
 # https://github.com/theskumar/python-dotenv
-python-dotenv==0.19.2
-
-# http://www.supervisord.org/
-supervisor==4.2.4
+python-dotenv==0.21.0

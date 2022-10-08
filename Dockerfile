@@ -1,6 +1,6 @@
 # FRONT-END ASSETS
 # ------------------------------------------------------------------------------
-FROM node:16-alpine AS assets
+FROM node:16.17.1-alpine AS assets
 
 # Create app directory
 WORKDIR /code
@@ -13,6 +13,7 @@ RUN npm install
 COPY ./backend ./backend
 COPY ./assets ./assets
 COPY *.config.js .
+COPY *.config.ts .
 
 # Build assets and watch for changes
 CMD [ "npm", "run", "dev" ]
@@ -24,7 +25,7 @@ RUN npm run build
 # BASE (PYTHON)
 # ------------------------------------------------------------------------------
 
-FROM python:3.10.3-slim-bullseye AS base
+FROM python:3.10.7-slim-bullseye AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
@@ -64,8 +65,6 @@ ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY ./backend .
 COPY --from=assets-builder /code/backend/static/dist/ /code/backend/static/dist/
-RUN DATABASE_URL="" \
-    REDIS_URL="" \
-    AWS_STORAGE_BUCKET_NAME="" \
-    python manage.py collectstatic --no-input
-CMD python manage.py migrate && daphne -b 0.0.0.0 -p $PORT config.asgi:application
+CMD python manage.py collectstatic --no-input \
+    && python manage.py migrate \
+    && daphne -b 0.0.0.0 -p $PORT config.asgi:application
