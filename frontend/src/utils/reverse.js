@@ -12,7 +12,7 @@ import Cookies from "js-cookie";
  * @param name The name of the URL.
  * @param args The arguments to pass to the URL.
  * @param kwargs The keyword arguments to pass to the URL.
- * @returns The URL.
+ * @returns {Promise<string>} The URL.
  */
 export default async function reverse(name, args, kwargs) {
   const response = await fetch("/js-reverse/", {

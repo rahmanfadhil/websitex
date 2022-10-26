@@ -71,16 +71,13 @@ services:
       - EMAIL_PORT=1025
       - AWS_STORAGE_BUCKET_NAME=
       - PORT=8000
-  assets:
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
-      target: assets
+      target: frontend
     ports:
       - "5173:5173"
     volumes:
       - ./backend:/code/backend
-      - ./assets:/code/assets
-      - ./vite.config.ts:/code/vite.config.ts
-      - ./tailwind.config.js:/code/tailwind.config.js
-      - ./postcss.config.js:/code/postcss.config.js
+      - ./frontend:/code/frontend

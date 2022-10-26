@@ -4,8 +4,8 @@
 @import "tailwindcss/utilities";
 
 /* Custom */
-@import "./buttons.css";
-@import "./forms.css";
+@import "./components/buttons.css";
+@import "./components/forms.css";
 
 /*
 Hide interactive elements until Alpine.js is loaded

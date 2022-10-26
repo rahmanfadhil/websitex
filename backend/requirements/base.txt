@@ -32,7 +32,7 @@ dj-database-url==1.0.0
 
 # Enables WebSockets in Django
 # https://github.com/django/channels
-channels[daphne]==3.0.5
+channels[daphne]==4.0.0
 
 # Provides Django Channels channel layers that use Redis as a backing store.
 # https://github.com/django/channels_redis

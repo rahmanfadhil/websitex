@@ -1,25 +1,23 @@
 # FRONT-END ASSETS
 # ------------------------------------------------------------------------------
-FROM node:16.17.1-alpine AS assets
+FROM node:16.17.1-alpine AS frontend
 
 # Create app directory
-WORKDIR /code
+WORKDIR /code/frontend
 
 # Install app dependencies
-COPY package*.json .
+COPY ./frontend/package*.json .
 RUN npm install
 
 # Copy source files
-COPY ./backend ./backend
-COPY ./assets ./assets
-COPY *.config.js .
-COPY *.config.ts .
+COPY ./backend /code/backend
+COPY ./frontend /code/frontend
 
-# Build assets and watch for changes
+# Build frontend and watch for changes
 CMD [ "npm", "run", "dev" ]
 
 # Build the production JS and CSS
-FROM assets AS assets-builder
+FROM frontend AS frontend-builder
 RUN npm run build
 
 # BASE (PYTHON)
@@ -51,7 +49,7 @@ RUN pip install --upgrade pip
 # ------------------------------------------------------------------------------
 
 FROM base AS development
-COPY ./requirements /tmp/requirements
+COPY ./backend/requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/dev.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.development
 WORKDIR /code
@@ -59,12 +57,12 @@ COPY ./backend .
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
 
 FROM base
-COPY ./requirements /tmp/requirements
+COPY ./backend/requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY ./backend .
-COPY --from=assets-builder /code/backend/static/dist/ /code/backend/static/dist/
+COPY --from=frontend-builder /code/backend/static/dist/ /code/backend/static/dist/
 CMD python manage.py collectstatic --no-input \
     && python manage.py migrate \
     && daphne -b 0.0.0.0 -p $PORT config.asgi:application

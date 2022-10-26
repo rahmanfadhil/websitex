@@ -9,10 +9,10 @@ export default defineConfig({
   build: {
     // generate manifest.json in outDir
     manifest: true,
-    outDir: "backend/static/dist",
+    outDir: "../backend/static/dist",
     rollupOptions: {
       // overwrite default .html entry
-      input: "assets/js/main.js",
+      input: "src/main.ts",
     },
   },
 });

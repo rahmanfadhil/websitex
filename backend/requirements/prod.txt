@@ -2,7 +2,7 @@
 
 # # The web server which the app runs on in production
 # # https://github.com/django/daphne
-# daphne==3.0.2
+daphne==4.0.0
 
 # Persist user-uploaded content to S3
 # https://github.com/jschneier/django-storages
