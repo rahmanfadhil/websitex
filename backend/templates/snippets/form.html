@@ -11,15 +11,15 @@
     {% if field.widget_type == 'checkbox' %}
       <label class="inline-flex items-center gap-2">
         {{ field }}
-        <span class="text-sm font-medium text-stone-700">{{ field.label }}</span>
+        <span class="text-sm font-medium text-secondary-700">{{ field.label }}</span>
       </label>
     {% else %}
-      <label for="{{ field.id_for_label }}" class="text-sm font-medium text-stone-700 block mb-2">{{ field.label }}</label>
+      <label for="{{ field.id_for_label }}" class="text-sm font-medium text-secondary-700 block mb-2">{{ field.label }}</label>
       {% if field.widget_type == 'radioselect' %}
         <ul>
           {% for radio in field %}
             <li>
-              <label for="{{ radio.id_for_label }}" class="text-sm text-stone-700 inline-flex items-center gap-2">
+              <label for="{{ radio.id_for_label }}" class="text-sm text-secondary-700 inline-flex items-center gap-2">
                 {{ radio.tag }}
                 {{ radio.choice_label }}
               </label>
@@ -31,7 +31,7 @@
       {% endif %}
     {% endif %}
     {% if field.help_text %}
-      <div class="mt-2 prose prose-sm prose-stone max-w-none text-stone-500">{{ field.help_text }}</div>
+      <div class="mt-2 prose prose-sm prose-secondary max-w-none text-secondary-500">{{ field.help_text }}</div>
     {% endif %}
     {% include 'components/forms/field_errors.html' with field=field %}
   </section>

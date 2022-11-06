@@ -2,12 +2,12 @@
   <section class="my-8 flex">
     <nav aria-label="Pagination" class="flex justify-center divide-x mx-auto rounded shadow border overflow-hidden">
       {% if page_obj.has_previous %}
-        <a class="bg-white hover:bg-stone-100 text-stone-600 px-3 py-2 flex items-center" href="?page=1" aria-label="First">
+        <a class="bg-white hover:bg-secondary-100 text-secondary-600 px-3 py-2 flex items-center" href="?page=1" aria-label="First">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
           </svg>
         </a>
-        <a class="bg-white hover:bg-stone-100 text-stone-600 px-3 py-2 flex items-center" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <a class="bg-white hover:bg-secondary-100 text-secondary-600 px-3 py-2 flex items-center" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
@@ -17,16 +17,16 @@
         {% if page_obj.number == num %}
           <a class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2" aria-current="page" href="?page={{ num }}">{{ num }}</a>
         {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-          <a class="bg-white hover:bg-stone-100 text-stone-600 px-3 py-2" href="?page={{ num }}">{{ num }}</a>
+          <a class="bg-white hover:bg-secondary-100 text-secondary-600 px-3 py-2" href="?page={{ num }}">{{ num }}</a>
         {% endif %}
       {% endfor %}
       {% if page_obj.has_next %}
-        <a class="bg-white hover:bg-stone-100 text-stone-600 px-3 py-2 flex items-center" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <a class="bg-white hover:bg-secondary-100 text-secondary-600 px-3 py-2 flex items-center" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </a>
-        <a class="bg-white hover:bg-stone-100 text-stone-600 px-3 py-2 flex items-center" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+        <a class="bg-white hover:bg-secondary-100 text-secondary-600 px-3 py-2 flex items-center" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
           </svg>

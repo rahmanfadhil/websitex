@@ -10,17 +10,17 @@ form input[type="search"],
 form input[type="tel"],
 form input[type="time"],
 form input[type="week"] {
-  @apply rounded-md shadow text-sm py-2 px-4 border-stone-300 w-full block text-stone-700;
+  @apply rounded-md shadow text-sm py-2 px-4 border-secondary-300 w-full block text-secondary-700;
 }
 
 form input[type="checkbox"] {
-  @apply rounded-md border-stone-300 shadow-sm;
+  @apply rounded-md border-secondary-300 shadow-sm;
 }
 
 form input[type="radio"] {
-  @apply border-stone-300 shadow-sm;
+  @apply border-secondary-300 shadow-sm;
 }
 
 form input[type="file"] {
-  @apply w-full text-sm text-stone-700 file:cursor-pointer file:bg-amber-600 file:text-white file:border-none file:rounded-md file:px-4 file:py-2 file:mr-4 file:font-medium;
+  @apply w-full text-sm text-secondary-700 file:cursor-pointer file:bg-primary-600 file:text-white file:border-none file:rounded-md file:px-4 file:py-2 file:mr-4 file:font-medium;
 }

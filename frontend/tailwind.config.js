@@ -1,10 +1,16 @@
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx,css}", "../backend/**/*.{html,py}"],
   theme: {
     extend: {
+      colors: {
+        primary: colors.emerald,
+        secondary: colors.slate,
+      },
       fontFamily: {
         sans: [
-          "NunitoVariable",
+          "MulishVariable",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",

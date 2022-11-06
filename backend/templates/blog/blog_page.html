@@ -6,8 +6,8 @@
 
 {% block content %}
   <div class="py-8 md:py-16 text-center max-w-screen-md mx-auto">
-    <time class="md:text-lg text-stone-500" datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date|date:"F j, Y" }}</time>
-    <h1 class="text-3xl md:text-4xl leading-tight md:leading-tight text-stone-800 font-extrabold mt-4">{{ page.title }}</h1>
+    <time class="md:text-lg text-secondary-500" datetime="{{ page.date|date:"Y-m-d" }}">{{ page.date|date:"F j, Y" }}</time>
+    <h1 class="text-3xl md:text-4xl leading-tight md:leading-tight text-secondary-800 font-extrabold mt-4">{{ page.title }}</h1>
   </div>
   <section class="prose md:prose-lg mx-auto py-8">
     {{ page.body|richtext }}

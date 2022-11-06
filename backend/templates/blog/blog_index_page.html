@@ -11,8 +11,8 @@
       <div class="bg-white shadow rounded-md overflow-hidden">
         {% image post.specific.thumbnail width-500 class='w-full h-48 object-cover' %}
         <div class="p-6 flex flex-col gap-4">
-          <a href="{% pageurl post %}" class="text-xl font-extrabold text-stone-800 hover:text-amber-600">{{ post.title }}</a>
-          <time datetime="{{ page.date|date:'Y-m-d' }}" class="text-stone-600 text-sm">{{ post.specific.date }}</time>
+          <a href="{% pageurl post %}" class="text-xl font-extrabold text-secondary-800 hover:text-primary-600">{{ post.title }}</a>
+          <time datetime="{{ page.date|date:'Y-m-d' }}" class="text-secondary-600 text-sm">{{ post.specific.date }}</time>
         </div>
       </div>
     {% endfor %}

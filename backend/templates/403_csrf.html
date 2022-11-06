@@ -6,8 +6,8 @@
 
 {% block content %}
   <div class="max-w-sm mx-auto my-8 md:my-16 px-4 sm:px-0">
-    <h1 class="text-2xl font-semibold text-stone-800">{% trans "Forbidden (403)" %}</h1>
-    <p class="mt-4 mb-8 text-sm text-stone-500">
+    <h1 class="text-2xl font-semibold text-secondary-800">{% trans "Forbidden (403)" %}</h1>
+    <p class="mt-4 mb-8 text-sm text-secondary-500">
       {% trans "CSRF verification failed. Request aborted." %}
     </p>
     <a href="{% url 'pages:home' %}" class="btn">{% trans "Back to home page" %}</a>
