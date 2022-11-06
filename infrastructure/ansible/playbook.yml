@@ -1,0 +1,50 @@
+---
+- name: Deploy Docker Container
+  hosts: webservers
+  remote_user: ec2-user
+
+  tasks:
+    - name: Pull docker image
+      docker_image:
+        name: "rahmanfadhil/websitex:v1"
+        source: pull
+    - name: Run docker container
+      docker_container:
+        name: "websitex"
+        image: "rahmanfadhil/websitex:v1"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+        env:
+          DB_HOST: "database"
+          DB_USER: "root"
+          DB_PASS: "password"
+          DB_NAME: "websitex"
+        volumes:
+          - "/var/www/websitex:/var/www/html"
+        networks:
+          - name: "websitex"
+        links:
+          - "database:database"
+    - name: Run docker container for PostgreSQL
+      docker_container:
+        name: "database"
+        image: "postgres:latest"
+        state: started
+        restart_policy: always
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: "root"
+          POSTGRES_PASSWORD: "password"
+          POSTGRES_DB: "websitex"
+        volumes:
+          - "/var/lib/postgresql/data:/var/lib/postgresql/data"
+        networks:
+          - name: "websitex"
+    - name: Create docker network
+      docker_network:
+        name: "websitex"
+        driver: bridge
+        state: present
