@@ -15,7 +15,7 @@ pytest-django==4.5.2
 
 # A better python shell
 # https://ipython.org/
-ipython==8.5.0
+ipython==8.6.0
 
 # Restart celery workers on file changes
 # https://github.com/gorakhargosh/watchdog

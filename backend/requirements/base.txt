@@ -4,15 +4,15 @@ Django==4.1.2
 
 # Content management system for the blog feature
 # https://wagtail.io/
-wagtail==4.0.2
+wagtail==4.1
 
 # PostgreSQL database adapter for Django
 # https://github.com/psycopg/psycopg2
-psycopg2==2.9.4
+psycopg2==2.9.5
 
 # To work with images in Django
 # https://github.com/python-pillow/Pillow
-Pillow==9.2.0
+Pillow==9.3.0
 
 # Serve static files in production
 # https://github.com/evansd/whitenoise
