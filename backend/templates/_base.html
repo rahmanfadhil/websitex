@@ -77,8 +77,11 @@
             <a href="#" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black">{% trans "About" %}</a>
             {% if user.is_authenticated %}
               <div x-data="{ open: false }" @keydown.escape="open = false" class="relative">
-                <button aria-label="{% trans "My account" %}" @click="open = ! open" :aria-expanded="open" aria-controls="my-account-dropdown" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black flex items-center gap-2 w-full">
-                  {% trans "My account" %}
+                <button aria-label="{{ user.full_name }}" @click="open = ! open" :aria-expanded="open" aria-controls="my-account-dropdown" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black flex items-center gap-2 w-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="hidden md:block">{{ user.full_name }}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                   </svg>
@@ -104,7 +107,7 @@
                           </p>
                           <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button class="btn-red">{% trans "Log out" %}</button>
+                            <button class="btn-red">{% trans "Yes, log out" %}</button>
                           </form>
                         </div>
                       </div>

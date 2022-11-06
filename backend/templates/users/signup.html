@@ -9,7 +9,7 @@
   <form action="" method="post" class="max-w-xs mx-auto my-8 md:my-16">
     <h1 class="text-2xl font-extrabold text-secondary-800">{% trans "Sign up" %}</h1>
     <hr class="mt-2 mb-8">
-    {% include 'snippets/form.html' %}
+    {% include 'snippets/form.html' with hide_help_text=True %}
     <button class="btn w-full">{% trans "Sign up" %}</button>
     <div class="flex justify-between mt-8 gap-4 flex-wrap">
       <a href="{% url 'login' %}" class="text-primary-600 text-sm font-medium hover:text-primary-700">{% trans "I have an account" %}</a>
