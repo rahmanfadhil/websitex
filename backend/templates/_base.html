@@ -11,7 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
   <link rel="shortcut icon" type="image/x-icon" href="{% static 'brand/favicon.ico' %}">
-  <title>{% block title %}WebsiteX{% endblock title %}</title>
+  <title>{% block title %}Tu Maestro Electricista{% endblock title %}</title>
 
   <!-- PWA -->
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'brand/apple-touch-icon.png' %}">
@@ -29,14 +29,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="WebsiteX">
+    <meta property="og:title" content="Tu Maestro Electricista">
     <meta property="og:description" content="A framework for launching new Django projects quickly.">
     <meta property="og:image" content="{% static 'images/og_image.png' %}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
-    <meta property="twitter:title" content="WebsiteX">
+    <meta property="twitter:title" content="Tu Maestro Electricista">
     <meta property="twitter:description" content="A framework for launching new Django projects quickly.">
     <meta property="twitter:image" content="{% static 'images/og_image.png' %}">
   {% endblock head %}
@@ -63,7 +63,7 @@
     <nav class="bg-white fixed top-0 right-0 left-0 border-b px-4" x-data="{ open: false }">
       <div class="max-w-screen-lg mx-auto flex items-center justify-between py-4 gap-4 flex-wrap">
         <a href="{% url 'pages:home' %}" class="font-extrabold text-lg text-secondary-800 flex items-center gap-3">
-          WebsiteX
+          Tu Maestro Electricista
         </a>
         <button class="md:hidden" @click="open = ! open" aria-label="Toggle menu" aria-controls="navigation" :aria-expanded="open">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

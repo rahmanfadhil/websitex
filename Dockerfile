@@ -1,12 +1,12 @@
 # FRONT-END ASSETS
 # ------------------------------------------------------------------------------
-FROM node:16.17.1-alpine AS frontend
+FROM node:18.12.0-alpine AS frontend
 
 # Create app directory
 WORKDIR /code/frontend
 
 # Install app dependencies
-COPY ./frontend/package*.json .
+COPY ./frontend/package*.json ./
 RUN npm install
 
 # Copy source files

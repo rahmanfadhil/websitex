@@ -1,4 +1,4 @@
-# WebsiteX
+# Tu Maestro Electricista
 
 A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvincent/djangox).
 

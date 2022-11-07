@@ -220,4 +220,4 @@ DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 
 # WAGTAIL
 # ------------------------------------------------------------------------------
-WAGTAIL_SITE_NAME = "WebsiteX Blog"
+WAGTAIL_SITE_NAME = "Tu Maestro Electricista Blog"

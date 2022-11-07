@@ -81,3 +81,4 @@ services:
     volumes:
       - ./backend:/code/backend
       - ./frontend:/code/frontend
+      - /code/frontend/node_modules
