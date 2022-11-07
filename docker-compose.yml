@@ -4,6 +4,7 @@ volumes:
   dev_postgres_data: {}
   dev_mailhog_data: {}
   dev_media: {}
+  playwright_cache: {}
 
 services:
   postgres:
@@ -58,6 +59,7 @@ services:
     volumes:
       - ./backend:/code
       - dev_media:/media
+      - playwright_cache:/root/.cache/ms-playwright
     ports:
       - "8000:8000"
       - "9999:9999"

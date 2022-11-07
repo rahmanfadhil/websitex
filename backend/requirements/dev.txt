@@ -20,3 +20,7 @@ ipython==8.6.0
 # Restart celery workers on file changes
 # https://github.com/gorakhargosh/watchdog
 watchdog[watchmedo]==2.1.9
+
+# End-to-end testing with Playwright
+# https://playwright.dev/python/
+pytest-playwright==0.3.0

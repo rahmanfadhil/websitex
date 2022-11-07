@@ -30,7 +30,7 @@
         {{ field }}
       {% endif %}
     {% endif %}
-    {% if field.help_text %}
+    {% if field.help_text and not hide_help_text %}
       <div class="mt-2 prose prose-sm prose-secondary max-w-none text-secondary-500">{{ field.help_text }}</div>
     {% endif %}
     {% include 'components/forms/field_errors.html' with field=field %}

@@ -50,7 +50,7 @@
             </p>
             <form action="{% url 'users:delete_user' %}" method="post">
               {% csrf_token %}
-              <button class="btn-red">{% trans "Delete my account" %}</button>
+              <button class="btn-red">{% trans "Yes, delete my account" %}</button>
             </form>
           </div>
         </div>
