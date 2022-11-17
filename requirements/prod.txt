@@ -1,0 +1,13 @@
+-r base.txt
+
+# Persist user-uploaded content to S3
+# https://github.com/jschneier/django-storages
+django-storages==1.13.1
+
+# The AWS SDK for Python used by django-storages
+# https://github.com/boto/boto3
+boto3==1.26.8
+
+# Log and debug errors in production
+# https://github.com/getsentry/sentry-python
+sentry-sdk==1.10.1

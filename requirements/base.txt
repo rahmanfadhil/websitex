@@ -1,0 +1,35 @@
+# The web framework for perfectionists with deadlines
+# https://www.djangoproject.com/
+Django==4.1.3
+
+# Content management system for the blog feature
+# https://wagtail.io/
+wagtail==4.1.1
+
+# PostgreSQL database adapter for Django
+# https://github.com/psycopg/psycopg2
+psycopg2==2.9.5
+
+# To work with images in Django
+# https://github.com/python-pillow/Pillow
+Pillow==9.3.0
+
+# Serve static files in production
+# https://github.com/evansd/whitenoise
+whitenoise[brotli]==6.2.0
+
+# Job queue with Redis
+# https://github.com/rq/django-rq
+django-rq==2.6.0
+
+# Use Heroku's DATABASE_URL environment variable
+# https://github.com/jacobian/dj-database-url
+dj-database-url==1.0.0
+
+# Enables WebSockets in Django
+# https://github.com/django/channels
+channels[daphne]==4.0.0
+
+# Provides Django Channels channel layers that use Redis as a backing store.
+# https://github.com/django/channels_redis
+channels_redis==4.0.0

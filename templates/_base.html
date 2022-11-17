@@ -1,0 +1,137 @@
+{% load static %}
+{% load i18n %}
+{% load core %}
+{% load wagtailcore_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'brand/favicon.ico' %}">
+  <title>{% block title %}WebsiteX{% endblock title %}</title>
+
+  <!-- PWA -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'brand/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'brand/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'brand/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'brand/site.webmanifest' %}">
+  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
+
+  <script defer src="{% url 'javascript-catalog' %}"></script>
+  <script defer src="{% static 'dist/main.js' %}"></script>
+
+  {% block head %}
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="A framework for launching new Django projects quickly.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="WebsiteX">
+    <meta property="og:description" content="A framework for launching new Django projects quickly.">
+    <meta property="og:image" content="{% static 'images/og_image.png' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="WebsiteX">
+    <meta property="twitter:description" content="A framework for launching new Django projects quickly.">
+    <meta property="twitter:image" content="{% static 'images/og_image.png' %}">
+  {% endblock head %}
+</head>
+
+<body class="px-3 bg-secondary-100">
+  {% if messages %}
+    <div class="fixed top-0 right-0 w-full max-w-md p-5 flex flex-col gap-5 z-30">
+      {% for message in messages %}
+        <div x-cloak x-data="{ show: false }" x-init="$nextTick(() => { show = true; })" x-show="show" x-transition class="{{ message.tags }} text-white shadow rounded flex justify-between gap-4 overflow-hidden">
+          <p class="p-4">{{ message }}</p>
+          <button @click="show = false" class="p-2 px-4 hover:bg-black hover:bg-opacity-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Top navigation -->
+  {% block header %}
+    <nav class="bg-white fixed top-0 right-0 left-0 border-b px-4" x-data="{ open: false }">
+      <div class="max-w-screen-lg mx-auto flex items-center justify-between py-4 gap-4 flex-wrap">
+        <a href="{% url 'pages:home' %}" class="font-extrabold text-lg text-secondary-800 flex items-center gap-3">
+          WebsiteX
+        </a>
+        <button class="md:hidden" @click="open = ! open" aria-label="Toggle menu" aria-controls="navigation" :aria-expanded="open">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div class="hidden md:flex gap-3 md:gap-5 ml-auto md:items-center w-full md:w-auto flex-col md:flex-row" :class="{ hidden: ! open, flex: open }" id="navigation">
+          <div class="flex flex-col md:flex-row md:mx-0">
+            <a href="{% slugurl 'blog' %}" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black">{% trans "Blog" %}</a>
+            <a href="#" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black">{% trans "Pricing" %}</a>
+            <a href="#" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black">{% trans "About" %}</a>
+            {% if user.is_authenticated %}
+              <div x-data="{ open: false }" @keydown.escape="open = false" class="relative">
+                <button aria-label="{{ user.full_name }}" @click="open = ! open" :aria-expanded="open" aria-controls="my-account-dropdown" class="font-medium text-sm py-3 md:py-2 md:px-4 md:rounded-md text-secondary-600 md:hover:bg-secondary-100 hover:text-black flex items-center gap-2 w-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="hidden md:block">{{ user.full_name }}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                <div id="my-account-dropdown" class="md:absolute w-full md:w-64 bg-white shadow border rounded-md right-0 mt-2 flex-col overflow-hidden py-1" x-show="open" x-transition x-cloak @click.outside="open = false">
+                  <a href="{% url 'users:update_user' %}" class="w-full flex items-center gap-3 text-sm py-2 px-4 text-secondary-600 font-medium hover:bg-secondary-100 hover:text-black">
+                    {% trans "Settings" %}
+                  </a>
+                  <div x-data="{ open: false }" @keydown.escape="open = false">
+                    <button @click="open = true" class="w-full flex items-center gap-3 text-sm py-2 px-4 text-red-600 font-medium hover:bg-secondary-100 hover:text-red-700">
+                      {% trans "Log out" %}
+                    </button>
+
+                    <div class="fixed z-10 inset-0 overflow-y-auto" x-cloak x-show="open" x-trap="open" role="dialog" aria-modal="true" tabindex="0" aria-labelledby="logoutModalTitle">
+                      <div class="flex items-center justify-center min-h-screen">
+                        <div class="fixed inset-0 bg-black opacity-30" @click="open = false" x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform opacity-0" x-transition:enter-end="transform opacity-30" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="transform opacity-30" x-transition:leave-end="transform opacity-0"></div>
+                        <div class="relative bg-white rounded max-w-md mx-auto w-full p-8" x-show="open" x-transition>
+                          <h1 id="logoutModalTitle" class="text-2xl font-extrabold text-secondary-800 mb-4">
+                            {% trans "Log out" %}
+                          </h1>
+                          <p class="text-secondary-500 text-sm mb-8">
+                            {% trans "Are you sure you want to log out?" %}
+                          </p>
+                          <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="btn-red">{% trans "Yes, log out" %}</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}" class="btn-secondary">{% trans "Log in" %}</a>
+            <a href="{% url 'users:signup' %}" class="btn">{% trans "Sign up" %}</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="h-20"></div>
+  {% endblock header %}
+
+  <!-- Main content -->
+  {% block content %}{% endblock content %}
+
+  {% block footer %}
+  {% endblock footer %}
+</body>
+</html>

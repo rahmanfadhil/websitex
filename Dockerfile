@@ -1,23 +1,11 @@
-# FRONT-END ASSETS
+# FRONTEND BUILDER
 # ------------------------------------------------------------------------------
-FROM node:18.12.0-alpine AS frontend
+FROM node:18.12.0-alpine AS frontend-builder
 
-# Create app directory
-WORKDIR /code/frontend
-
-# Install app dependencies
-COPY ./frontend/package*.json ./
+WORKDIR /code
+COPY ./package*.json ./
 RUN npm install
-
-# Copy source files
-COPY ./backend /code/backend
-COPY ./frontend /code/frontend
-
-# Build frontend and watch for changes
-CMD [ "npm", "run", "dev" ]
-
-# Build the production JS and CSS
-FROM frontend AS frontend-builder
+COPY . .
 RUN npm run build
 
 # BASE (PYTHON)
@@ -35,8 +23,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     # psycopg2 dependencies
     libpq-dev \
-    # watchdog dependencies
-    libyaml-dev \
     # Translations dependencies
     gettext \
     # cleaning up unused files
@@ -45,24 +31,38 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --upgrade pip
 
+# BASE IMAGE (PYTHON) WITH NODE.JS
+# ------------------------------------------------------------------------------
+
+FROM base AS with-nodejs
+
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
+# Install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # RELEASES
 # ------------------------------------------------------------------------------
 
-FROM base AS development
-COPY ./backend/requirements /tmp/requirements
+FROM with-nodejs AS development
+COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/dev.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.development
 WORKDIR /code
-COPY ./backend .
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+COPY ./package*.json ./
+RUN npm install
+COPY . .
+CMD [ "npm", "run", "start" ]
 
 FROM base
-COPY ./backend/requirements /tmp/requirements
+COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/prod.txt
 ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
-COPY ./backend .
-COPY --from=frontend-builder /code/backend/static/dist/ /code/backend/static/dist/
+COPY . .
+COPY --from=frontend-builder /code/static/dist/ /code/static/dist/
 CMD python manage.py collectstatic --no-input \
     && python manage.py migrate \
     && daphne -b 0.0.0.0 -p $PORT config.asgi:application

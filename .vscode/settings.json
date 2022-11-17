@@ -1,6 +1,5 @@
 {
   "python.testing.pytestArgs": ["."],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "python.envFile": "${workspaceFolder}/.vscode.env" // <--- make sure auto-import feature works
+  "python.testing.pytestEnabled": true
 }

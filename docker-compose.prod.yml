@@ -21,29 +21,42 @@ services:
     image: redis:6.2.5-alpine
     ports:
       - "6379:6379"
-  mailhog:
-    image: mailhog/mailhog:v1.0.0
-    user: root
-    command: ["-storage=maildir", "-maildir-path=/maildir"]
-    volumes:
-      - dev_mailhog_data:/maildir
-    ports:
-      - "1025:1025"
-      - "8025:8025"
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py rqscheduler
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - REDIS_URL=redis://redis:6379
+      - EMAIL_HOST=mailhog
+      - EMAIL_PORT=1025
+      - AWS_STORAGE_BUCKET_NAME=
+      - PORT=8000
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py rqworker
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres
+      - REDIS_URL=redis://redis:6379
+      - EMAIL_HOST=mailhog
+      - EMAIL_PORT=1025
+      - AWS_STORAGE_BUCKET_NAME=
+      - PORT=8000
   web:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
-    volumes:
-      - .:/code
-      - dev_media:/media
-      - playwright_cache:/root/.cache/ms-playwright
-      - /code/node_modules
     ports:
       - "8000:8000"
-      - "9999:9999"
-      - "5173:5173"
     depends_on:
       - postgres
       - redis

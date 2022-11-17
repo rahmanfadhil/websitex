@@ -1,0 +1,22 @@
+-r base.txt
+
+# To debug the app from the browser
+# https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar==3.7.0
+
+# For creating mock data in test environments
+# https://github.com/FactoryBoy/factory_boy
+factory-boy==3.2.1
+
+# For testing django with pytest
+# https://pytest-django.readthedocs.io/en/latest/
+pytest==7.2.0
+pytest-django==4.5.2
+
+# A better python shell
+# https://ipython.org/
+ipython==8.6.0
+
+# End-to-end testing with Playwright
+# https://playwright.dev/python/
+pytest-playwright==0.3.0
