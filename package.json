@@ -4,11 +4,15 @@
   "description": "A production-ready Django boilerplate based on [DjangoX](https://github.com/wsvincent/djangox).",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm:server\" \"npm:worker\" \"npm:frontend\"",
-    "server": "python manage.py runserver 0.0.0.0:8000",
+    "start": "concurrently \"npm:django\" \"npm:worker\" \"npm:watch:css\" \"npm:watch:js\"",
+    "django": "python manage.py runserver 0.0.0.0:8000",
     "worker": "python manage.py rqworker --with-scheduler",
-    "frontend": "NODE_ENV=development node build.js",
-    "build": "NODE_ENV=production node build.js"
+    "watch": "concurrently \"npm:watch:css\" \"npm:watch:js\"",
+    "watch:js": "NODE_ENV=development node esbuild.config.js",
+    "watch:css": "tailwindcss -i frontend/css/main.css -o static/dist/main.css --postcss -w",
+    "build": "concurrently \"npm:build:css\" \"npm:build:js\"",
+    "build:js": "NODE_ENV=production node esbuild.config.js",
+    "build:css": "tailwindcss -i frontend/css/main.css -o static/dist/main.css --postcss"
   },
   "repository": {
     "type": "git",
@@ -37,6 +41,8 @@
     "autoprefixer": "^10.4.12",
     "concurrently": "^7.5.0",
     "postcss": "^8.4.18",
+    "postcss-import": "^15.0.0",
+    "postcss-url": "^10.1.3",
     "tailwindcss": "^3.2.1"
   }
 }

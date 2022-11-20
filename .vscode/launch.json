@@ -5,18 +5,30 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Django",
+      "name": "Python: Django",
       "type": "python",
-      "request": "attach",
-      "pathMappings": [
-        {
-          "localRoot": "${workspaceFolder}",
-          "remoteRoot": "/code"
-        }
-      ],
-      "port": 9999,
-      "host": "127.0.0.1",
-      "subProcess": true
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["runserver"],
+      "django": true,
+      "justMyCode": true
+    },
+    {
+      "name": "Python: RQ Worker",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["rqworker", "default"],
+      "django": true,
+      "justMyCode": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Django",
+      "configurations": ["Python: Django", "Python: RQ Worker"],
+      "stopAll": true,
+      "preLaunchTask": "npm: watch"
     }
   ]
 }

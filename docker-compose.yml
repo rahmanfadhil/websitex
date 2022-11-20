@@ -4,7 +4,6 @@ volumes:
   dev_postgres_data: {}
   dev_mailhog_data: {}
   dev_media: {}
-  playwright_cache: {}
 
 services:
   postgres:
@@ -18,7 +17,7 @@ services:
     ports:
       - "5432:5432"
   redis:
-    image: redis:6.2.5-alpine
+    image: redis:7.0.5-alpine
     ports:
       - "6379:6379"
   mailhog:
@@ -38,7 +37,6 @@ services:
     volumes:
       - .:/code
       - dev_media:/media
-      - playwright_cache:/root/.cache/ms-playwright
       - /code/node_modules
     ports:
       - "8000:8000"
@@ -52,5 +50,3 @@ services:
       - REDIS_URL=redis://redis:6379
       - EMAIL_HOST=mailhog
       - EMAIL_PORT=1025
-      - AWS_STORAGE_BUCKET_NAME=
-      - PORT=8000

@@ -4,7 +4,6 @@ volumes:
   dev_postgres_data: {}
   dev_mailhog_data: {}
   dev_media: {}
-  playwright_cache: {}
 
 services:
   postgres:
@@ -18,7 +17,7 @@ services:
     ports:
       - "5432:5432"
   redis:
-    image: redis:6.2.5-alpine
+    image: redis:7.0.5-alpine
     ports:
       - "6379:6379"
   scheduler:

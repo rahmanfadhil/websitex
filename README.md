@@ -22,13 +22,14 @@ Install dependencies
 
 ```
 $ pip install -r requirements.txt
+$ npm install
 ```
 
 ## Usage
 
 ### Run development server
 
-Start the development server
+Start additional services for development environment
 
 ```
 $ docker compose up -d
@@ -37,13 +38,19 @@ $ docker compose up -d
 Run migrations
 
 ```
-$ docker compose exec web python manage.py migrate
+$ python manage.py migrate
 ```
 
 Create a superuser
 
 ```
-$ docker compose exec web python manage.py createsuperuser
+$ python manage.py createsuperuser
+```
+
+Run development server
+
+```
+$ npm run start
 ```
 
 Visit http://localhost:8000
@@ -53,11 +60,11 @@ Visit http://localhost:8000
 Install playwright and its dependencies:
 
 ```
-$ docker compose exec web playwright install --with-deps
+$ playwright install
 ```
 
 Run tests:
 
 ```
-$ docker compose exec web python pytest
+$ pytest
 ```

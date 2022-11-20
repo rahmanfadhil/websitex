@@ -21,8 +21,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 RUN apt-get update && apt-get install -y \
     # dependencies for building Python packages
     build-essential \
-    # psycopg2 dependencies
-    libpq-dev \
     # Translations dependencies
     gettext \
     # cleaning up unused files
@@ -31,38 +29,55 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --upgrade pip
 
-# BASE IMAGE (PYTHON) WITH NODE.JS
+# DEVELOPMENT
 # ------------------------------------------------------------------------------
 
-FROM base AS with-nodejs
+FROM base AS development
 
-# Install curl
-RUN apt-get update && apt-get install -y curl
+# Install python dependencies
+COPY ./requirements /tmp/requirements
+RUN pip install -r /tmp/requirements/dev.txt
 
 # Install nodejs
+RUN apt-get update && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# RELEASES
-# ------------------------------------------------------------------------------
-
-FROM with-nodejs AS development
-COPY ./requirements /tmp/requirements
-RUN pip install -r /tmp/requirements/dev.txt
-ENV DJANGO_SETTINGS_MODULE config.settings.development
+# Install nodejs dependencies
 WORKDIR /code
 COPY ./package*.json ./
 RUN npm install
+
+# Use the development django settings
+ENV DJANGO_SETTINGS_MODULE config.settings.development
+
+# Copy source code
 COPY . .
+
+# Run development server
 CMD [ "npm", "run", "start" ]
 
+# PRODUCTION (DEFAULT)
+# ------------------------------------------------------------------------------
+
 FROM base
+
+# Install python dependencies
 COPY ./requirements /tmp/requirements
 RUN pip install -r /tmp/requirements/prod.txt
+
+# Use the production django settings
 ENV DJANGO_SETTINGS_MODULE config.settings.production
+
+# Copy source code
 WORKDIR /code
 COPY . .
+
+# Copy frontend static files
 COPY --from=frontend-builder /code/static/dist/ /code/static/dist/
-CMD python manage.py collectstatic --no-input \
-    && python manage.py migrate \
-    && daphne -b 0.0.0.0 -p $PORT config.asgi:application
+
+# Collect all static files
+RUN python manage.py collectstatic --no-input
+
+# Run production server
+CMD python manage.py migrate && daphne -b 0.0.0.0 -p $PORT config.asgi:application

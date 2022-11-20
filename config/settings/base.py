@@ -112,7 +112,7 @@ FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 # https://github.com/jacobian/dj-database-url#usage
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://postgres:postgres@postgres:5432/postgres",
+        default="postgres://postgres:postgres@localhost:5432/postgres",
     )
 }
 
@@ -192,12 +192,22 @@ MESSAGE_TAGS = {
     messages.ERROR: "error bg-red-600",
 }
 
+# CACHES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.environ.get("REDIS_URL", "redis://localhost:6379/0"),
+    }
+}
+
 # DJANGO-RQ
 # ------------------------------------------------------------------------------
 # https://github.com/rq/django-rq
 RQ_QUEUES = {
     "default": {
-        "URL": os.getenv("REDIS_URL", "redis://redis:6379/0"),
+        "URL": os.environ.get("REDIS_URL", "redis://localhost:6379/0"),
         "DEFAULT_TIMEOUT": 500,
     },
 }
@@ -211,7 +221,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.pubsub.RedisPubSubChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ["REDIS_URL"]],
+            "hosts": [os.environ.get("REDIS_URL", "redis://localhost:6379/0")],
         },
     },
 }
@@ -220,6 +230,16 @@ CHANNEL_LAYERS = {
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-host
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-port
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 1025)
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+# https://docs.djangoproject.com/en/4.1/ref/settings/#email-use-tls
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "false").lower() == "true"
 
 # WAGTAIL
 # ------------------------------------------------------------------------------

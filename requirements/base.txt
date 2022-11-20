@@ -8,7 +8,7 @@ wagtail==4.1.1
 
 # PostgreSQL database adapter for Django
 # https://github.com/psycopg/psycopg2
-psycopg2==2.9.5
+psycopg2-binary==2.9.5
 
 # To work with images in Django
 # https://github.com/python-pillow/Pillow
@@ -21,6 +21,9 @@ whitenoise[brotli]==6.2.0
 # Job queue with Redis
 # https://github.com/rq/django-rq
 django-rq==2.6.0
+
+# Package that adds job scheduling capabilities to RQ
+rq-scheduler==0.10.0
 
 # Use Heroku's DATABASE_URL environment variable
 # https://github.com/jacobian/dj-database-url
