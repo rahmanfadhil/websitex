@@ -9,10 +9,10 @@
     "worker": "python manage.py rqworker --with-scheduler",
     "watch": "concurrently \"npm:watch:css\" \"npm:watch:js\"",
     "watch:js": "NODE_ENV=development node esbuild.config.js",
-    "watch:css": "tailwindcss -i frontend/css/main.css -o static/dist/main.css --postcss -w",
+    "watch:css": "tailwindcss -i assets/css/main.css -o static/dist/main.css --postcss -w",
     "build": "concurrently \"npm:build:css\" \"npm:build:js\"",
     "build:js": "NODE_ENV=production node esbuild.config.js",
-    "build:css": "tailwindcss -i frontend/css/main.css -o static/dist/main.css --postcss"
+    "build:css": "tailwindcss -i assets/css/main.css -o static/dist/main.css --postcss"
   },
   "repository": {
     "type": "git",

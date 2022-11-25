@@ -1,6 +1,7 @@
-# FRONTEND BUILDER
+# ASSETS BUILDER
 # ------------------------------------------------------------------------------
-FROM node:18.12.0-alpine AS frontend-builder
+
+FROM node:18.12.0-alpine AS assets-builder
 
 WORKDIR /code
 COPY ./package*.json ./
@@ -73,11 +74,11 @@ ENV DJANGO_SETTINGS_MODULE config.settings.production
 WORKDIR /code
 COPY . .
 
-# Copy frontend static files
-COPY --from=frontend-builder /code/static/dist/ /code/static/dist/
+# Copy assets static files
+COPY --from=assets-builder /code/static/dist/ /code/static/dist/
 
 # Collect all static files
 RUN python manage.py collectstatic --no-input
 
 # Run production server
-CMD python manage.py migrate && daphne -b 0.0.0.0 -p $PORT config.asgi:application
+CMD daphne -b 0.0.0.0 -p $PORT config.asgi:application

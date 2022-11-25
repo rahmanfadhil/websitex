@@ -2,7 +2,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 require("esbuild")
   .build({
-    entryPoints: ["frontend/main.ts"],
+    entryPoints: ["assets/main.ts"],
     bundle: true,
     outdir: "static/dist",
     minify: !isDevelopment,
